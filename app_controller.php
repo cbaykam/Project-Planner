@@ -3,7 +3,7 @@
 	class AppController extends Controller
 	{  
 	    var $helpers = array('Html' , 'Javascript');
-	    var $components = array('Auth');
+	    var $components = array('Auth' , 'Session');
 	    var $uses = array('Project');
 	    
 		function beforeFilter()
@@ -35,6 +35,7 @@
             else
             {
             	$this->set("authuser" , false);
+            	$this->set("adminuser" , false);
             }	
             
 	    }

@@ -69,7 +69,7 @@ class TasksController extends AppController {
 		$this->set('task', $this->Task->read(null, $id));
 	}
 
-	function master_add() {
+	function master_add($project , $user) {
 		if (!empty($this->data)) {
 			$this->Task->create();
 			if ($this->Task->save($this->data)) {
@@ -78,7 +78,7 @@ class TasksController extends AppController {
 			}
 		}
 		$projects = $this->Task->Project->find('list');
-		$resources = $this->Task->Resource->find('list');
+		$resources = $this->Task->User->find('list');
 		$this->set(compact('projects', 'resources'));
 	}
 

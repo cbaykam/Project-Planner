@@ -38,6 +38,10 @@
 		<!-- start content -->
 		<div id="content">
 			<div class="flower"></div>
+			<?php if ($_SESSION["Message"]["flash"]["message"] != ''): ?>
+			    <?php echo $_SESSION["Message"]["flash"]["message"]; ?>
+			    <?php  $_SESSION["Message"]["flash"]["message"] = '';?>
+			<?php endif; ?>
 			<?php echo $content_for_layout; ?>
 		</div>
 		<!-- end content -->

@@ -112,15 +112,8 @@ class ProjectsController extends AppController {
 		
 		if (!empty($this->data))
 		{
-		 
-		  $this->UserProject->find('all' , 
-		  								array(
-		  								    'conditions'=>array(
-		  								   		'user_id'=>$this->data["User"]["user_id"],
-		  								   		'project_id'=> $project
-		  								    )
-		  								)
-		  				)
+		
+		  $this->UsersProject->find('all');
 		  $this->Project->create();
 		   if ($this->Project->save($this->data))
 		   {

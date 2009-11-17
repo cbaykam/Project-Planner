@@ -108,17 +108,24 @@ class ProjectsController extends AppController {
 		}
 	}
 	
-	function master_adduser($project){
+	/*function master_adduser($project){
 		
 		if (!empty($this->data))
 		{
+		
+		  $this->UsersProject->find('all' , array(
+		  							'conditions'=>array(
+		  								'UsersProject.user_id'=>$this->data
+		  							)
+		  ));
+		  $this->data["UsersProject"][]
 		  $this->Project->create();
 		   if ($this->Project->save($this->data))
 		   {
-		   		$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
+		   		//$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
 		   }
 		}
-	}
+	}*/
 
 }
 ?>
