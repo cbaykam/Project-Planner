@@ -10,6 +10,7 @@
 		echo $form->input('pmobile');
 		echo $form->input('messenger');
 		echo $form->input('skype');
+		echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'resource' , '1'=>'admin') , 'label'=>'User type'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

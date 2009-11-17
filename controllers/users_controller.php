@@ -117,6 +117,16 @@ class UsersController extends AppController {
 	function logout(){
 		$this->redirect($this->Auth->logout());
 	}
+	
+	function master_login()
+	{
+		
+	}
+	
+	function master_logout()
+	{
+		
+	}
 
 }
 ?>

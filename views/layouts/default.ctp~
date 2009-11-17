@@ -15,7 +15,7 @@
 	</div>
 	<div id="menu">
 		<ul id="main">
-			<li><a href="#">Projects</a></li>
+			<li><?php echo $html->link("Projects" , array('controller' => 'Projects' , 'action' => 'index') ); ?></li>
 			<li><a href="#">Tasks</a></li>
 			<li><a href="#">Services</a></li>
 			<li><a href="#">About Us</a></li>
@@ -42,14 +42,9 @@
 		</div>
 		<!-- end content -->
 		<!-- start sidebars -->
-		<div id="sidebar2" class="sidebar">
-			<ul>
-				<li>
-					<h2>Tasks</h2>
-					<p class="tag"><a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a> <a href="#">sit amet</a> <a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a> <a href="#">sit amet</a></p></li>
-				<li>
-				</li>
-			</ul>
+		<div id="sidebar2" class="sidebar">		
+					<?php echo $this->element('projside'); ?>
+					<?php echo $adminuser ?>
 		</div>
 		<!-- end sidebars -->
 		<div style="clear: both;">&nbsp;</div>

@@ -1,22 +1,17 @@
 <div class="projects view">
-<h2><?php  __('Project');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $project['Project']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $project['Project']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Status'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $project['Project']['status']; ?>
-			&nbsp;
-		</dd>
-	</dl>
+<h2><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h2>
+	
+	<fieldset>
+	<?php echo $form->create('Project' , array('url'=>array('controller'=>'projects' , 'action'=>'adduser','master'=>true , $project["Project"]["id"]))); ?>
+	    <select id="data[User][0][user_id]" name="data[User][0][user_id]">
+		<?php foreach($users as $user):?>
+		
+			<option value="<?php echo $user['User']['id'] ?>"><?php echo $user['User']['name'] ?></option>
+		
+		<?php endforeach;?>
+	    </select>	
+	<?php echo $form->end('Add User To Project'); ?>
+	</fieldset>
 </div>
 <div class="actions">
 	<ul>

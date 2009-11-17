@@ -3,7 +3,8 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 	var $helpers = array('Html', 'Form');
-
+	var $uses = array('Project' , 'User' , 'UsersProject');
+	
 	function index() {
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
@@ -14,6 +15,7 @@ class ProjectsController extends AppController {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
 		$this->set('project', $this->Project->read(null, $id));
+        $this->set("users" , $this->User->find('all'));
 	}
 
 	function add() {
@@ -65,6 +67,7 @@ class ProjectsController extends AppController {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
 		$this->set('project', $this->Project->read(null, $id));
+        $this->set("users" , $this->User->find('all'));
 	}
 
 	function master_add() {
@@ -102,6 +105,18 @@ class ProjectsController extends AppController {
 		}
 		if ($this->Project->del($id)) {
 			$this->flash(__('Project deleted', true), array('action'=>'index'));
+		}
+	}
+	
+	function master_adduser($project){
+		
+		if (!empty($this->data))
+		{
+		  $this->Project->create();
+		   if ($this->Project->save($this->data))
+		   {
+		   		$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
+		   }
 		}
 	}
 

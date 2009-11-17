@@ -4,7 +4,6 @@
  		<legend><?php __('Add Project');?></legend>
 	<?php
 		echo $form->input('name');
-		echo $form->input('status');
 		echo $form->input('portal');
 		echo $form->input('website');
 	?>

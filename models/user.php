@@ -4,7 +4,31 @@ class User extends AppModel {
 	var $name = 'User';
 	
 	var $validate = array(
-			
+			'email'=>'email',
+			'name'=> array(
+				'between' => array(
+		            'rule' => array('between', 5, 45),
+		            'message' => 'User\'s Name shall be Between 5 to 45 characters'
+            	)
+			),
+			'password' => array(
+				'between' => array(
+					'rule' => array('between' , 6 , 12),
+					'message' => 'Password shall be beween 6 - 12 characters '
+				)
+			),
+			'pwork' => array(
+				'integer' => array(
+					'rule' => 'numeric',
+					'message' => 'Please enter only digits for your phone number.'
+				)
+			),
+			'pmobile' => array(
+				'integer' => array(
+					'rule' => 'numeric',
+					'message' => 'Please enter only digits for your mobile number.'
+				)
+			)
 	);
 
 	var $hasMany = array(

@@ -42,14 +42,8 @@
 		</div>
 		<!-- end content -->
 		<!-- start sidebars -->
-		<div id="sidebar2" class="sidebar">
-			<ul>
-				<li>
-					<h2>Tasks</h2>
-					<p class="tag"><a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a> <a href="#">sit amet</a> <a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a> <a href="#">sit amet</a></p></li>
-				<li>
-				</li>
-			</ul>
+		<div id="sidebar2" class="sidebar">		
+					<?php echo $this->element('projside'); ?>
 		</div>
 		<!-- end sidebars -->
 		<div style="clear: both;">&nbsp;</div>
