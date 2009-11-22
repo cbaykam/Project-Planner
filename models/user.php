@@ -11,12 +11,7 @@ class User extends AppModel {
 		            'message' => 'User\'s Name shall be Between 5 to 45 characters'
             	)
 			),
-			'password' => array(
-				'between' => array(
-					'rule' => array('between' , 6 , 12),
-					'message' => 'Password shall be beween 6 - 12 characters '
-				)
-			),
+			
 			'pwork' => array(
 				'integer' => array(
 					'rule' => 'numeric',

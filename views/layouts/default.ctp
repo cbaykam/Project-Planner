@@ -14,17 +14,7 @@
 		<h1><a href="#"><span>Project</span>Planner</a></h1>
 	</div>
 	<div id="menu">
-		<ul id="main">
-			<li><?php echo $html->link("Projects" , array('controller' => 'Projects' , 'action' => 'index') ); ?></li>
-			<li><a href="#">Tasks</a></li>
-			<li><a href="#">Services</a></li>
-			<li><a href="#">About Us</a></li>
-			<?php if ($authuser): ?>
-			   <li><?php echo $html->link("Logout" , array('controller' => 'users' , 'action' => 'logout') ); ?></li> 
-		    <?php else: ?>
-		       <li><?php echo $html->link("Login" , array('controller' => 'users' , 'action' => 'login') ); ?></li>
-		    <?php endif; ?>
-		</ul>
+		<?php echo $this->element('topnav'); ?>
 	</div>
 	
 </div>
@@ -38,7 +28,7 @@
 		<!-- start content -->
 		<div id="content">
 			<div class="flower"></div>
-			<?php if ($_SESSION["Message"]["flash"]["message"] != ''): ?>
+			<?php if (isset($_SESSION["Message"]["flash"]["message"]) && $_SESSION["Message"]["flash"]["message"] != ''): ?>
 			    <?php echo $_SESSION["Message"]["flash"]["message"]; ?>
 			    <?php  $_SESSION["Message"]["flash"]["message"] = '';?>
 			<?php endif; ?>

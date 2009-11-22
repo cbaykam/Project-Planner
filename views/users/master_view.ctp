@@ -1,53 +1,77 @@
-<div class="users view">
-<h2><?php  __('user');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Email'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['email']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Password'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['password']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pwork'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['pwork']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Pmobile'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['pmobile']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Messenger'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['messenger']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Skype'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $user['user']['skype']; ?>
-			&nbsp;
-		</dd>
-	</dl>
+<h1> <?php echo $data["User"]["name"]; ?> </h1>
+<div id="user_master_view_userinfo">
+ <table border="0" cellspacing="0" cellpadding="0">
+ 	<tr>
+ 		<td><b>Email</b></td>
+ 		<td><?php echo $data["User"]["email"]; ?></td>
+ 	</tr>
+ 	<tr>
+ 		<td><b>Skype</b></td>
+ 		<td><?php echo $data["User"]["skype"]; ?></td>
+ 	</tr>
+ 	<tr>
+ 		<td><b>Messenger</b></td>
+ 		<td><?php echo $data["User"]["messenger"]; ?></td>
+ 	</tr>
+ 	
+ </table>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit user', true), array('action'=>'edit', $user['user']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete user', true), array('action'=>'delete', $user['user']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['user']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List users', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New user', true), array('action'=>'add')); ?> </li>
-	</ul>
+<div id="user_master_view_tasks">
+	<?php if (count($data["Task"]) == 0): ?>
+		<h3>No Tasks for this user</h3>
+	<?php else: ?>
+		<table border="0" cellspacing="0" cellpadding="0">
+		
+			<tr>
+				<th>Task Name</th>
+				<th>Status</th>
+				<th>Priority</th>
+			</tr>
+		<?php foreach($data["Task"] as $task):?>
+	
+			<tr>
+				<td><?php echo $task["name"];?></td>
+				<td><?php echo $task["status"];?></td>
+				<td><?php echo $task["priority"];?></td>
+			</tr>
+	
+		<?php endforeach;?>
+	
+		</table>
+	<?php endif; ?>
+</div>
+
+<div id="user_master_view_projects">
+	<?php if (count($data["Project"]) == 0): ?>
+		<h3>Not working in any projects</h3>
+	<?php else: ?>
+		<table border="0" cellspacing="0" cellpadding="0">
+		
+			<tr>
+				<th>Project Name</th>
+			</tr>
+		<?php foreach($data["Project"] as $prj):?>
+	
+			<tr>
+				<td><?php echo $html->link($prj["name"] , array('controller' => 'projects' , 'action' => 'view','master'=>true , $prj["id"]) ); ?></td>
+			</tr>
+	
+		<?php endforeach;?>
+	
+		</table>
+	<?php endif; ?>
+</div>
+
+<div id="user_master_view_addtoproj">
+	<fieldset>
+	<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'toproject','master'=>true , $data["User"]["id"]))); ?>
+	    <select id="data[UsersProject][project_id]" name="data[UsersProject][project_id]">
+		<?php foreach($projects as $project):?>
+		
+			<option value="<?php echo $project['Project']['id'] ?>"><?php echo $project['Project']['name'] ?></option>
+		
+		<?php endforeach;?>
+	    </select>	
+	<input type="submit" value="Add User To Project"/>
+	</fieldset>
 </div>

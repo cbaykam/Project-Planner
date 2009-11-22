@@ -1,5 +1,5 @@
 <div class="users form">
-<?php echo $form->create('user');?>
+<?php echo $form->create('User' , array('url'=>array('controller'=>'users' , 'action'=>'add' , 'master'=>true) ));?>
 	<fieldset>
  		<legend><?php __('Add user');?></legend>
 	<?php

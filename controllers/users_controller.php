@@ -3,6 +3,7 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
+	var $uses = array('User' , 'Project');
 	
 	function beforeFilter(){
 		 parent::beforeFilter(); 
@@ -66,17 +67,16 @@ class UsersController extends AppController {
 	}
 
 	function master_view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid User', true), array('action'=>'index'));
-		}
-		$this->set('User', $this->User->read(null, $id));
+		$this->set("data" , $this->User->findById($id));
+		$this->Project->recursive = 0;
+		$this->set("projects" , $this->Project->find("all"));
 	}
 
 	function master_add() {
 		if (!empty($this->data)) {
 			$this->User->create();
 			if ($this->User->save($this->data)) {
-				$this->flash(__('User saved.', true), array('action'=>'index'));
+				$this->flash(__('User saved.', true), array('controller'=>'projects', 'action'=>'index'));
 			} else {
 			}
 		}
@@ -111,7 +111,11 @@ class UsersController extends AppController {
 	}
 	
 	function login(){
-		
+		if ($this->Auth->user("id") != 0)
+		{
+			 
+			 $this->redirect(array('controller'=>'projects' , 'action'=>'index'));
+		}
 	}
 	
 	function logout(){
@@ -120,12 +124,15 @@ class UsersController extends AppController {
 	
 	function master_login()
 	{
-		
+		if ($this->Auth->user("id") != 0)
+		{
+			 $this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+		}
 	}
 	
 	function master_logout()
 	{
-		
+		$this->redirect($this->Auth->logout());
 	}
 
 }

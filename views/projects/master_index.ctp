@@ -8,9 +8,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('status');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -22,14 +20,9 @@ foreach ($projects as $project):
 	}
 ?>
 	<tr<?php echo $class;?>>
+		
 		<td>
-			<?php echo $project['Project']['id']; ?>
-		</td>
-		<td>
-			<?php echo $project['Project']['name']; ?>
-		</td>
-		<td>
-			<?php echo $project['Project']['status']; ?>
+			<?php echo $html->link($project['Project']['name'] , array('controller' => 'projects' , 'action' => 'view', 'master'=>true, $project["Project"]["id"]) ); ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $project['Project']['id'])); ?>
@@ -47,6 +40,6 @@ foreach ($projects as $project):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New Project', true), array('action'=>'add')); ?></li>
+		<li><?php echo $html->link(__('New Project', true), array('controller'=>'projects', 'action'=>'add')); ?></li>
 	</ul>
 </div>

@@ -2,7 +2,7 @@
 	
 	class AppController extends Controller
 	{  
-	    var $helpers = array('Html' , 'Javascript');
+	    var $helpers = array('Html' , 'Javascript', 'Time');
 	    var $components = array('Auth' , 'Session');
 	    var $uses = array('Project');
 	    
@@ -14,8 +14,8 @@
             	'username' => 'email',
             	'password' => 'password'
             );
-            $this->Auth->loginRedirect = array('controller'=>'projects' , 'action'=>'index');
-            
+            $this->Auth->loginRedirect = array('controller'=>'projects' , 'action'=>'index' , 'master'=>true);
+            $this->Auth->logoutRedirect = array('controller'=>'users' , 'action'=>'login');
             //get projects 
              
             $this->__getProjects();

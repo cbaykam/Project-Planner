@@ -2,8 +2,8 @@
 class ProjectsController extends AppController {
 
 	var $name = 'Projects';
-	var $helpers = array('Html', 'Form');
-	var $uses = array('Project' , 'User' , 'UsersProject');
+	var $helpers = array('Html', 'Form' , 'Priority');
+	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task');
 	
 	function index() {
 		$this->Project->recursive = 0;
@@ -66,8 +66,25 @@ class ProjectsController extends AppController {
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
-		$this->set('project', $this->Project->read(null, $id));
-        $this->set("users" , $this->User->find('all'));
+		$prdat = $this->Project->read(null, $id);
+		$this->set('project', $prdat);
+        $this->set("users" , $this->User->find('list'));
+        $this->Task->recursive = 0;
+        $this->set("tasks" , $this->Task->find('all' , array(
+        										'conditions'=>array(
+        											'Task.project_id'=>$id
+        										)
+        ) ));
+       
+		$usersa = array();
+		
+		foreach ($prdat["User"] as $res)
+		{
+			$usersa[] = $res["name"];
+		}
+		
+		$this->set(compact('usersa'));
+		
 	}
 
 	function master_add() {
