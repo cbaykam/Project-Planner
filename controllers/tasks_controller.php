@@ -82,22 +82,29 @@ class TasksController extends AppController {
 				$this->flash(__('Task saved.', true), array('controller'=>'projects', 'action'=>'view' , 'master'=>'true' , $project));
 			} 
 		}
+		
+		if ($user)
+		{
+			$this->set("user_id" , $user);
+		}
 		$resources = $this->Project->findById($project);
 	
 		$users = array();
-		
+		$i = 0;
 		foreach ($resources["User"] as $res)
 		{
-			$users[] = $res["name"];
+			$users[$i]["name"] = $res["name"];
+			$users[$i]["id"] = $res["id"];
+			$i++;
 		}
-		
+		$this->set("users" , $users);
 		$tasks = $this->Task->find('list' , 
 						array(
 							'conditions'=>array(
 								'Task.project_id'=>$project
 							)	
 		) );
-		$this->set(compact('projects' , 'tasks' , 'users'));
+		$this->set(compact('projects' , 'tasks'));
 	}
 
 	function master_edit($id = null) {
@@ -119,12 +126,25 @@ class TasksController extends AppController {
 		
 	}
 
-	function master_delete($id = null) {
+	function master_delete($id = null , $project) {
 		if (!$id) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));
 		}
 		if ($this->Task->del($id)) {
-			$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project));
+		}
+	}
+	
+	function master_assign($task , $project)
+	{
+		if (!empty($this->data))
+		{
+			$this->Task->id = $task;
+			$this->Task->saveField("user_id" , $this->data["Task"]["usersa"]);
+			//$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
+			echo '<pre>';
+				  print_r($this->data); 
+			echo '</pre>';
 		}
 	}
 

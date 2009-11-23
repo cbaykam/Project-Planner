@@ -28,24 +28,31 @@
 					<th>Priority</th>
 					<th>Status</th>
 					<th>User</th>
+					<th>Actions</th>
 				</tr>
-			<?php foreach($project["Task"] as $task):?>
+			<?php foreach($tasks as $task):?>
 			
 				<tr>
-					<td><?php echo $task["name"]; ?></td>
-					<td><?php echo $priority->display($task["priority"]); ?></td>
-					<td><?php echo $task["status"]; ?> %</td>
-					<?php if ($task["user_id"] == 0): ?>
+					<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"]) ); ?></td>
+					<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
+					<td><?php echo $task["Task"]["status"]; ?> %</td>
+					<?php if ($task["Task"]["user_id"] == 0): ?>
 					 <td>
-						<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' , 'master'=>true) ) ); ?>
-						 <?php echo $form->input('usersa' , array('empty'=>'select one' , 'options'=>$usersa , 'type'=>'select') ); ?>
-						<input type="submit" value="assign"/>
+						<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' , 'master'=>true, $task["id"] , $project["Project"]["id"]) ) ); ?>
+						 <select id="TaskUsersa" name="data[Task][usersa]">
+						   <option value="">Select one</option>
+						  <?php foreach($usersa as $option):?>
+						  	 <option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
+						  <?php endforeach;?>
+						 </select>
+						 <input type="submit" value="assign"/> 
+						 </form>
 					 </td>
 					<?php else: ?>
-						<td><?php echo $task["user_id"]; ?>
+						<td><?php echo $task["Task"]["user_id"]; ?>
 					<?php endif; ?>
+					<td><?php echo $html->link("Delete task" , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
 				</tr>		
-			
 			<?php endforeach;?>
 			</table>
 			<ul>

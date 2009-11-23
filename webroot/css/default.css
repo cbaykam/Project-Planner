@@ -1,9 +1,9 @@
 body {
-	margin-top: 10px;
+	margin: 0;
 	padding: 0;
 	background: #787878 url(images/img01.jpg) repeat left top;
 	text-align: justify;
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: Arial;
 	font-size: 12px;
 	color: #616161;
 }
@@ -54,15 +54,17 @@ img.right {
 }
 
 #header {
-	width: 960px;
+	width: 100%;
 	margin: 0 auto;
-	height: 100px;
+	height: 80px;
+	background:#8ac015;
+	padding : 5px 5px 5px 5px ;
 }
 
 /* Header */
 
 #logo {
-	width: 960px;
+	width: 100%;
 	height: 50px;
 	margin: 0 auto;
 	padding: 0;
@@ -102,11 +104,10 @@ img.right {
 /* Menu */
 
 #menu {
-	width: 960px;
+	width: 100%;
 	margin: 0px auto;
 	padding: 0px;
-	height: 52px;
-	background: url(images/img02.jpg) no-repeat left top;
+	height: 40px;
 }
 
 #menu ul {
@@ -117,24 +118,23 @@ img.right {
 
 #menu li {
 	display: inline;
+	background : #999999;
 }
 
 #menu a {
 	display: block;
 	float: left;
-	height: 33px;
+	height: 23px;
 	margin: 0px;
-	padding: 19px 30px 0px 30px;
+	padding: 6px 20px 0px 20px;
 	text-decoration: none;
 	text-transform: capitalize;
-	background: url(images/img03.jpg) no-repeat right 50%;
-	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 12px;
 	color: #FFFFFF;
 }
 
 #menu a:hover {
-	color: #FFFFFF;
+	text-decoration: underline;
 }
 
 #menu .current_page_item a {
@@ -149,9 +149,9 @@ img.right {
 /* Page */
 
 #page {
-	width: 960px;
+	width: 100%;
 	margin: 0px auto;
-	background: url(images/img05.jpg) repeat-y left top;
+	
 }
 
 #page-bgtop {
@@ -174,9 +174,10 @@ img.right {
 
 #content {
 	float: left;
-	width: 720px;
+	width: 96%;
 	margin: 0px;
-	padding: 20px 0px 0px 0px;
+	padding: 20px 20px 20px 20px;
+	background: #FFFFFF ;
 }
 
 .post {
@@ -388,10 +389,7 @@ form div.required {
 	font-weight: bold;
 }
 form div.submit {
-	border: 0;
-	clear: both;
-	margin-top: 10px;
-	margin-left: 140px;
+	
 }
 label {
 	display: block;
@@ -406,12 +404,10 @@ input, textarea {
 	width: 100%;
 }
 select {
-	clear: both;
-	font-size: 120%;
-	vertical-align: text-bottom;
+
 }
 select[multiple=multiple] {
-	width: 100%;
+
 }
 option {
 	font-size: 120%;
@@ -432,7 +428,6 @@ div.radio label {
 	margin: 0 0 6px 20px;
 }
 input[type=submit] {
-	display: inline;
 	font-size: 110%;
 	padding: 2px 5px;
 	width: auto;
@@ -510,4 +505,7 @@ td.actions a {
 	text-align: left;
 }
 
+.forminline {
+	float:left;
+}
 

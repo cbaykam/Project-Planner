@@ -22,8 +22,7 @@
 <div id="wrapper">
 	<!-- start page -->
 	<div id="page">
-	<div id="page-bgtop">
-	<div id="page-bgbtm">
+
 		
 		<!-- start content -->
 		<div id="content">
@@ -36,13 +35,8 @@
 		</div>
 		<!-- end content -->
 		<!-- start sidebars -->
-		<div id="sidebar2" class="sidebar">		
-					<?php echo $this->element('projside'); ?>
-		</div>
 		<!-- end sidebars -->
 		<div style="clear: both;">&nbsp;</div>
-	</div>
-	</div>
 	</div>
 	<!-- end page -->
 </div>

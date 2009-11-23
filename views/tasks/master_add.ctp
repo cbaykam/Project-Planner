@@ -11,7 +11,15 @@
 		echo $form->input('duedate');
 		if (!isset($this->params["pass"][1]))
 		{
-			echo $form->input('user_id' , array('label'=>'Resource' , 'empty'=>'(None)'));
+		     echo '<select id="TaskUserId" name="data[Task][user_id]">
+					<option value="">(None)</option>';
+				foreach ($users as $usr)
+				{
+					echo '<option value="'. $usr["id"] .'">' . $usr["name"] . '</option>';
+				}
+			 echo '</select>';
+		}else{
+			echo $form->input('user_id', array('type'=>'hidden' , 'value'=>$this->params["pass"][1]));
 		}
 		echo $form->input('task_id' , array('label'=>'Dependency' , 'empty'=>'(None)'));
 	?>

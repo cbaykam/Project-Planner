@@ -69,7 +69,7 @@ class ProjectsController extends AppController {
 		$prdat = $this->Project->read(null, $id);
 		$this->set('project', $prdat);
         $this->set("users" , $this->User->find('list'));
-        $this->Task->recursive = 0;
+        $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(
         										'conditions'=>array(
         											'Task.project_id'=>$id
@@ -77,10 +77,12 @@ class ProjectsController extends AppController {
         ) ));
        
 		$usersa = array();
-		
+		$i = 0;
 		foreach ($prdat["User"] as $res)
 		{
-			$usersa[] = $res["name"];
+			$usersa[$i]['name'] = $res["name"];
+			$usersa[$i]['id'] = $res["id"];
+			$i++;
 		}
 		
 		$this->set(compact('usersa'));
