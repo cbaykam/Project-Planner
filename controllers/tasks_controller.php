@@ -63,16 +63,30 @@ class TasksController extends AppController {
 		$this->set('tasks', $this->paginate());
 	}
 
-	function master_view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Task', true), array('action'=>'index'));
+	function master_view($id = null , $project) {
+		if ($id)
+		{
+			$tdata = $this->Task->findById($id);
+			
+			if ($tdata["Task"]["dependency"] != 0)
+			{
+				$this->Task->recursive = 0 ; 
+				$dependent = $this->Task->findById($tdata["Task"]["dependency"]);	
+				$this->set("depend" , $dependent);
+			}else
+			{
+				$this->set("depend" , false);
+			}
+			$this->set("task" , $tdata);
+		}else{
+			$this->setFlash("Could Not Find the Task With Specified ID .");
 		}
-		$this->set('task', $this->Task->read(null, $id));
 	}
 
 	function master_add($project=null , $user=null) {
 		if (!empty($this->data)) {
 			$this->data["Task"]["project_id"] = $project;
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
 			if ($user){
 				$this->data["Task"]["user_id"] = $user;
 			}

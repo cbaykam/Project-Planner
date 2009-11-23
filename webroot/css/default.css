@@ -339,7 +339,7 @@ img.right {
 	background: #CA8186;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial;
 	font-size: 10px;
 	color: #CCCCCC;
 }
@@ -399,7 +399,6 @@ label {
 input, textarea {
 	clear: both;
 	font-size: 140%;
-	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
 	padding: 2px;
 	width: 100%;
 }

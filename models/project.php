@@ -40,6 +40,18 @@ class Project extends AppModel {
 								'exclusive' => '',
 								'finderQuery' => '',
 								'counterQuery' => ''
+			),
+			'Link' => array('className' => 'Link',
+								'foreignKey' => 'project_id',
+								'dependent' => false,
+								'conditions' => '',
+								'fields' => '',
+								'order' => '',
+								'limit' => '',
+								'offset' => '',
+								'exclusive' => '',
+								'finderQuery' => '',
+								'counterQuery' => ''
 			)
 	);
 

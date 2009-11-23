@@ -33,7 +33,7 @@
 			<?php foreach($tasks as $task):?>
 			
 				<tr>
-					<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"]) ); ?></td>
+					<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
 					<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
 					<td><?php echo $task["Task"]["status"]; ?> %</td>
 					<?php if ($task["Task"]["user_id"] == 0): ?>
@@ -65,12 +65,30 @@
 	
 	
 	</div>	
-	
+	<div id="project_links_menu">
+		<?php if (count($project["Link"]) != 0): ?>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<th>Name</th>
+						<th>Link</th>
+					</tr>
+				<?php foreach($project["Link"] as $link):?>
+				    <tr>
+				    	<td><?php echo $link["name"]; ?></td>
+				    	<td><a href="<?php echo $link['link'] ?>"><?php echo $link['link'] ?></td>
+				    </tr>
+				<?php endforeach;?>	
+				</table>
+				<?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add','master'=>true, $project["Project"]["id"] ) ); ?>
+		<?php else: ?>
+			<h3>No Links at the project. Please Click <?php echo $html->link("Here" , array('controller' => 'links' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?> to add a link</h3>
+		<?php endif; ?>	
+	</div>
 	<fieldset>
 		<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'add','master'=>true , $project["Project"]["id"]))); ?>
 		<?php echo $form->input("user_id" , array('label'=>'Resource') ); ?>
 		<input type="submit" value="Add User to Project"/>	
-	
+		</form>
 	</fieldset>
 </div>
 
