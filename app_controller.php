@@ -2,7 +2,7 @@
 	
 	class AppController extends Controller
 	{  
-	    var $helpers = array('Html' , 'Javascript', 'Time');
+	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority');
 	    var $components = array('Auth' , 'Session');
 	    var $uses = array('Project');
 	    
@@ -43,5 +43,13 @@
 	    function __getProjects(){
 	    	$this->set("projectsOpen" , $this->Project->find('all'));
 	    }
+	    
+	    function __checkadmin(){
+	    	if (!$this->Auth->user("admin"))
+	    	{
+	    		$this->cakeError("notadmin");	
+	    	}
+	    }
+	    
 	}
 ?>

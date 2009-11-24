@@ -62,17 +62,20 @@ class UsersController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->User->recursive = 0;
 		$this->set('Users', $this->paginate());
 	}
 
 	function master_view($id = null) {
+		$this->__checkadmin();
 		$this->set("data" , $this->User->findById($id));
 		$this->Project->recursive = 0;
 		$this->set("projects" , $this->Project->find("all"));
 	}
 
 	function master_add() {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->User->create();
 			if ($this->User->save($this->data)) {
@@ -85,6 +88,7 @@ class UsersController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
@@ -102,6 +106,7 @@ class UsersController extends AppController {
 	}
 
 	function master_delete($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}

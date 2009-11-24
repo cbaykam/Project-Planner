@@ -56,11 +56,13 @@ class BugsController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->Bug->recursive = 0;
 		$this->set('bugs', $this->paginate());
 	}
 
 	function master_view($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Bug', true), array('action'=>'index'));
 		}
@@ -68,6 +70,7 @@ class BugsController extends AppController {
 	}
 
 	function master_add() {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->Bug->create();
 			if ($this->Bug->save($this->data)) {
@@ -80,6 +83,7 @@ class BugsController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Bug', true), array('action'=>'index'));
 		}
@@ -97,6 +101,7 @@ class BugsController extends AppController {
 	}
 
 	function master_delete($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Bug', true), array('action'=>'index'));
 		}

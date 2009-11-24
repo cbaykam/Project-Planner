@@ -398,9 +398,7 @@ label {
 }
 input, textarea {
 	clear: both;
-	font-size: 140%;
 	padding: 2px;
-	width: 100%;
 }
 select {
 

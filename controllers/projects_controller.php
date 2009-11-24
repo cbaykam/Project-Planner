@@ -58,11 +58,13 @@ class ProjectsController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
 	}
 
 	function master_view($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
@@ -90,6 +92,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_add() {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->Project->create();
 			if ($this->Project->save($this->data)) {
@@ -102,6 +105,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
@@ -119,6 +123,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_delete($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}

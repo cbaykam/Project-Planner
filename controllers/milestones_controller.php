@@ -56,11 +56,13 @@ class MilestonesController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->Milestone->recursive = 0;
 		$this->set('milestones', $this->paginate());
 	}
 
 	function master_view($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}
@@ -68,6 +70,7 @@ class MilestonesController extends AppController {
 	}
 
 	function master_add() {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->Milestone->create();
 			if ($this->Milestone->save($this->data)) {
@@ -80,6 +83,7 @@ class MilestonesController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}
@@ -97,6 +101,7 @@ class MilestonesController extends AppController {
 	}
 
 	function master_delete($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}

@@ -56,11 +56,13 @@ class NoticesController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->Notice->recursive = 0;
 		$this->set('notices', $this->paginate());
 	}
 
 	function master_view($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
 		}
@@ -68,6 +70,7 @@ class NoticesController extends AppController {
 	}
 
 	function master_add() {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->Notice->create();
 			if ($this->Notice->save($this->data)) {
@@ -80,6 +83,7 @@ class NoticesController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
 		}
@@ -97,6 +101,7 @@ class NoticesController extends AppController {
 	}
 
 	function master_delete($id = null) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
 		}

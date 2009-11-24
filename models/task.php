@@ -26,6 +26,22 @@ class Task extends AppModel {
 			)
 	);
 	
+	var $hasMany = array(
+			'Activity'=> array(
+						'className' => 'Activity',
+						'foreignKey' => 'task_id',
+						'dependent' => false,
+						'conditions' => '',
+						'fields' => '',
+						'order' => '',
+						'limit' => '',
+						'offset' => '',
+						'exclusive' => '',
+						'finderQuery' => '',
+						'counterQuery' => ''
+			)
+	);
+	
 	function comparedate($date1 , $date2){
 		$start = strtotime($date1['startdate']);
 		$end = strtotime($date2['duedate']);

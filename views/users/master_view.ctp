@@ -30,9 +30,9 @@
 		<?php foreach($data["Task"] as $task):?>
 	
 			<tr>
-				<td><?php echo $task["name"];?></td>
-				<td><?php echo $task["status"];?></td>
-				<td><?php echo $task["priority"];?></td>
+				<td><?php echo $html->link($task["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["id"]) );?></td>
+				<td><?php echo $task["status"];?> %</td>
+				<td><?php echo $priority->display($task["priority"]);?></td>
 			</tr>
 	
 		<?php endforeach;?>

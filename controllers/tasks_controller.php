@@ -59,13 +59,16 @@ class TasksController extends AppController {
 
 
 	function master_index() {
+		$this->__checkadmin();
 		$this->Task->recursive = 0;
 		$this->set('tasks', $this->paginate());
 	}
 
 	function master_view($id = null , $project) {
+		$this->__checkadmin();
 		if ($id)
 		{
+			$this->Task->recursive = 1 ;
 			$tdata = $this->Task->findById($id);
 			
 			if ($tdata["Task"]["dependency"] != 0)
@@ -82,8 +85,20 @@ class TasksController extends AppController {
 			$this->setFlash("Could Not Find the Task With Specified ID .");
 		}
 	}
+	
+	function master_viewuser($user , $project){
+		$this->__checkadmin();
+		$this->set("tasks" , $this->Task->find('all' , 
+										array(
+										    'conditions'=>array(
+										      "Task.user_id"=>$user,
+										    )
+										)
+						));
+	}
 
 	function master_add($project=null , $user=null) {
+		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->data["Task"]["project_id"] = $project;
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
@@ -122,6 +137,7 @@ class TasksController extends AppController {
 	}
 
 	function master_edit($id = null) {
+		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));
 		}
@@ -141,6 +157,7 @@ class TasksController extends AppController {
 	}
 
 	function master_delete($id = null , $project) {
+		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));
 		}
@@ -151,15 +168,17 @@ class TasksController extends AppController {
 	
 	function master_assign($task , $project)
 	{
+		$this->__checkadmin();
 		if (!empty($this->data))
 		{
 			$this->Task->id = $task;
 			$this->Task->saveField("user_id" , $this->data["Task"]["usersa"]);
-			//$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
-			echo '<pre>';
-				  print_r($this->data); 
-			echo '</pre>';
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
 		}
+	}
+	
+	function deneme(){
+		$this->__checkadmin();
 	}
 
 }
