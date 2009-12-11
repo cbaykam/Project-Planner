@@ -96,12 +96,13 @@ class ProjectsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Project->create();
 			if ($this->Project->save($this->data)) {
-				$this->flash(__('Project saved.', true), array('action'=>'index'));
+				$this->Session->setFlash("Your Project Succesfully Saved");
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			} else {
 			}
 		}
-		$resources = $this->Project->User->find('list');
-		$this->set(compact('resources'));
+		$users = $this->Project->User->find('list');
+		$this->set(compact('users'));
 	}
 
 	function master_edit($id = null) {

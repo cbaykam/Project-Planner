@@ -106,6 +106,8 @@ class TasksController extends AppController {
 				$this->data["Task"]["user_id"] = $user;
 			}
 			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
+			$date = date('yd');
+			$this->data["Task"]["id"] = $date."-".$project."-";
 			$this->Task->create();
 			if ($this->Task->save($this->data)) {
 				$this->flash(__('Task saved.', true), array('controller'=>'projects', 'action'=>'view' , 'master'=>'true' , $project));
@@ -179,6 +181,18 @@ class TasksController extends AppController {
 	
 	function deneme(){
 		$this->__checkadmin();
+		echo date('ym');
+	}
+	
+	function __slicetask($project){
+		$data = $this->Task->find('all', array(
+								'conditions'=>array(
+									'Task.project_id'=>$project
+								),
+								'order'=>array(
+									'Task.created'
+								)
+		));
 	}
 
 }

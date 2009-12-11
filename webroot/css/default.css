@@ -506,3 +506,28 @@ td.actions a {
 	float:left;
 }
 
+#sessionMessage {
+	font-size:140%;
+	color: red;
+}
+
+#projectLeftSide {
+	float:left;
+	width:69%;
+}
+
+#projectRightSide {
+	width:29%;
+	float:right;
+}
+
+.noborder {
+	border:none;
+}
+
+.nobordercorner{
+	border-right:1px solid #cccccc;
+	border-bottom:none;
+	border-left:none;
+}
+

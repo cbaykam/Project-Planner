@@ -117,3 +117,6 @@
 2009-11-24 16:08:24 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/activities_controller.php, line 129]
 2009-11-24 16:08:24 Warning: Warning (2): Missing argument 3 for ActivitiesController::master_edit(), called in /var/www/planner/cake/libs/object.php on line 120 and defined in [APP/controllers/activities_controller.php, line 90]
 2009-11-24 16:08:25 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/activities_controller.php, line 129]
+2009-12-10 13:26:26 Warning: Warning (2): Missing argument 1 for AppController::__checkadmin(), called in /var/www/planner/app/controllers/projects_controller.php on line 61 and defined in [APP/app_controller.php, line 47]
+2009-12-11 02:07:55 Warning: Warning (2): Missing argument 1 for StatussesController::master_add(), called in /var/www/planner/cake/libs/object.php on line 116 and defined in [APP/controllers/statusses_controller.php, line 72]
+2009-12-11 02:07:55 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/planner/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]

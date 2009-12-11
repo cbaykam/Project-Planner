@@ -52,6 +52,18 @@ class Project extends AppModel {
 								'exclusive' => '',
 								'finderQuery' => '',
 								'counterQuery' => ''
+			),
+			'Statuss' => array('className' => 'Statuss',
+								'foreignKey' => 'project_id',
+								'dependent' => false,
+								'conditions' => '',
+								'fields' => '',
+								'order' => '',
+								'limit' => '',
+								'offset' => '',
+								'exclusive' => '',
+								'finderQuery' => '',
+								'counterQuery' => ''
 			)
 	);
 

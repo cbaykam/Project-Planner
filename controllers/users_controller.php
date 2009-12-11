@@ -116,10 +116,14 @@ class UsersController extends AppController {
 	}
 	
 	function login(){
-		if ($this->Auth->user("id") != 0)
-		{
-			 
-			 $this->redirect(array('controller'=>'projects' , 'action'=>'index'));
+		if ($this->Auth->isAuthorized())
+		{ 
+		   	if ($this->__checkadmin(false))
+			{
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+			}else{
+				$this->redirect(array('controller'=>'users' , 'action'=>'view' , $this->Auth->user("id")));
+			}
 		}
 	}
 	
@@ -129,9 +133,21 @@ class UsersController extends AppController {
 	
 	function master_login()
 	{
-		if ($this->Auth->user("id") != 0)
+		if ($this->Auth->isAuthorized())
 		{
 			 $this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+		}
+		if (!empty($this->data))
+		{
+		   
+			if ($this->__checkadmin(false))
+			{
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+			}
+			if ($this->Auth->isAuthorized())
+			{
+				$this->redirect(array('controller'=>'users' , 'action'=>'view', $this->Auth->user("id")));
+			}
 		}
 	}
 	

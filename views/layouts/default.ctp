@@ -28,7 +28,7 @@
 		<div id="content">
 			<div class="flower"></div>
 			<?php if (isset($_SESSION["Message"]["flash"]["message"]) && $_SESSION["Message"]["flash"]["message"] != ''): ?>
-			    <?php echo $_SESSION["Message"]["flash"]["message"]; ?>
+			    <span id="sessionMessage"><?php echo $_SESSION["Message"]["flash"]["message"]; ?></span>
 			    <?php  $_SESSION["Message"]["flash"]["message"] = '';?>
 			<?php endif; ?>
 			<?php echo $content_for_layout; ?>

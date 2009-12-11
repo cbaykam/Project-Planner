@@ -69,12 +69,13 @@ class StatussesController extends AppController {
 		$this->set('statuss', $this->Statuss->read(null, $id));
 	}
 
-	function master_add() {
+	function master_add($project) {
 		$this->__checkadmin();
 		if (!empty($this->data)) {
+			$this->data["Statuss"]["project_id"] = $project;
 			$this->Statuss->create();
 			if ($this->Statuss->save($this->data)) {
-				$this->flash(__('Statuss saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 			} else {
 			}
 		}

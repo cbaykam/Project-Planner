@@ -1,16 +1,10 @@
 <div class="statusses form">
-<?php echo $form->create('Statuss');?>
+<?php echo $form->create('Statuss' , array('url'=>array('controller'=>'statusses' , 'action'=>'add','master'=>true , $this->params["pass"][0])));?>
 	<fieldset>
  		<legend><?php __('Add Statuss');?></legend>
 	<?php
-		echo $form->input('project_id');
 		echo $form->input('status');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('List Statusses', true), array('action'=>'index'));?></li>
-	</ul>
 </div>

@@ -14,7 +14,7 @@
             	'username' => 'email',
             	'password' => 'password'
             );
-            $this->Auth->loginRedirect = array('controller'=>'projects' , 'action'=>'index' , 'master'=>true);
+            //$this->Auth->loginRedirect = array('controller'=>'projects' , 'action'=>'index' , 'master'=>true);
             $this->Auth->logoutRedirect = array('controller'=>'users' , 'action'=>'login');
             //get projects 
              
@@ -44,10 +44,20 @@
 	    	$this->set("projectsOpen" , $this->Project->find('all'));
 	    }
 	    
-	    function __checkadmin(){
+	    function __checkadmin($redir = true){
 	    	if (!$this->Auth->user("admin"))
 	    	{
-	    		$this->cakeError("notadmin");	
+	    		if ($redir)
+	    		{
+	    			$this->cakeError("notadmin");
+	    		}else
+	    		{
+	    			return false;
+	    		}
+	    			
+	    	}else
+	    	{
+	    		return true;
 	    	}
 	    }
 	    
