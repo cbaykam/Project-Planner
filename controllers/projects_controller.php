@@ -64,7 +64,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_view($id = null) {
-		$this->__checkadmin();
+		$this->__checkadmin($id);
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
@@ -106,7 +106,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_edit($id = null) {
-		$this->__checkadmin();
+		$this->__checkadmin($id);
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
@@ -124,7 +124,7 @@ class ProjectsController extends AppController {
 	}
 
 	function master_delete($id = null) {
-		$this->__checkadmin();
+		$this->__checkadmin($id);
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}

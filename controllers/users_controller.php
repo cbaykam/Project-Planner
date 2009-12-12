@@ -118,7 +118,7 @@ class UsersController extends AppController {
 	function login(){
 		if ($this->Auth->isAuthorized())
 		{ 
-		   	if ($this->__checkadmin(false))
+		   	if ($this->__checkadmin(null , false))
 			{
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			}else{
@@ -140,7 +140,7 @@ class UsersController extends AppController {
 		if (!empty($this->data))
 		{
 		   
-			if ($this->__checkadmin(false))
+			if ($this->__checkadmin(null , false))
 			{
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			}

@@ -70,7 +70,7 @@ class StatussesController extends AppController {
 	}
 
 	function master_add($project) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if (!empty($this->data)) {
 			$this->data["Statuss"]["project_id"] = $project;
 			$this->Statuss->create();

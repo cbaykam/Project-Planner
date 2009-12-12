@@ -4,7 +4,7 @@
 	{  
 	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority');
 	    var $components = array('Auth' , 'Session');
-	    var $uses = array('Project');
+	    var $uses = array('Project' , 'User');
 	    
 		function beforeFilter()
 	    {
@@ -44,12 +44,38 @@
 	    	$this->set("projectsOpen" , $this->Project->find('all'));
 	    }
 	    
-	    function __checkadmin($redir = true){
-	    	if (!$this->Auth->user("admin"))
+	    function __checkadmin($project = null , $redir = true){
+	    	if ($project != null)
+	    	{
+	    		$this->Project->recursive = 2;
+	        	$projdat = $this->Project->findById($project);	
+	        	if ($this->Auth->user("admin"))
+	        	{
+	        		$uid = $this->Auth->user('id');	
+	        	}else{
+	        		$uid = $projdat["Project"]["user_id"];
+	        	}	
+	    	}else{
+	    		$this->User->recursive = 2 ;
+	    		if ($this->Auth->user("admin"))
+	    		{	
+	    			$uid = $this->Auth->user('id');
+	    		}else{
+					$adm = $this->User->find('first' , array(
+				    							'conditions'=>array(
+				    								'User.admin'=>1
+				    							)
+				    ));
+					$uid = $adm["User"]["id"];
+	    		}
+	    	    
+	    	}
+	    	if (!$this->Auth->user("admin") || $uid != $this->Auth->user("id"))
 	    	{
 	    		if ($redir)
 	    		{
 	    			$this->cakeError("notadmin");
+	    			
 	    		}else
 	    		{
 	    			return false;

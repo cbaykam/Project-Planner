@@ -13,7 +13,7 @@
 			
 			<div id="projectKeyMilestones">
 				<table border="0" cellspacing="0" cellpadding="0">
-					<tr><th>Key Milestones</th><th><?php echo $html->link("Add Milestone" , array('controller' => 'controller' , 'action' => 'action' , $variable) ); ?></th></tr>
+					<tr><th class="noborder">Key Milestones</th><th class="noborder"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
 					<tr><td>Data</td></tr>
 					
 				</table>
@@ -108,7 +108,7 @@
 					</ul>
 				<?php else: ?>
 		
-					<h3>No tasks in the project click <?php echo $html->link("here" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?> to add one.</h3>
+					No tasks in the project click <?php echo $html->link("here" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?> to add one.
 				<?php endif; ?>
 	
 	
@@ -139,9 +139,3 @@
 					<h2>No Users In the project</h2>
 				<?php endif; ?>
 	</div>
-	<div>
-		<pre>
-		   <?php print_r($project); ?>
-		</pre>
-	</div>		
-

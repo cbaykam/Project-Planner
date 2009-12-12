@@ -69,9 +69,10 @@ class MilestonesController extends AppController {
 		$this->set('milestone', $this->Milestone->read(null, $id));
 	}
 
-	function master_add() {
-		$this->__checkadmin();
+	function master_add($project) {
+		$this->__checkadmin($project);
 		if (!empty($this->data)) {
+			$this->data["Milestone"]["project_id"] = $project;
 			$this->Milestone->create();
 			if ($this->Milestone->save($this->data)) {
 				$this->flash(__('Milestone saved.', true), array('action'=>'index'));

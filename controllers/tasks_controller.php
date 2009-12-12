@@ -65,7 +65,7 @@ class TasksController extends AppController {
 	}
 
 	function master_view($id = null , $project) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if ($id)
 		{
 			$this->Task->recursive = 1 ;
@@ -87,7 +87,7 @@ class TasksController extends AppController {
 	}
 	
 	function master_viewuser($user , $project){
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
@@ -98,7 +98,7 @@ class TasksController extends AppController {
 	}
 
 	function master_add($project=null , $user=null) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if (!empty($this->data)) {
 			$this->data["Task"]["project_id"] = $project;
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
@@ -159,7 +159,7 @@ class TasksController extends AppController {
 	}
 
 	function master_delete($id = null , $project) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if (!$id) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));
 		}
@@ -170,7 +170,7 @@ class TasksController extends AppController {
 	
 	function master_assign($task , $project)
 	{
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if (!empty($this->data))
 		{
 			$this->Task->id = $task;
