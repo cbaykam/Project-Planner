@@ -145,3 +145,7 @@
 2009-12-15 02:47:05 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/planner/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]
 2009-12-15 02:48:24 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/planner/app/controllers/tasks_controller.php:211) in [CORE/cake/libs/controller/controller.php, line 644]
 2009-12-15 02:48:58 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/planner/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]
+2009-12-15 12:18:32 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/elements/timeline.ctp, line 2]
+2009-12-15 16:28:48 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/controllers/projects_controller.php, line 92]
+2009-12-15 16:28:48 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/projects/master_view.ctp, line 25]
+2009-12-15 16:52:48 Warning: Warning (2): print_r() expects at least 1 parameter, 0 given in [APP/views/milestones/master_complete.ctp, line 16]

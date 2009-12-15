@@ -82,22 +82,21 @@ class MilestonesController extends AppController {
 		$this->set(compact('users'));
 	}
 
-	function master_edit($id = null) {
+	function master_edit($id = null , $project) {
 		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
+			$this->data["Milestone"]["project_id"] = $project;
 			if ($this->Milestone->save($this->data)) {
-				$this->flash(__('The Milestone has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view', 'master'=>true, $project));
 			} else {
 			}
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Milestone->read(null, $id);
 		}
-		$projects = $this->Milestone->Project->find('list');
-		$this->set(compact('projects'));
 	}
 
 	function master_delete($id = null) {
@@ -108,6 +107,30 @@ class MilestonesController extends AppController {
 		if ($this->Milestone->del($id)) {
 			$this->flash(__('Milestone deleted', true), array('action'=>'index'));
 		}
+	}
+	
+	function master_assign($milestone , $project){
+		$this->__checkadmin($project);
+		if (!empty($this->data))
+		{
+			$udat = $this->User->findById($this->data["Milestone"]["usersa"]);
+			$this->Milestone->id = $milestone;
+			$this->Milestone->saveField("user_id" , $this->data["Milestone"]["usersa"]);			
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
+		}
+	}
+	
+	function master_complete($milestone , $project){
+		if (!empty($this->data))
+		{
+			$this->Milestone->id = $milestone;
+			$this->Milestone->saveAll($this->data);
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Milestone->read(null, $milestone);
+			$this->set("mil" , $this->data);
+		}	
 	}
 	
 	function master_standart(){

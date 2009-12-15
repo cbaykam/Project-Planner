@@ -60,9 +60,16 @@ class ProjectsController extends AppController {
 	function master_index() {
 		$this->__checkadmin();
 		$this->Project->recursive = 2;
-		$this->set('projects', $this->paginate());
+		$data = $this->Project->find('all');
+		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
+		foreach ($data as $project)
+		{
+	       echo '<pre>';
+	       	  print_r($project); 
+	       echo '</pre>';
+		}
 	}
 
 	function master_view($id = null) {
@@ -123,6 +130,18 @@ class ProjectsController extends AppController {
 		}
 		$resources = $this->Project->User->find('list');
 		$this->set(compact('resources'));
+	}
+	
+	function master_changeover($project){	
+	    if (!empty($this->data))
+	    {
+	    	 $this->Project->id = $project;
+	    	 $this->Project->saveField('overview' , $this->data["Project"]["overview"]);
+	    	 $this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+	    }else{
+			$this->data = $this->Project->read(null, $project);
+			$this->set("proj" , $this->data);
+		}
 	}
 
 	function master_delete($id = null) {

@@ -535,3 +535,13 @@ td.actions a {
 	width:95%;
 }
 
+.submitassign button{
+	border: 1px solid #006;
+    background: #9cf;
+}
+
+.submitassign button hover{
+	border: 1px solid #006;
+    background: #ffffff;
+}
+

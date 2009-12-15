@@ -1,13 +1,13 @@
 function addfields(){
 	
 	var html = "<a href='#' id='removeMilestones'>Remove Milestones</a>"; 
-	var content = "<table><tr><th>Milestone</th><th>Due Date</th></tr><tr><td><input type='text' name='data[Milestone][0][name]' value='Consult (Assess & Specify)' size='50'></td><td></td></tr>";
+	var loadUrl = baseUrl + 'master/milestones/standart';
 	var obj = $(html).click(function(){
 		removefields();
 		event.preventDefault();
 	});
 	$("#milestones").empty().append(obj);
-	$("#milestones").load('http://localhost/planner/master/milestones/standart');
+	$("#milestones").load(loadUrl);
 	
 }
 

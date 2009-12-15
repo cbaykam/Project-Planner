@@ -1,3 +1,4 @@
+<a href='' id='removeMilestones'>Remove Milestones</a>
 <?php echo $form->input('Milestone.0.name' , array('label'=>'Description' , 'value'=>'Consult (Assess & Specify)') ); ?>
 <?php echo $form->input('Milestone.0.enddate'); ?>
 <?php echo $form->input('Milestone.0.key' , array('value'=>'1' , 'type'=>'hidden')); ?>
@@ -19,3 +20,4 @@
 <?php echo $form->input('Milestone.4.key' , array('value'=>'1' , 'type'=>'hidden')); ?>
 <?php echo $form->input('Milestone.4.status' , array('value'=>'Not Yet Started' , 'type'=>'hidden')); ?>
 <?php echo $form->input('milestone' , array('type'=>'hidden', 'value'=>'1')) ?>
+<a href='' id='removeMilestones'>Remove Milestones</a>

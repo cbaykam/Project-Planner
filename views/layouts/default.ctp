@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Project Planner</title>
 <script type="text/javascript"> 
-    var baseUrl = <?php echo Configure::read('appPath'); ?>;
+    var baseUrl = '<?php echo Configure::read('appPath'); ?>';
 </script>
 <?php echo $html->css('default'); ?>
 <?php echo $scripts_for_layout; ?>
