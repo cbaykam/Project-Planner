@@ -75,12 +75,11 @@ class MilestonesController extends AppController {
 			$this->data["Milestone"]["project_id"] = $project;
 			$this->Milestone->create();
 			if ($this->Milestone->save($this->data)) {
-				$this->flash(__('Milestone saved.', true), array('action'=>'index'));
-			} else {
-			}
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+			} 
 		}
-		$projects = $this->Milestone->Project->find('list');
-		$this->set(compact('projects'));
+		$users = $this->Milestone->User->find('list');
+		$this->set(compact('users'));
 	}
 
 	function master_edit($id = null) {
@@ -109,6 +108,10 @@ class MilestonesController extends AppController {
 		if ($this->Milestone->del($id)) {
 			$this->flash(__('Milestone deleted', true), array('action'=>'index'));
 		}
+	}
+	
+	function master_standart(){
+		$this->layout ='ajax';
 	}
 
 }

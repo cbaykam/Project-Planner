@@ -3,9 +3,12 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Project Planner</title>
-<?php echo $javascript->link('jquery-1.3.2.min'); ?>
+<script type="text/javascript"> 
+    var baseUrl = <?php echo Configure::read('appPath'); ?>;
+</script>
 <?php echo $html->css('default'); ?>
 <?php echo $scripts_for_layout; ?>
+<?php echo $this->element('timeline'); ?>
 </head>
 <body>
 <!-- start header -->

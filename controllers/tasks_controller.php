@@ -100,17 +100,25 @@ class TasksController extends AppController {
 	function master_add($project=null , $user=null) {
 		$this->__checkadmin($project);
 		if (!empty($this->data)) {
+			$mail = false;
 			$this->data["Task"]["project_id"] = $project;
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
 			if ($user){
 				$this->data["Task"]["user_id"] = $user;
+				$mail = true;
+				$udat = $this->User->findById($user);
 			}
 			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
 			$date = date('yd');
-			$this->data["Task"]["id"] = $date."-".$project."-";
+			$this->data["Task"]["id"] = $date."-".$project."-" . $this->__slicetask($project);
+			$this->data["Task"]["time"] = time();
 			$this->Task->create();
 			if ($this->Task->save($this->data)) {
-				$this->flash(__('Task saved.', true), array('controller'=>'projects', 'action'=>'view' , 'master'=>'true' , $project));
+				if ($mail)
+				{
+					$this->__eTaskNotification($udat['User']['email']);
+				}
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 			} 
 		}
 		
@@ -173,8 +181,12 @@ class TasksController extends AppController {
 		$this->__checkadmin($project);
 		if (!empty($this->data))
 		{
+			$udat = $this->User->findById($this->data["Task"]["usersa"]);
 			$this->Task->id = $task;
-			$this->Task->saveField("user_id" , $this->data["Task"]["usersa"]);
+			if($this->Task->saveField("user_id" , $this->data["Task"]["usersa"])){
+				$this->__eTaskNotification($udat['User']['email']);
+			}
+			
 			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project) );
 		}
 	}
@@ -190,9 +202,34 @@ class TasksController extends AppController {
 									'Task.project_id'=>$project
 								),
 								'order'=>array(
-									'Task.created'
-								)
+									'Task.time Desc'
+								),
+								'limit'=>1
 		));
+		
+		if (count($data) == 0)
+		{
+			return '01';
+		}else{
+			$slice = explode('-' , $data[0]["Task"]["id"]);
+		    $num = (int)$slice[2];
+		    $num++;
+		    if ($num < 10)
+		    {
+		    	$num = '0' . $num ; 
+		    }
+		    return $num;
+		}
+		
+		
+	}
+	
+	function __eTaskNotification($email){
+		$this->Email->from    = 'Redalto <project@redalto.com>';
+		$this->Email->to      = $email;
+		$this->Email->subject = 'You Have been Assigned To A Task';
+		$message = 'You Are now working on another project please view.';
+		$this->Email->send($message);
 	}
 
 }

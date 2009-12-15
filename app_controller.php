@@ -3,12 +3,13 @@
 	class AppController extends Controller
 	{  
 	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority');
-	    var $components = array('Auth' , 'Session');
+	    var $components = array('Auth' , 'Session' , 'Email');
 	    var $uses = array('Project' , 'User');
 	    
 		function beforeFilter()
 	    {
-	    	
+	    	// Dont use timeline for start
+	    	$this->set("timeline" , false);
 	    	//set authentication fields for using email as username 
 	    	$this->Auth->fields = array(
             	'username' => 'email',
@@ -45,19 +46,21 @@
 	    }
 	    
 	    function __checkadmin($project = null , $redir = true){
+	    	$admin = $this->Auth->user('admin');
 	    	if ($project != null)
 	    	{
 	    		$this->Project->recursive = 2;
 	        	$projdat = $this->Project->findById($project);	
-	        	if ($this->Auth->user("admin"))
+	        	if ($admin)
 	        	{
 	        		$uid = $this->Auth->user('id');	
 	        	}else{
 	        		$uid = $projdat["Project"]["user_id"];
+	        		$admin = 1;
 	        	}	
 	    	}else{
 	    		$this->User->recursive = 2 ;
-	    		if ($this->Auth->user("admin"))
+	    		if ($admin)
 	    		{	
 	    			$uid = $this->Auth->user('id');
 	    		}else{
@@ -70,7 +73,7 @@
 	    		}
 	    	    
 	    	}
-	    	if (!$this->Auth->user("admin") || $uid != $this->Auth->user("id"))
+	    	if (!$admin || $uid != $this->Auth->user("id"))
 	    	{
 	    		if ($redir)
 	    		{

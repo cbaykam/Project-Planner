@@ -3,7 +3,7 @@
 	
 	<div id="projectLeftSide">
 			<div id="projectOverview">
-				<table border="0" cellspacing="0" cellpadding="0">
+				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
 					<tr><th class="noborder">Project Overview</th><th class="nobordercorner">edit</th></tr>
 					<tr><td class="noborder"><?php echo $project["Project"]["overview"]; ?></td><td></td></tr>
 					
@@ -12,10 +12,36 @@
 			</div>
 			
 			<div id="projectKeyMilestones">
-				<table border="0" cellspacing="0" cellpadding="0">
-					<tr><th class="noborder">Key Milestones</th><th class="noborder"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
-					<tr><td>Data</td></tr>
+				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
+					<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
+					<tr>
+						<th>Due Date</th>
+						<th>Owner</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Completed</th>
+					</tr>
+					<?php foreach($project['Milestone'] as $milestone):?>
 					
+						<?php if ($milestone['key'] == 1): ?>	
+							<tr>
+								<td><?php echo $milestone['enddate']; ?></td>
+								<td>
+									<?php if (isset($milestone['User']['name'])): ?>
+										<?php echo $milestone['User']['name']; ?>
+									<?php endif; ?>
+								</td>
+								<td><?php echo $milestone['name']; ?></td>
+								<td><?php echo $milestone['status']; ?></td>
+								<td><?php echo $milestone['completed']; ?></td>
+							</tr>
+						<?php endif; ?>
+					
+					<?php endforeach;?>
+					<tr>
+						<td></td><td></td><td></td><td></td>
+						<td><?php echo $html->link('View All Milestones' , array('controller' => 'milestones' , 'action' => 'view', 'master'=>true , $project['Project']['id']) ); ?></td>
+					</tr>
 				</table>
 			</div>
 			
@@ -138,4 +164,10 @@
 				<?php else: ?>
 					<h2>No Users In the project</h2>
 				<?php endif; ?>
+	</div>
+	
+	<div>
+		<pre>
+		   <?php print_r($project); ?>
+		</pre>
 	</div>

@@ -59,8 +59,10 @@ class ProjectsController extends AppController {
 
 	function master_index() {
 		$this->__checkadmin();
-		$this->Project->recursive = 0;
+		$this->Project->recursive = 2;
 		$this->set('projects', $this->paginate());
+		$this->set("username" , $this->Auth->user('name'));
+		$this->set("timeline" , true);
 	}
 
 	function master_view($id = null) {
@@ -95,7 +97,7 @@ class ProjectsController extends AppController {
 		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->Project->create();
-			if ($this->Project->save($this->data)) {
+			if ($this->Project->saveAll($this->data)) {
 				$this->Session->setFlash("Your Project Succesfully Saved");
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			} else {
@@ -133,24 +135,10 @@ class ProjectsController extends AppController {
 		}
 	}
 	
-	/*function master_adduser($project){
-		
-		if (!empty($this->data))
-		{
-		
-		  $this->UsersProject->find('all' , array(
-		  							'conditions'=>array(
-		  								'UsersProject.user_id'=>$this->data
-		  							)
-		  ));
-		  $this->data["UsersProject"][]
-		  $this->Project->create();
-		   if ($this->Project->save($this->data))
-		   {
-		   		//$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
-		   }
-		}
-	}*/
+	function __addMilestones($project){
+		$milestone['Milestone']['project_id'] = $project;
+		$milestone['Milestone']['name'] = 'Consult (Assess & Specify)';
+	}
 
 }
 ?>
