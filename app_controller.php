@@ -10,6 +10,7 @@
 	    {
 	    	// Dont use timeline for start
 	    	$this->set("timeline" , false);
+	    	$this->set("colorpicker" , false);
 	    	//set authentication fields for using email as username 
 	    	$this->Auth->fields = array(
             	'username' => 'email',
@@ -89,6 +90,12 @@
 	    		return true;
 	    	}
 	    }
+	    
+	    function __timelineDate($date){
+			$split = explode('-' , $date);
+			$ret = $split[0].$split[1].$split[2];
+			return $ret;
+		}
 	    
 	}
 ?>

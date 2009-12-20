@@ -12,47 +12,49 @@
 			</div>
 			
 			<div id="projectKeyMilestones">
-				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
-					<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
-					<tr>
-						<th>Due Date</th>
-						<th>Owner</th>
-						<th>Description</th>
-						<th>Status</th>
-						<th>Completed</th>
-						<th>Edit</th>
-					</tr>
-					<?php foreach($project['Milestone'] as $milestone):?>
+			
+				<?php if (count($project['Milestone']) != 0): ?>
+					<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
+						<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
+						<tr>
+							<th>Due Date</th>
+							<th>Owner</th>
+							<th>Description</th>
+							<th>Status</th>
+							<th>Completed</th>
+							<th>Edit</th>
+						</tr>
+						<?php foreach($project['Milestone'] as $milestone):?>
 					
-						<?php if ($milestone['key'] == 1): ?>	
-							<tr>
-								<td><?php echo $milestone['enddate']; ?></td>
-								<td>
-									<?php if (isset($milestone['User']['name'])): ?>
-										<?php echo $milestone['User']['name']; ?>
-									<?php else: ?>
-										<?php echo $form->create("Milestone" , array('url'=>array('controller'=>'milestones' , 'action'=>'assign' , 'master'=>true, $milestone["id"] , $project["Project"]["id"]) ) ); ?>
-								 			<select id="TaskUsersa" name="data[Milestone][usersa]">
-								   			<option value="">Select one</option>
-								  				<?php foreach($usersa as $option):?>
-								  	 				<option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
-								  				<?php endforeach;?>
-								 			</select>
-								 			<input type="submit" value="assign" class="submitassign"/> 
-								 			</form>
-									<?php endif; ?>
-								</td>
-								<td><?php echo $milestone['name']; ?></td>
-								<td><?php echo $milestone['status']; ?></td>
-								<td>
-									<?php if ($milestone['completed'] != '0000-00-00'): ?>
-										<?php echo $milestone['completed']; ?>
-									<?php else: ?>
-										<?php echo $html->link("complete" , array('controller' => 'milestones' , 'action' => 'complete','master'=>true, $milestone["id"] , $project["Project"]["id"]) ); ?>
-									<?php endif; ?>
-								</td>
-								<td><?php echo $html->link("edit" , array('controller' => 'milestones' , 'action' => 'edit','master'=>true, $milestone["id"], $project["Project"]["id"]) ); ?></td>
-							</tr>
+							<?php if ($milestone['key'] == 1): ?>	
+								<tr>
+									<td><?php echo $milestone['enddate']; ?></td>
+									<td width="200">
+										<?php if (isset($milestone['User']['name'])): ?>
+											<?php echo $milestone['User']['name']; ?>
+										<?php else: ?>
+											<?php echo $form->create("Milestone" , array('url'=>array('controller'=>'milestones' , 'action'=>'assign' , 'master'=>true, $milestone["id"] , $project["Project"]["id"]) ) ); ?>
+									 			<select id="TaskUsersa" name="data[Milestone][usersa]">
+									   			<option value="">Select one</option>
+									  				<?php foreach($usersa as $option):?>
+									  	 				<option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
+									  				<?php endforeach;?>
+									 			</select>
+									 			<input type="submit" value="assign" class="submitassign"/> 
+									 			</form>
+										<?php endif; ?>
+									</td>
+									<td><?php echo $milestone['name']; ?></td>
+									<td><?php echo $milestone['status']; ?></td>
+									<td>
+										<?php if ($milestone['completed'] != '0000-00-00'): ?>
+											<?php echo $milestone['completed']; ?>
+										<?php else: ?>
+											<?php echo $html->link("complete" , array('controller' => 'milestones' , 'action' => 'complete','master'=>true, $milestone["id"] , $project["Project"]["id"]) ); ?>
+										<?php endif; ?>
+									</td>
+									<td><?php echo $html->link("edit" , array('controller' => 'milestones' , 'action' => 'edit','master'=>true, $milestone["id"], $project["Project"]["id"]) ); ?></td>
+								</tr>
 						<?php endif; ?>
 					
 					<?php endforeach;?>
@@ -62,12 +64,36 @@
 					</tr>
 				</table>
 			</div>
+			<?php else: ?>
+				<?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?>
+			<?php endif; ?>
 			
 			
 	
 	</div>
 
 	<div id="projectRightSide">
+	
+			<div id="project_notices">
+				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?>
+				<?php if (count($project["Notice"]) != 0 ): ?>
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<th>Date</th>
+							<th>Notice</th>
+						</tr>
+						
+						<?php foreach($project["Notice"] as $notice):?>
+					
+								<tr>
+									<td><?php echo $notice["created"]; ?></td>
+									<td><?php echo $notice["noticescol"]; ?></td>
+								</tr>
+					
+						<?php endforeach;?>			
+					</table>
+				<?php endif; ?>
+			</div>
 		
 			<div id="project_links_menu">
 				<?php if (count($project["Link"]) != 0): ?>

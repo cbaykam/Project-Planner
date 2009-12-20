@@ -69,12 +69,13 @@ class NoticesController extends AppController {
 		$this->set('notice', $this->Notice->read(null, $id));
 	}
 
-	function master_add() {
+	function master_add($project) {
 		$this->__checkadmin();
 		if (!empty($this->data)) {
+			$this->data["Notice"]["project_id"] = $project;
 			$this->Notice->create();
 			if ($this->Notice->save($this->data)) {
-				$this->flash(__('Notice saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true, $project));
 			} else {
 			}
 		}

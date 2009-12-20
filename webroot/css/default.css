@@ -401,7 +401,7 @@ input, textarea {
 	padding: 2px;
 }
 select {
-
+	font-size: 10px;
 }
 select[multiple=multiple] {
 
@@ -425,8 +425,7 @@ div.radio label {
 	margin: 0 0 6px 20px;
 }
 input[type=submit] {
-	font-size: 110%;
-	padding: 2px 5px;
+	font-size: 10px;
 	width: auto;
 	vertical-align: bottom;
 }
@@ -457,7 +456,6 @@ table {
 	clear: both;
 	color: #333;
 	margin-bottom: 10px;
-	width: 100%;
 }
 th {
 	background: #f2f2f2;
@@ -480,7 +478,6 @@ th a:hover {
 table tr td {
 	background: #fff;
 	border-right: 1px solid #ccc;
-	padding: 4px;
 	text-align: center;
 	vertical-align: top;
 }

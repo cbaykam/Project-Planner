@@ -9,6 +9,7 @@
 <?php echo $html->css('default'); ?>
 <?php echo $scripts_for_layout; ?>
 <?php echo $this->element('timeline'); ?>
+<?php echo $this->element('colorpicker'); ?>
 </head>
 <body>
 <!-- start header -->

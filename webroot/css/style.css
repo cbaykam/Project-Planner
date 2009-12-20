@@ -1,0 +1,101 @@
+@charset "utf-8";
+*{
+	margin:0;
+	padding:0;
+	zoom:1;
+}
+html{
+	height:100%;
+}
+html>/**/body{
+	overflow:-moz-scrollbars-vertical;
+}
+html:first-child body{
+	min-height:100%;
+	padding-bottom:1px;
+}
+body {
+	font-family: "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3";
+	font-size: 12px;
+	color: #333333;
+	background-image: url(img/common_bg.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: left center;
+}
+a {
+	text-decoration: none;
+	color: #006699;
+}
+a:hover {
+	text-decoration: underline;
+}
+ul,ol,dl{
+	list-style:none;
+}
+li{
+	display:list-item;
+	zoom:normal;
+}
+img,a img{
+	vertical-align:bottom;
+	border:none;
+	background:transparent;
+}
+p, pre {
+	margin-bottom: 10px;
+}
+h1 {
+	margin-bottom: 0px;
+}
+h2 {
+}
+h3 {
+	color: #660000;
+}
+#wrapper {
+	width: 800px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#wrapper #head {
+	margin-bottom: 10px;
+}
+#download {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: dotted;
+	border-bottom-style: dotted;
+	border-top-color: #666666;
+	border-bottom-color: #666666;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-bottom: 10px;
+}
+.source {
+	padding: 10px;
+	border: 1px solid #333333;
+	margin-bottom: 10px;
+	background-color: #EEEEEE;
+}
+
+#wrapper #source .caption {
+	color: #990000;
+}
+.list01 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.list01 li {
+	margin-left: 10px;
+	padding: 0px;
+}
+.text01 {
+	color: #669900;
+}
+.text02 {
+	color: #3333CC;
+}
+.text03 {
+	color: #CC0000;
+}

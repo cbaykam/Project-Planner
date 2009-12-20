@@ -4,6 +4,7 @@
  		<legend><?php __('Add Milestone');?></legend>
 	<?php
 		echo $form->input('name' , array('label'=>'Milestone'));
+		echo $form->input('startdate' , array('label'=>'Start Date'));
 		echo $form->input('enddate' , array('label'=>'Due Date')); 
 		echo $form->input('user_id');
 		echo $form->input('status' , array('type'=>'select' , 'options'=>array('Not Yet Started'=>'Not Yet Started' , 'In Progress'=>'In Progress' , 'Done'=>'Done') ));

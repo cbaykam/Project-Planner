@@ -64,12 +64,7 @@ class ProjectsController extends AppController {
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
-		foreach ($data as $project)
-		{
-	       echo '<pre>';
-	       	  print_r($project); 
-	       echo '</pre>';
-		}
+		$this->set("timell" , $this->__generateTimeline($data));
 	}
 
 	function master_view($id = null) {
@@ -102,6 +97,7 @@ class ProjectsController extends AppController {
 
 	function master_add() {
 		$this->__checkadmin();
+		$this->set("colorpicker" , true);
 		if (!empty($this->data)) {
 			$this->Project->create();
 			if ($this->Project->saveAll($this->data)) {
@@ -158,6 +154,35 @@ class ProjectsController extends AppController {
 		$milestone['Milestone']['project_id'] = $project;
 		$milestone['Milestone']['name'] = 'Consult (Assess & Specify)';
 	}
+	
+	function __generateTimeline($data){
+		$first = true;
+		$timell = '';
+		for ($i = 0; $i < count($data) ; $i++)
+		{
+			
+			if (count($data[$i]["Milestone"]) != 0)
+			{
+				$link = '<a href="/planner/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+				$timell .= "{'titles': '". $link ."', 
+								'events':[";
+				foreach ($data[$i]["Milestone"] as $milestone)
+				{
+					$start = $this->__timelineDate($milestone["startdate"]) ;
+					$end = $this->__timelineDate($milestone["enddate"]) ;;
+					
+							$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $milestone['color'] . "'},";
+				}
+				
+				$timell .= "]},";
+							
+			}
+		}
+		
+		return $timell;
+	}
+	
+	
 
 }
 ?>

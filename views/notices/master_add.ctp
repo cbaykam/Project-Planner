@@ -1,16 +1,10 @@
 <div class="notices form">
-<?php echo $form->create('Notice');?>
+<?php echo $form->create('Notice' , array('url'=>array('controller'=>'notices' , 'action'=>'add','master'=>true , $this->params['pass'][0])));?>
 	<fieldset>
  		<legend><?php __('Add Notice');?></legend>
 	<?php
-		echo $form->input('project_id');
-		echo $form->input('noticescol');
+		echo $form->input('noticescol', array('type'=>'textfield'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('List Notices', true), array('action'=>'index'));?></li>
-	</ul>
 </div>
