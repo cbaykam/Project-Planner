@@ -65,7 +65,7 @@
 				</table>
 			</div>
 			<?php else: ?>
-				<?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?>
+				<?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 			<?php endif; ?>
 			
 			
@@ -75,7 +75,7 @@
 	<div id="projectRightSide">
 	
 			<div id="project_notices">
-				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?>
+				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?><br><br>
 				<?php if (count($project["Notice"]) != 0 ): ?>
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -115,14 +115,14 @@
 						<?php endforeach;?>	
 						</table>
 				<?php else: ?>
-					<h3><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add','master'=>true, $project["Project"]["id"] ) ); ?></h3>
+					<h3><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add','master'=>true, $project["Project"]["id"] ), array('class'=>'buttonlink') ); ?></h3>
 				<?php endif; ?>	
 			</div>
 			
 			<div id="projectStatus">
 				<?php $countstats = count($project["Statuss"]); ?>
 				<?php if ( $countstats == 0): ?>
-					<?php echo $html->link("Change Project Status" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?>
+					<?php echo $html->link("Change Project Status" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 				<?php else: ?>
 				    <?php $statindice = $countstats - 1; ?>
 					<table border="0" cellspacing="0" cellpadding="0">
@@ -175,12 +175,12 @@
 						</tr>		
 					<?php endforeach;?>
 					</table>
-					<ul>
-					<li><?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?></li>
-					</ul>
+					
+					<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?><br><br>
+					
 				<?php else: ?>
 		
-					No tasks in the project click <?php echo $html->link("here" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?> to add one.
+					 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?> 
 				<?php endif; ?>
 	
 	
@@ -203,7 +203,7 @@
 					<?php endforeach;?>
 					</table>
 				<?php else: ?>
-					No Users In the project
+					No Users In the project please use the form below to add one.
 				<?php endif; ?>
 				
 				<fieldset>

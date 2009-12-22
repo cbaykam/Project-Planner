@@ -14,6 +14,7 @@
 	background-image: url(images/gnt_cell01.png);
 	background-repeat: no-repeat;
 	background-position: left top;
+	padding:0px;
 }
 .GNT_tbl th.th02, .GNT_tbl td.td02 {
 	background-image: url(images/gnt_cell02.png);

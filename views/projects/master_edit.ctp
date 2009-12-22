@@ -5,7 +5,6 @@
 	<?php
 		echo $form->input('id');
 		echo $form->input('name');
-		echo $form->input('status');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

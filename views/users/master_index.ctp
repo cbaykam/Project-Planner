@@ -11,7 +11,6 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('password');?></th>
 	<th><?php echo $paginator->sort('pwork');?></th>
 	<th><?php echo $paginator->sort('pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
@@ -28,33 +27,29 @@ foreach ($users as $user):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $user['user']['id']; ?>
+			<?php echo $user['User']['id']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['name']; ?>
+			<?php echo $user['User']['name']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['email']; ?>
+			<?php echo $user['User']['email']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['password']; ?>
+			<?php echo $user['User']['pwork']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['pwork']; ?>
+			<?php echo $user['User']['pmobile']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['pmobile']; ?>
+			<?php echo $user['User']['messenger']; ?>
 		</td>
 		<td>
-			<?php echo $user['user']['messenger']; ?>
-		</td>
-		<td>
-			<?php echo $user['user']['skype']; ?>
+			<?php echo $user['User']['skype']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $user['user']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['user']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['user']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['user']['id'])); ?>
+			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -65,8 +60,8 @@ foreach ($users as $user):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New user', true), array('action'=>'add')); ?></li>
-	</ul>
-</div>
+
+<?php echo $html->link(__('New user', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+
+
+

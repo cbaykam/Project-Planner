@@ -117,15 +117,13 @@ class ProjectsController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Project->save($this->data)) {
-				$this->flash(__('The Project has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
 			} else {
 			}
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Project->read(null, $id);
 		}
-		$resources = $this->Project->User->find('list');
-		$this->set(compact('resources'));
 	}
 	
 	function master_changeover($project){	

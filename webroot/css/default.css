@@ -106,8 +106,7 @@ img.right {
 #menu {
 	width: 100%;
 	margin: 0px auto;
-	padding: 0px;
-	height: 40px;
+	padding: 0px;	height:10px;
 }
 
 #menu ul {
@@ -116,25 +115,32 @@ img.right {
 	list-style: none;
 }
 
-#menu li {
+#menu{
 	display: inline;
 	background : #999999;
+}
+
+#main li{
+	height:15px;
 }
 
 #menu a {
 	display: block;
 	float: left;
-	height: 23px;
+	height: 12px;
 	margin: 0px;
-	padding: 6px 20px 0px 20px;
+	padding: 20px 4px 0px 12px;
 	text-decoration: none;
 	text-transform: capitalize;
 	font-size: 12px;
-	color: #FFFFFF;
+	color: #ffffff;
+	
 }
 
 #menu a:hover {
 	text-decoration: underline;
+	background:#fff600;
+	color: #525252;
 }
 
 #menu .current_page_item a {
@@ -480,6 +486,7 @@ table tr td {
 	border-right: 1px solid #ccc;
 	text-align: center;
 	vertical-align: top;
+	padding: 3px 3px 3px 3px;
 }
 table tr.altrow td {
 	background: #f4f4f4;
@@ -540,5 +547,26 @@ td.actions a {
 .submitassign button hover{
 	border: 1px solid #006;
     background: #ffffff;
+}
+
+.buttonlink{
+	background:#8ac015;
+	color:#ffffff;
+	padding:5px 5px 5px 5px;
+	margin-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;
+	margin-right:10px; 
+}
+
+.buttonlink:hover{
+	background:#fff600;
+	color:#525252;
+	text-decoration:underline;
+	padding:5px 5px 5px 5px;
+	margin-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;
+	margin-right:10px; 
 }
 

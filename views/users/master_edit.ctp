@@ -1,23 +1,17 @@
 <div class="users form">
-<?php echo $form->create('user');?>
+<?php echo $form->create('user' , array('url'=>array('controller'=>'users' , 'action'=>'edit','master'=>true , $userDat["User"]["id"])) );?>
 	<fieldset>
  		<legend><?php __('Edit user');?></legend>
 	<?php
-		echo $form->input('id');
-		echo $form->input('name');
-		echo $form->input('email');
-		echo $form->input('password');
-		echo $form->input('pwork');
-		echo $form->input('pmobile');
-		echo $form->input('messenger');
-		echo $form->input('skype');
+		echo $form->input('User.id' ,array('value'=>$userDat["User"]["id"]));
+		echo $form->input('User.name' ,array('value'=>$userDat["User"]["name"], 'label'=>'Name'));
+		echo $form->input('User.email' ,array('value'=>$userDat["User"]["email"]));
+		echo $form->input('User.password' ,array('value'=>$userDat["User"]["password"], 'label'=>'Password'));
+		echo $form->input('User.pwork' ,array('value'=>$userDat["User"]["pwork"], 'label'=>'Phone Work'));
+		echo $form->input('User.pmobile' ,array('value'=>$userDat["User"]["pmobile"], 'label'=>'Mobile Phone'));
+		echo $form->input('User.messenger' ,array('value'=>$userDat["User"]["messenger"] , 'label'=>'Messenger'));
+		echo $form->input('User.skype' ,array('value'=>$userDat["User"]["skype"] , 'label'=>'Skype'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('user.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('user.id'))); ?></li>
-		<li><?php echo $html->link(__('List users', true), array('action'=>'index'));?></li>
-	</ul>
 </div>

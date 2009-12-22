@@ -63,8 +63,8 @@ class UsersController extends AppController {
 
 	function master_index() {
 		$this->__checkadmin();
-		$this->User->recursive = 0;
-		$this->set('Users', $this->paginate());
+		$this->User->recursive = 1;
+		$this->set('users', $this->paginate());
 	}
 
 	function master_view($id = null) {
@@ -79,7 +79,7 @@ class UsersController extends AppController {
 		if (!empty($this->data)) {
 			$this->User->create();
 			if ($this->User->save($this->data)) {
-				$this->flash(__('User saved.', true), array('controller'=>'projects', 'action'=>'index'));
+				$this->redirect(array('controller'=>'users' , 'action'=>'index','master'=>true));
 			} else {
 			}
 		}
@@ -89,20 +89,15 @@ class UsersController extends AppController {
 
 	function master_edit($id = null) {
 		$this->__checkadmin();
+		$this->set("userDat" , $this->User->read(null, $id));
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
 			if ($this->User->save($this->data)) {
-				$this->flash(__('The User has been saved.', true), array('action'=>'index'));
-			} else {
-			}
+				$this->redirect(array('controller'=>'users' , 'action'=>'index', 'master'=>true));
+			} 
 		}
-		if (empty($this->data)) {
-			$this->data = $this->User->read(null, $id);
-		}
-		$projects = $this->User->Project->find('list');
-		$this->set(compact('projects'));
 	}
 
 	function master_delete($id = null) {

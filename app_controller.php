@@ -11,6 +11,7 @@
 	    	// Dont use timeline for start
 	    	$this->set("timeline" , false);
 	    	$this->set("colorpicker" , false);
+	    	$this->set('user_idd' , $this->Auth->user("id"));
 	    	//set authentication fields for using email as username 
 	    	$this->Auth->fields = array(
             	'username' => 'email',

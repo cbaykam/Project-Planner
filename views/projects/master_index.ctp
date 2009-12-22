@@ -6,6 +6,7 @@
 	<tr>
 	<th>Project Name</th>
 	<th>Type</th>
+	<th>Delete</th>
 	</tr>
 	
 	
@@ -21,10 +22,17 @@
 				 <?php echo "Consumer"; ?>
 				<?php endif; ?>
 			</td>
+			<td><?php echo $html->link("Delete" , array('controller' => 'projects' , 'action' => 'delete','master'=>true , $project["Project"]["id"]) ); ?> | <?php echo $html->link("Edit" , array('controller' => 'projects' , 'action' => 'edit','master'=>true , $project["Project"]["id"]) ); ?></td>
 		</tr>
 
 <?php endforeach;?>
+
+
+
 </table>
+
+<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
+
 <a href="#" class="GNT_prev">[&lt;&lt;]</a> 
 <a href="#" class="GNT_prev2">[&lt;]</a> 
 <a href="#" class="GNT_now">now</a> 
