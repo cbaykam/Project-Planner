@@ -6,8 +6,8 @@
 		echo $form->input('name');
 		echo $form->input('email');
 		echo $form->input('password');
-		echo $form->input('pwork');
-		echo $form->input('pmobile');
+		echo $form->input('pwork' , array('label'=>'Phone') );
+		echo $form->input('pmobile' ,array('label'=>'Mobile') );
 		echo $form->input('messenger');
 		echo $form->input('skype');
 		echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'resource' , '1'=>'admin') , 'label'=>'User type'));

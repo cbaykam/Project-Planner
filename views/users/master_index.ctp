@@ -1,3 +1,6 @@
+
+<?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+<br><br>
 <div class="users index">
 <h2><?php __('users');?></h2>
 <p>
@@ -30,7 +33,7 @@ foreach ($users as $user):
 			<?php echo $user['User']['id']; ?>
 		</td>
 		<td>
-			<?php echo $user['User']['name']; ?>
+			<?php echo $html->link($user['User']['name'] , array('controller' => 'users' , 'action' => 'view','master'=>true , $user['User']['id']) ); ?>
 		</td>
 		<td>
 			<?php echo $user['User']['email']; ?>
@@ -61,7 +64,7 @@ foreach ($users as $user):
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 
-<?php echo $html->link(__('New user', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+<?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 
 
 

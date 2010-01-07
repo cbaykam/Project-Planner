@@ -106,7 +106,7 @@ class ProjectsController extends AppController {
 			} else {
 			}
 		}
-		$users = $this->Project->User->find('list');
+		$users = $this->Project->User->find('list' , array('conditions'=>array('User.admin'=>'0') ) );
 		$this->set(compact('users'));
 	}
 

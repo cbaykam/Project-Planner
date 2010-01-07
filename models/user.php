@@ -7,22 +7,9 @@ class User extends AppModel {
 			'email'=>'email',
 			'name'=> array(
 				'between' => array(
-		            'rule' => array('between', 5, 45),
+		            'rule' => array('between', 1, 45),
 		            'message' => 'User\'s Name shall be Between 5 to 45 characters'
             	)
-			),
-			
-			'pwork' => array(
-				'integer' => array(
-					'rule' => 'numeric',
-					'message' => 'Please enter only digits for your phone number.'
-				)
-			),
-			'pmobile' => array(
-				'integer' => array(
-					'rule' => 'numeric',
-					'message' => 'Please enter only digits for your mobile number.'
-				)
 			)
 	);
 
