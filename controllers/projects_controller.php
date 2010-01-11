@@ -60,7 +60,14 @@ class ProjectsController extends AppController {
 	function master_index() {
 		$this->__checkadmin();
 		$this->Project->recursive = 2;
-		$data = $this->Project->find('all');
+		$data = $this->Project->find('all' , array(
+									'conditions'=>array(
+										'NOT'=>array(
+											'Project.currstats'=>array('complete' , 'arch')
+										)
+									),
+									'order'=>'Project.redalto DESC'
+		) );
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
@@ -141,11 +148,17 @@ class ProjectsController extends AppController {
 	function master_delete($id = null) {
 		$this->__checkadmin($id);
 		if (!$id) {
-			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
 		if ($this->Project->del($id)) {
-			$this->flash(__('Project deleted', true), array('action'=>'index'));
+			$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
 		}
+	}
+	
+	function master_archive($project){
+		$this->__checkadmin($project);
+		$this->Project->id = $project;
+		$this->Project->saveField('currstats' , 'arch');
+		$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true ));
 	}
 	
 	function __addMilestones($project){
@@ -168,8 +181,19 @@ class ProjectsController extends AppController {
 				{
 					$start = $this->__timelineDate($milestone["startdate"]) ;
 					$end = $this->__timelineDate($milestone["enddate"]) ;;
-					
-							$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $milestone['color'] . "'},";
+					 if ($this->__overdue($end) && $milestone["completed"] == '0000-00-00' )
+					 {
+					  	$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(!)</b>', 'color':'" . $milestone['color'] . "'},";
+					 }else{
+					 	if ($milestone["completed"] == '0000-00-00')
+					 	{
+					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $milestone['color'] . "'},";
+					 	}else{
+					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(OK)</b>', 'color':'" . $milestone['color'] . "'},";
+					 	}
+					 	
+					 }
+							
 				}
 				
 				$timell .= "]},";

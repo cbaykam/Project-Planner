@@ -1,5 +1,7 @@
 @charset "utf-8";
 .GNT_tbl {
+	color:red;
+	text-align:right;
 	margin: 0px;
 	padding: 0px;
 	font-size: 10px;

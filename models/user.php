@@ -4,12 +4,9 @@ class User extends AppModel {
 	var $name = 'User';
 	
 	var $validate = array(
-			'email'=>'email',
-			'name'=> array(
-				'between' => array(
-		            'rule' => array('between', 1, 45),
-		            'message' => 'User\'s Name shall be Between 5 to 45 characters'
-            	)
+			'email'=>array(
+				'rule'=>'email',
+				'message'=>'Please enter a valid e-mail address.'
 			)
 	);
 

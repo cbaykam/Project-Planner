@@ -97,6 +97,16 @@
 			$ret = $split[0].$split[1].$split[2];
 			return $ret;
 		}
+		
+		function __overdue($time){
+			 if(strtotime($time) < time())
+				 {
+				 	return true; 				 	
+				 }else
+				 {
+				 	return false;
+				 }
+		}
 	    
 	}
 ?>

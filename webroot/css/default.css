@@ -384,7 +384,6 @@ fieldset fieldset div {
 form div {
 	clear: both;
 	margin-bottom: 1em;
-	padding: .5em;
 	vertical-align: text-top;
 }
 form div.input {
@@ -487,7 +486,6 @@ th a:hover {
 table tr td {
 	background: #fff;
 	border-right: 1px solid #ccc;
-	text-align: center;
 	vertical-align: top;
 	padding: 3px 3px 3px 3px;
 }
@@ -571,5 +569,16 @@ td.actions a {
 	margin-top:10px;
 	margin-left:10px;
 	margin-right:10px; 
+}
+
+.error-message{
+	font-size:110%;
+	color:red;
+	font-weight:bold;
+}
+
+.duration{
+	float:left;
+	width:190px;
 }
 

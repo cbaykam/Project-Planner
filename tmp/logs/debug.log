@@ -516,3 +516,7 @@
 2009-12-22 14:48:02 Notice: Notice (8): Undefined variable: userDat in [APP/views/users/master_edit.ctp, line 11]
 2009-12-22 14:48:02 Notice: Notice (8): Undefined variable: userDat in [APP/views/users/master_edit.ctp, line 12]
 2009-12-22 14:48:02 Notice: Notice (8): Undefined variable: userDat in [APP/views/users/master_edit.ctp, line 13]
+2010-01-09 01:12:46 Notice: Notice (8): Undefined variable: timeline in [APP/views/elements/timeline.ctp, line 1]
+2010-01-09 01:12:46 Notice: Notice (8): Undefined variable: adminuser in [APP/views/elements/topnav.ctp, line 1]
+2010-01-09 01:13:07 Notice: Notice (8): Undefined variable: timeline in [APP/views/elements/timeline.ctp, line 1]
+2010-01-09 01:13:07 Notice: Notice (8): Undefined variable: adminuser in [APP/views/elements/topnav.ctp, line 1]

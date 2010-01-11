@@ -15,4 +15,3 @@
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
-<?php echo $html->link(__('List users', true), array('action'=>'index'),array('class'=>'buttonlink') );?>
