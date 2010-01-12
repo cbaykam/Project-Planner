@@ -92,6 +92,30 @@
 	    	}
 	    }
 	    
+	    function __belongs($model , $user , $item){
+	    	$admin = $this->Auth->user('admin');
+	    	if ($admin)
+	    	{    	
+	    		return true;
+	    	}else
+	    	{
+	    		$dat = $this->$model->find('all', array(
+	    								'conditions'=>array(
+	    									'id'=>$item,
+	    									'user_id'=>$user
+	    								)
+	    		) );
+	    	
+	    		if (count($dat) != 0)
+	    		{	
+	    			return true;
+	    		}
+	    		else{
+	    			return false;
+	    		}	
+	    	}	    	
+	    }
+	    
 	    function __timelineDate($date){
 			$split = explode('-' , $date);
 			$ret = $split[0].$split[1].$split[2];
@@ -108,5 +132,9 @@
 				 }
 		}
 	    
+	    function __calculatetime($hour , $minute){
+		$duration = ($hour * 60) + $minute;
+		return $duration;
+	}
 	}
 ?>

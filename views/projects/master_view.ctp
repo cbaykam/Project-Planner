@@ -2,6 +2,7 @@
 <h2><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h2>
 	
 	<div id="projectLeftSide">
+			<!--Project Overview -->
 			<div id="projectOverview">
 				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
 					<tr><th class="noborder">Project Overview</th><th class="nobordercorner"><?php echo $html->link("Edit" , array('controller' => 'projects' , 'action' => 'changeover','master'=>true , $project["Project"]["id"]) ); ?></th></tr>
@@ -10,7 +11,7 @@
 				</table>
 				
 			</div>
-			
+			<!--Project milesontes-->
 			<div id="projectKeyMilestones">
 			
 				<?php if (count($project['Milestone']) != 0): ?>
@@ -28,7 +29,7 @@
 					
 							<?php if ($milestone['key'] == 1): ?>	
 								<tr>
-									<td><?php echo $milestone['enddate']; ?></td>
+									<td><?php echo $timecal->format($milestone['enddate']); ?></td>
 									<td width="200">
 										<?php if (isset($milestone['User']['name'])): ?>
 											<?php echo $milestone['User']['name']; ?>
@@ -71,11 +72,14 @@
 			
 	
 	</div>
-
+	<!--Start of the right side Div-->
 	<div id="projectRightSide">
-	
+			<!--Project Notices-->
 			<div id="project_notices">
 				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?><br><br>
+				<?php echo $html->link("View All" , array('controller' => 'notices' , 'action' => 'view','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
+				<br><br>
+				
 				<?php if (count($project["Notice"]) != 0 ): ?>
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -87,14 +91,14 @@
 					
 								<tr>
 									<td><?php echo $notice["created"]; ?></td>
-									<td><?php echo $notice["noticescol"]; ?></td>
+									<td><?php echo $notice["title"]; ?></td>
 								</tr>
 					
 						<?php endforeach;?>			
 					</table>
 				<?php endif; ?>
 			</div>
-		
+			<!--Links of the project-->
 			<div id="project_links_menu">
 				<?php if (count($project["Link"]) != 0): ?>
 						<table border="0" cellspacing="0" cellpadding="0">
@@ -118,7 +122,7 @@
 					<h3><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add','master'=>true, $project["Project"]["id"] ), array('class'=>'buttonlink') ); ?></h3>
 				<?php endif; ?>	
 			</div>
-			
+			<!--For updating project status-->
 			<div id="projectStatus">
 				<?php $countstats = count($project["Statuss"]); ?>
 				<?php if ( $countstats == 0): ?>
@@ -137,7 +141,7 @@
 			</div>
    
 	</div>
-	
+	<!--Tasks of the project-->
 	<div id="tasks_in_project">
 				<?php if (count($project["Task"])): ?>
 					<table border="0" cellspacing="0" cellpadding="0">
@@ -187,7 +191,7 @@
 	</div>	
 	
 </div>
-
+	<!--Show users in the project-->
 	<div id="users_in_project">
 				<?php if (count($project["User"]) != 0): ?>
 					<table border="0" cellspacing="0" cellpadding="0">
@@ -212,4 +216,19 @@
 					<input type="submit" value="Add User to Project"/>	
 					</form>
 				</fieldset>
+	</div>
+	<!--Budgeting information-->
+	<div id="budgeting">
+		<table border="0" cellspacing="0" cellpadding="0">
+			
+			<tr>
+			    <td>Hours Budgeted</td>
+			    <td><?php echo $timecal->show($project["Project"]["budget"]); ?></td>
+			</tr>
+			<tr>
+			    <td>Hours Worked</td>
+			    <td><?php echo $timecal->show($sumhours); ?></td>
+			</tr>
+		</table>
+		
 	</div>

@@ -3,7 +3,7 @@ class TasksController extends AppController {
 
 	var $name = 'Tasks';
 	var $helpers = array('Html', 'Form');
-	var $uses = array("Task" , "UsersProject" , "User" , "Project");
+	var $uses = array("Task" , "UsersProject" , "User" , "Project" , "Milestone");
 
 	function index() {
 		$this->Task->recursive = 0;
@@ -65,6 +65,7 @@ class TasksController extends AppController {
 	}
 
 	function master_view($id = null , $project) {
+		
 		$this->__checkadmin($project);
 		if ($id)
 		{
@@ -87,6 +88,7 @@ class TasksController extends AppController {
 	}
 	
 	function master_viewuser($user , $project){
+		//View task by resource 
 		$this->__checkadmin($project);
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
@@ -121,13 +123,16 @@ class TasksController extends AppController {
 				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 			} 
 		}
-		
+		// Find user If the user is set get user_id 
 		if ($user)
 		{
+			// For the form if the user set.  
 			$this->set("user_id" , $user);
 		}
+		// Fetching the project data will get the users too . 
 		$resources = $this->Project->findById($project);
-	
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
 		$users = array();
 		$i = 0;
 		foreach ($resources["User"] as $res)
@@ -137,16 +142,26 @@ class TasksController extends AppController {
 			$i++;
 		}
 		$this->set("users" , $users);
+		//For setting the task dependency. 
 		$tasks = $this->Task->find('list' , 
 						array(
 							'conditions'=>array(
 								'Task.project_id'=>$project
 							)	
 		) );
-		$this->set(compact('projects' , 'tasks'));
+		// Set the milestones. To generate the lists. 
+		$milestones = $this->Milestone->find('list' , 
+						array(
+							'conditions'=>array(
+								'project_id'=>$project
+							)
+						) 
+		);
+		// Generate the lists 
+		$this->set(compact('projects' , 'tasks' , 'milestones'));
 	}
 
-	function master_edit($id = null) {
+	function master_edit($id = null , $project , $user = null) {
 		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));

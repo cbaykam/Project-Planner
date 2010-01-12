@@ -11,7 +11,14 @@
 		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer Maintanance' , '1'=>'Redalto Project') ) );
 		
 	?>
-	
+	<br><br>
+		<span class="duration">
+			Budget 
+		</span>
+	    	<input id="ProjectName" type="text" value="" maxlength="128" name="data[Project][hours]" size="4"/>	
+				Hrs
+			<input id="ProjectName" type="text" value="" maxlength="128" name="data[Project][mins]" size="4"/>
+			Mins
 	<div id="milestones">
 		<a href="#" id="addMilestones">Add Standart Milestones</a>
 	</div>

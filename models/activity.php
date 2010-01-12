@@ -16,6 +16,12 @@ class Activity extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
+			),
+			'Project' => array('className' => 'Project',
+								'foreignKey' => 'project_id',
+								'conditions' => '',
+								'fields' => '',
+								'order' => ''
 			)
 	);
 

@@ -118,11 +118,6 @@ class ActivitiesController extends AppController {
 		}
 	}
 	
-	function __calculatetime($hour , $minute){
-		$duration = ($hour * 60) + $minute;
-		return $duration;
-	}
-	
 	function __usersin($project){
 		$usersin = $this->Project->findById($project);
 		$users = array();

@@ -21,6 +21,22 @@ class Milestone extends AppModel {
 								'order' => ''
 			)
 	);
+	
+	var $hasMany = array(
+			'Task'=> array(
+						'className' => 'Task',
+						'foreignKey' => 'milestone_id',
+						'dependent' => false,
+						'conditions' => '',
+						'fields' => '',
+						'order' => '',
+						'limit' => '',
+						'offset' => '',
+						'exclusive' => '',
+						'finderQuery' => '',
+						'counterQuery' => ''
+			)
+	);
 
 }
 ?>

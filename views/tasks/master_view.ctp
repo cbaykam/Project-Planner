@@ -8,8 +8,13 @@
 		<td><?php echo $task["Task"]["name"] ?></td>
 	</tr>
 	<tr>
-		<td>Task Owner</td>
-		<td><?php echo $task["User"]["name"] ?></td>
+		<?php if (isset($task["User"]["name"])): ?>
+			<td>Task Owner</td>
+			<td><?php echo $task["User"]["name"] ?></td>
+		<?php else: ?>
+			<td>Task Owner</td>
+			<td>(None)</td>
+		<?php endif; ?>
 	</tr>
 	<?php if ($depend): ?>
 		<tr>
@@ -17,16 +22,33 @@
 			<td><?php echo $depend["Task"]["id"] . ' [ Status ' . $depend["Task"]["status"]; ?> % ]</td>
 		</tr>
 	<?php endif; ?>
+	
+	<tr>
+		<td>Project Phase</td>
+		<td><?php echo $task["Milestone"]["name"];?></td>
+	</tr>
+	
+	<tr>
+		<td>Last Update</td>
+		<td>
+			<?php if ($task["Task"]["modified"] == '0000-00-00'): ?>
+				<?php echo $timecal->format($task["Task"]["created"]);?>
+			<?php else: ?>
+				<?php echo $timecal->format($task["Task"]["modified"]);?>
+			<?php endif; ?>
+		</td>
+	</tr>
+	
 	<tr>
 		<td>Due Date</td>
 		<td>
 			<?php 
 				 if(strtotime($task["Task"]["duedate"]) < time())
 				 {
-				 	echo $task["Task"]["duedate"] . " (Overdue)";				 	
+				 	echo $timecal->format($task["Task"]["duedate"]) . " (Overdue)";				 	
 				 }else
 				 {
-				 	echo $task["Task"]["duedate"] ;
+				 	echo $timecal->format($task["Task"]["duedate"]) ;
 				 }
 			?>
 		</td>

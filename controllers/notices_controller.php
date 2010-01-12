@@ -61,12 +61,20 @@ class NoticesController extends AppController {
 		$this->set('notices', $this->paginate());
 	}
 
-	function master_view($id = null) {
+	function master_view($project=null) {
 		$this->__checkadmin();
-		if (!$id) {
-			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
-		}
-		$this->set('notice', $this->Notice->read(null, $id));
+		
+			$this->set("data" , $this->Notice->find('all' , array(
+								'conditions'=>array(
+									'OR'=>array(
+										'Notice.project_id'=>array('0' , $project)
+									)		
+								),
+								'order'=>array(
+									'Notice.project_id DESC'  
+								)
+			)));
+		
 	}
 
 	function master_add($project) {

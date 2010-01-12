@@ -82,13 +82,14 @@ class ProjectsController extends AppController {
 		$prdat = $this->Project->read(null, $id);
 		$this->set('project', $prdat);
         $this->set("users" , $this->User->find('list'));
+        // Why fetching seperately 
         $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(
         										'conditions'=>array(
         											'Task.project_id'=>$id
         										)
         ) ));
-       
+        // Fetch users in the project 
 		$usersa = array();
 		$i = 0;
 		foreach ($prdat["User"] as $res)
@@ -97,7 +98,7 @@ class ProjectsController extends AppController {
 			$usersa[$i]['id'] = $res["id"];
 			$i++;
 		}
-		
+		$this->set("sumhours" , $this->__calcDuration($prdat));
 		$this->set(compact('usersa'));
 		
 	}
@@ -106,12 +107,12 @@ class ProjectsController extends AppController {
 		$this->__checkadmin();
 		$this->set("colorpicker" , true);
 		if (!empty($this->data)) {
+			$this->data["Project"]["budget"] = $this->__calculatetime($this->data["Project"]["hours"] , $this->data["Project"]["mins"]);
 			$this->Project->create();
 			if ($this->Project->saveAll($this->data)) {
 				$this->Session->setFlash("Your Project Succesfully Saved");
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
-			} else {
-			}
+			} 
 		}
 		$users = $this->Project->User->find('list' , array('conditions'=>array('User.admin'=>'0') ) );
 		$this->set(compact('users'));
@@ -202,6 +203,15 @@ class ProjectsController extends AppController {
 		}
 		
 		return $timell;
+	}
+	// Calculate the total hours worked for the project
+	function __calcDuration($project){
+		$sum = 0;
+		foreach ($project["Activity"] as $activity)
+		{
+			$sum = $sum + $activity['duration'];
+		}
+		return $sum;
 	}
 	
 	

@@ -158,3 +158,4 @@
 2009-12-22 14:44:33 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/users/master_index.ctp, line 23]
 2010-01-09 00:57:29 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Project.status' in 'where clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
 2010-01-09 00:57:29 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/projects/master_index.ctp, line 14]
+2010-01-12 00:44:02 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'asc' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]

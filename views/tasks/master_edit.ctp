@@ -1,25 +1,28 @@
 <div class="tasks form">
-<?php echo $form->create('Task');?>
+<?php echo $form->create('Task' , array('url'=>array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0]) ) );?>
 	<fieldset>
- 		<legend><?php __('Edit Task');?></legend>
+ 		<legend><?php __('Add Task');?></legend>
 	<?php
-		echo $form->input('id');
 		echo $form->input('name');
-		echo $form->input('project_id');
-		echo $form->input('status');
-		echo $form->input('priority');
-		echo $form->input('type');
+		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') ) );
+		echo $form->input('status' , array('type'=>'select', 'options'=>array('0'=>'0%' , '10'=>'10%' , '20'=>'20%', '30'=>'30%', '40'=>'40%', '50'=>'50%', '60'=>'60%', '70'=>'70%', '80'=>'80%', '90'=>'90%', '100'=>'100%') ) );
 		echo $form->input('description');
+		echo $form->input('startdate');
 		echo $form->input('duedate');
-		echo $form->input('resource_id');
-		echo $form->input('dependency');
+		if (!isset($this->params["pass"][1]))
+		{
+		     echo '<select id="TaskUserId" name="data[Task][user_id]">
+					<option value="">(None)</option>';
+				foreach ($users as $usr)
+				{
+					echo '<option value="'. $usr["id"] .'">' . $usr["name"] . '</option>';
+				}
+			 echo '</select>';
+		}else{
+			echo $form->input('user_id', array('type'=>'hidden' , 'value'=>$this->params["pass"][1]));
+		}
+		echo $form->input('task_id' , array('label'=>'Dependency' , 'empty'=>'(None)'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Task.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Task.id'))); ?></li>
-		<li><?php echo $html->link(__('List Tasks', true), array('action'=>'index'));?></li>
-	</ul>
 </div>

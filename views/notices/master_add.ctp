@@ -3,7 +3,8 @@
 	<fieldset>
  		<legend><?php __('Add Notice');?></legend>
 	<?php
-		echo $form->input('noticescol', array('type'=>'textfield'));
+		echo $form->input('title', array('label'=>'Notice Title'));
+		echo $form->input('noticescol', array('label'=>'Notice Text','type'=>'textfield'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

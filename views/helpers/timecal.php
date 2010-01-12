@@ -43,6 +43,10 @@
 			$minute = $time % 60 ; 
 			return $this->output($minute);
 		}
+		
+		function format($date){
+			return $this->output(date('d-M-y' , strtotime($date)));
+		}
 			
 	
 	}
