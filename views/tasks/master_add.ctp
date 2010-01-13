@@ -1,5 +1,5 @@
 <div class="tasks form">
-<?php echo $form->create('Task' , array('url'=>array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0]) ) );?>
+<?php echo $form->create('Task' , array('url'=>array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $this->params["pass"][1], $this->params["pass"][2]) ) );?>
 	<fieldset>
  		<legend><?php __('Add Task');?></legend>
 	<?php
@@ -22,10 +22,17 @@
 		}else{
 			echo $form->input('user_id', array('type'=>'hidden' , 'value'=>$this->params["pass"][1]));
 		}
-		echo $form->input('task_id' , array('label'=>'Dependency' , 'empty'=>'(None)'));
-		echo $form->input('milestone_id' , array('label'=>'Project Phase', 'empty'=>'(None)'));
+		
+		
 		
 	?>
+	
+	<?php if ($this->params['pass'][0] == 0): ?>
+		<?php echo $form->input('project_id'); ?>
+	<?php else: ?>
+		<?php echo $form->input('task_id' , array('label'=>'Dependency' , 'empty'=>'(None)')); ?>
+		<?php echo $form->input('milestone_id' , array('label'=>'Project Phase', 'empty'=>'(None)')); ?>
+	<?php endif; ?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

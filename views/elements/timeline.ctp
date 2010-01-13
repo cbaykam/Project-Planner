@@ -29,7 +29,7 @@
 		var nowD = dateObj.getDate();
 	
 		$("#gantt").gantt({
-			'range' : 60,
+			'range' : 20,
 			'tasks':[
 				<?php echo $timell; ?>
 			]

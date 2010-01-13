@@ -2,7 +2,7 @@
 class TasksController extends AppController {
 
 	var $name = 'Tasks';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form' , 'Tsk');
 	var $uses = array("Task" , "UsersProject" , "User" , "Project" , "Milestone");
 
 	function index() {
@@ -87,9 +87,10 @@ class TasksController extends AppController {
 		}
 	}
 	
-	function master_viewuser($user , $project){
-		//View task by resource 
-		$this->__checkadmin($project);
+	function master_viewuser($user){
+		//View task by resource 	
+		// will add the user  verification $this->__checkadmin($project) is not a good solution for this.
+		
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
@@ -99,11 +100,28 @@ class TasksController extends AppController {
 						));
 	}
 
-	function master_add($project=null , $user=null) {
+	/*
+	*
+	* Adding a task  
+	* params : project int  -> Project id 
+	*          user    int  -> Userid
+	*          fromres bool -> where to return 
+	* 
+	* If fromres = true after adding it will redirect to resource else to the project
+	**/
+	
+	function master_add($project=null , $user=null , $formres = false) {
 		$this->__checkadmin($project);
 		if (!empty($this->data)) {
 			$mail = false;
-			$this->data["Task"]["project_id"] = $project;
+			// If no project is specified.
+			if ($this->data["Task"]["project_id"] == "")
+			{
+				$this->data["Task"]["project_id"] = $project;	
+			}else{
+				$project = $this->data["Task"]["project_id"];
+			}
+			
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
 			if ($user){
 				$this->data["Task"]["user_id"] = $user;
@@ -120,7 +138,21 @@ class TasksController extends AppController {
 				{
 					$this->__eTaskNotification($udat['User']['email']);
 				}
-				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+				//redirection part
+				if ($formres == 1)
+				{
+					$this->redirect(array('controller'=>'tasks' , 'action'=>'viewuser','master'=>true , $user));
+				}else
+				{
+					//if we have a project
+					if ($project)
+					{
+					 	$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+					}else{
+						$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $this->data["Task"]["project_id"]));
+					}
+				}
+				
 			} 
 		}
 		// Find user If the user is set get user_id 
@@ -157,6 +189,8 @@ class TasksController extends AppController {
 							)
 						) 
 		);
+		// get the list of projects
+		$projects = $this->Project->find('list');
 		// Generate the lists 
 		$this->set(compact('projects' , 'tasks' , 'milestones'));
 	}

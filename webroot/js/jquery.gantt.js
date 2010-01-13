@@ -6,7 +6,7 @@
 			gnt.defaultType = 'date';
 			gnt.defaultRange = 35;
 			gnt.rangeLimit = 200;
-			gnt.graphSize = 12;
+			gnt.graphSize = 30;
 			gnt.constract = function(c, o){
 				var i;
 				var p = {};

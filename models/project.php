@@ -31,7 +31,7 @@ class Project extends AppModel {
 			),
 			'Task' => array('className' => 'Task',
 								'foreignKey' => 'project_id',
-								'dependent' => false,
+								'dependent' => true,
 								'conditions' => '',
 								'fields' => '',
 								'order' => '',

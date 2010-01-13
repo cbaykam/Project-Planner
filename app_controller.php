@@ -2,7 +2,7 @@
 	
 	class AppController extends Controller
 	{  
-	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority');
+	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority' , 'Text');
 	    var $components = array('Auth' , 'Session' , 'Email');
 	    var $uses = array('Project' , 'User');
 	    

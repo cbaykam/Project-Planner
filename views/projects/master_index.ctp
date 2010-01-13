@@ -4,9 +4,9 @@
 <h1> Welcome : <?php echo $username; ?> </h1>
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th>Project Name</th>
-	<th>Type</th>
-	<th>Action</th>
+		<th>Project Name</th>
+		<th>Type</th>
+		<th>Action</th>
 	</tr>
 	
 	
@@ -38,6 +38,6 @@
 <a href="#" class="GNT_now">now</a> 
 <a href="#" class="GNT_next2">[&gt;]</a> 
 <a href="#" class="GNT_next">[&gt;&gt;]</a> 
- 
+<br><br>
 
 <div class="gantt" id="gantt"></div> 

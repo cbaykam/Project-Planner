@@ -1,4 +1,3 @@
-<div class="projects view">
 <h2><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h2>
 	
 	<div id="projectLeftSide">
@@ -67,8 +66,56 @@
 			</div>
 			<?php else: ?>
 				<?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
+				</div>
 			<?php endif; ?>
+			<!--Tasks of the project-->
+	<div id="tasks_in_project">
+						<?php if (count($project["Task"])): ?>
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<th>Id</th>
+									<th>Task</th>
+									<th>Priority</th>
+									<th>Status</th>
+									<th>User</th>
+									<th>Actions</th>
+								</tr>
+							<?php foreach($tasks as $task):?>
 			
+								<tr>
+									<td><?php echo $task["Task"]["id"]; ?></td>
+									<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
+									<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
+									<td><?php echo $task["Task"]["status"]; ?> %</td>
+									<?php if ($task["Task"]["user_id"] == 0): ?>
+									 <td>
+										<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' , 'master'=>true, $task["Task"]["id"] , $project["Project"]["id"]) ) ); ?>
+										 <select id="TaskUsersa" name="data[Task][usersa]">
+										   <option value="">Select one</option>
+										  <?php foreach($usersa as $option):?>
+										  	 <option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
+										  <?php endforeach;?>
+										 </select>
+										 <input type="submit" value="assign" class="submitassign"/> 
+										 </form>
+									 </td>
+									<?php else: ?>
+										<td><?php echo $task["Task"]["user_id"]; ?>
+									<?php endif; ?>
+									<td><?php echo $html->link("Delete task" , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
+								</tr>		
+							<?php endforeach;?>
+							</table>
+					
+							<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
+					
+						<?php else: ?>
+		
+							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?> 
+						<?php endif; ?>
+	
+	
+			</div>	
 			
 	
 	</div>
@@ -76,9 +123,9 @@
 	<div id="projectRightSide">
 			<!--Project Notices-->
 			<div id="project_notices">
-				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?><br><br>
+				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 				<?php echo $html->link("View All" , array('controller' => 'notices' , 'action' => 'view','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
-				<br><br>
+				
 				
 				<?php if (count($project["Notice"]) != 0 ): ?>
 					<table border="0" cellspacing="0" cellpadding="0">
@@ -139,58 +186,24 @@
 					</table>
 				<?php endif; ?>
 			</div>
+			<!--Show the budgeting.-->
+			<div id="budgeting">
+				<table border="0" cellspacing="0" cellpadding="0">
+			
+					<tr>
+						<td>Hours Budgeted</td>
+						<td><?php echo $timecal->show($project["Project"]["budget"]); ?></td>
+					</tr>
+					<tr>
+						<td>Hours Worked</td>
+						<td><?php echo $timecal->show($sumhours); ?></td>
+					</tr>
+				</table>
+		
+			</div>
    
 	</div>
-	<!--Tasks of the project-->
-	<div id="tasks_in_project">
-				<?php if (count($project["Task"])): ?>
-					<table border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<th>Id</th>
-							<th>Task</th>
-							<th>Priority</th>
-							<th>Status</th>
-							<th>User</th>
-							<th>Actions</th>
-						</tr>
-					<?php foreach($tasks as $task):?>
-			
-						<tr>
-							<td><?php echo $task["Task"]["id"]; ?></td>
-							<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
-							<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
-							<td><?php echo $task["Task"]["status"]; ?> %</td>
-							<?php if ($task["Task"]["user_id"] == 0): ?>
-							 <td>
-								<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' , 'master'=>true, $task["Task"]["id"] , $project["Project"]["id"]) ) ); ?>
-								 <select id="TaskUsersa" name="data[Task][usersa]">
-								   <option value="">Select one</option>
-								  <?php foreach($usersa as $option):?>
-								  	 <option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
-								  <?php endforeach;?>
-								 </select>
-								 <input type="submit" value="assign" class="submitassign"/> 
-								 </form>
-							 </td>
-							<?php else: ?>
-								<td><?php echo $task["Task"]["user_id"]; ?>
-							<?php endif; ?>
-							<td><?php echo $html->link("Delete task" , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
-						</tr>		
-					<?php endforeach;?>
-					</table>
-					
-					<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?><br><br>
-					
-				<?php else: ?>
-		
-					 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?> 
-				<?php endif; ?>
 	
-	
-	</div>	
-	
-</div>
 	<!--Show users in the project-->
 	<div id="users_in_project">
 				<?php if (count($project["User"]) != 0): ?>
@@ -216,19 +229,4 @@
 					<input type="submit" value="Add User to Project"/>	
 					</form>
 				</fieldset>
-	</div>
-	<!--Budgeting information-->
-	<div id="budgeting">
-		<table border="0" cellspacing="0" cellpadding="0">
-			
-			<tr>
-			    <td>Hours Budgeted</td>
-			    <td><?php echo $timecal->show($project["Project"]["budget"]); ?></td>
-			</tr>
-			<tr>
-			    <td>Hours Worked</td>
-			    <td><?php echo $timecal->show($sumhours); ?></td>
-			</tr>
-		</table>
-		
-	</div>
+	</div>	

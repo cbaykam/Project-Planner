@@ -1,4 +1,3 @@
-
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 <br><br>
 <div class="users index">
@@ -18,6 +17,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
 	<th><?php echo $paginator->sort('skype');?></th>
+	<th><?php echo $paginator->sort('View Tasks');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -49,6 +49,9 @@ foreach ($users as $user):
 		</td>
 		<td>
 			<?php echo $user['User']['skype']; ?>
+		</td>
+		<td>
+			<?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser', 'master'=>true , $user['User']['id']) );; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>

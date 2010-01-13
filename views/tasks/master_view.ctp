@@ -42,15 +42,7 @@
 	<tr>
 		<td>Due Date</td>
 		<td>
-			<?php 
-				 if(strtotime($task["Task"]["duedate"]) < time())
-				 {
-				 	echo $timecal->format($task["Task"]["duedate"]) . " (Overdue)";				 	
-				 }else
-				 {
-				 	echo $timecal->format($task["Task"]["duedate"]) ;
-				 }
-			?>
+			<?php echo $tsk->overdue($task["Task"]["duedate"]);?>
 		</td>
 	</tr>
 	<tr>
@@ -63,17 +55,6 @@
 <li><?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $this->params["pass"][1]) ); ?></li>
 </ul>
  <?php if (count($task["Activity"]) != 0): ?>
-
-    <?php $sum = 0; ?>
-  	<?php foreach($task["Activity"] as $acti):?>
-  	
-  			<?php
-  			
-  				$sum += $acti['duration'];
-  			
-  			?> 
-  	
-  	<?php endforeach;?>
   
 
  <table border="0" cellspacing="0" cellpadding="0">
@@ -81,7 +62,7 @@
  		<th>Activities / Notes</th>
  		<th>&nbsp;</th><th>&nbsp;</th>
  		<th>Total :</th>
- 		<th><?php echo $timecal->show($sum); ?></th>
+ 		<th><?php echo $tsk->duration($task["Activity"]); ?></th>
  	</tr>
  	<tr>
  	     <th>Date</th>

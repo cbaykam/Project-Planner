@@ -1,13 +1,14 @@
 @charset "utf-8";
 .GNT_tbl {
-	color:red;
 	text-align:right;
 	margin: 0px;
 	padding: 0px;
-	font-size: 10px;
-	border-right-width: 1px;
+	font-size: 12px;
+	border-top:none;
+	border-left:1px solid;
 	border-bottom-width: 1px;
 	border-right-style: solid;
+	border-left-style: solid;
 	border-bottom-style: solid;
 	border-right-color: #333333;
 	border-bottom-color: #333333;
@@ -33,7 +34,7 @@
 }
 .GNT_tbl ul.GNT_calList:after {
 	content: " ";
-	clear: both;
+	c30lear: both;
 	height: 0;
 	display: block;
 	visibility: hidden;
@@ -45,6 +46,8 @@
 	background-image: url(images/gnt_cell01.png);
 	background-repeat: no-repeat;
 	background-position: left top;
+	color:#000;
+	font-size:12px;
 	overflow: hidden;
 }
 .GNT_tbl .GNT_month02 {
@@ -53,23 +56,27 @@
 .GNT_tbl .GNT_date {
 	background-image: url(images/gnt_dates.png);
 	background-repeat: repeat-x;
-	height: 12px;
+	height: 15px;
 }
 .GNT_tbl .GNT_date02 {
 	background-position: 0 -12px;
 }
 .GNT_tbl .GNT_day {
 	background-repeat: repeat-x;
-	height: 12px;
-	line-height: 12px;
+	height: 30px;
+	line-height: 30px;
 	background-color: #66CCCC;
 }
 .GNT_tbl th.GNT_head {
 	background-image: url(images/gnt_cell02.png);
 	padding: 3px;
+	border:none;
 }
 .GNT_tbl td.GNT_title {
-	padding: 3px;
+	padding: 3pborder-x;
+	color:black;
+	border-left:1px solid;
+	border-top:none;
 }
 .GNT_tbl .GNT_chart {
 	background-repeat: repeat-x;
