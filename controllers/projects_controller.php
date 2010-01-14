@@ -2,7 +2,7 @@
 class ProjectsController extends AppController {
 
 	var $name = 'Projects';
-	var $helpers = array('Html', 'Form' , 'Priority');
+	var $helpers = array('Html', 'Form' , 'Priority', 'Tsk');
 	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task');
 	
 	function index() {
@@ -66,7 +66,9 @@ class ProjectsController extends AppController {
 											'Project.currstats'=>array('complete' , 'arch')
 										)
 									),
-									'order'=>'Project.redalto DESC'
+									'order'=>array(
+										'Project.redalto DESC'
+									)
 		) );
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));

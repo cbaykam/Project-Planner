@@ -195,23 +195,59 @@ class TasksController extends AppController {
 		$this->set(compact('projects' , 'tasks' , 'milestones'));
 	}
 
-	function master_edit($id = null , $project , $user = null) {
-		$this->__checkadmin();
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Task', true), array('action'=>'index'));
-		}
+	function master_edit($id = null , $project) {
+		$this->__checkadmin($project);
 		if (!empty($this->data)) {
+			$mail = false;
+			// If no project is specified.
+			
+			$this->data["Task"]["project_id"] = $project;
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
+			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
+			$date = date('yd');
+			$this->data["Task"]["time"] = time();
+			$this->Task->id = $this->data["Task"]["id"];
 			if ($this->Task->save($this->data)) {
-				$this->flash(__('The Task has been saved.', true), array('action'=>'index'));
-			} else {
-			}
+				//redirection part
+				$this->redirect(array('controller'=>'projects', 'action'=>'view', 'master'=>true, $project));
+				
+			} 
 		}
+		
 		if (empty($this->data)) {
 			$this->data = $this->Task->read(null, $id);
 		}
-		$projects = $this->Task->Project->find('list');
-		$resources = $this->Task->Resource->find('list');
-		$this->set(compact('projects','resources'));
+
+		// Fetching the project data will get the users too . 
+		$resources = $this->Project->findById($project);
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		$users = array();
+		$i = 0;
+		foreach ($resources["User"] as $res)
+		{
+			$users[$i]["name"] = $res["name"];
+			$users[$i]["id"] = $res["id"];
+			$i++;
+		}
+		$this->set("users" , $users);
+		//For setting the task dependency. 
+		$tasks = $this->Task->find('list' , 
+						array(
+							'conditions'=>array(
+								'Task.project_id'=>$project
+							)	
+		) );
+		// Set the milestones. To generate the lists. 
+		$milestones = $this->Milestone->find('list' , 
+						array(
+							'conditions'=>array(
+								'project_id'=>$project
+							)
+						) 
+		);
+		// get the list of projects
+		$this->set(compact('tasks' , 'milestones'));
 		
 	}
 
@@ -223,6 +259,15 @@ class TasksController extends AppController {
 		if ($this->Task->del($id)) {
 			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project));
 		}
+	}
+	
+	function master_complete($task=null , $project=null ){
+		$this->__checkadmin($project);
+		$data["Task"]["enddate"] = date("Y-m-d");
+		$data["Task"]["status"] = 100;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 	}
 	
 	function master_assign($task , $project)

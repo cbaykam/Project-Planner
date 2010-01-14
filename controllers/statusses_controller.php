@@ -61,12 +61,16 @@ class StatussesController extends AppController {
 		$this->set('statusses', $this->paginate());
 	}
 
-	function master_view($id = null) {
+	function master_view($project) {
 		$this->__checkadmin();
-		if (!$id) {
-			$this->flash(__('Invalid Statuss', true), array('action'=>'index'));
-		}
-		$this->set('statuss', $this->Statuss->read(null, $id));
+		$this->set("data" , $this->Statuss->find('all' , 
+										array(
+										    'conditions'=>array(
+										        	'Statuss.project_id'=>$project
+										    )
+										)
+						));
+		
 	}
 
 	function master_add($project) {
