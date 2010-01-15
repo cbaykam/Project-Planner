@@ -123,11 +123,16 @@
 		
 							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?> 
 						<?php endif; ?>
+			</div>
+			
+			<div id="bugs_oftheProject">
+				<?php echo $html->link("Add A Bug / Issue" , array('controller' => 'bugs' , 'action' => 'add','master'=>true , $project["Project"]["id"]) , array('class'=>'buttonlink') ); ?>
 			</div>			
 	</div>
 	<!--Start of the right side Div-->
 	<div id="projectRightSide">
 			<!--Project Notices-->
+			
 			<div id="project_notices">
 				<?php echo $html->link("Add Notice" , array('controller' => 'notices' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 				<?php echo $html->link("View Notices" , array('controller' => 'notices' , 'action' => 'view','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>

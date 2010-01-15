@@ -1,4 +1,11 @@
+<?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
+<?php echo $javascript->link('jquery-1.3.2' , false); ?>
+<?php echo $javascript->link('jquery.gantt' , false); ?>
+<?php if (!isset($this->params["pass"][0])): ?>
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+<?php else: ?>
+<?php echo $html->link(__('Add Customer', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+<?php endif; ?>
 <br><br>
 <div class="users index">
 <h2><?php __('users');?></h2>
@@ -17,7 +24,9 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
 	<th><?php echo $paginator->sort('skype');?></th>
+	<?php if (!isset($this->params["pass"][0])): ?>
 	<th><?php echo $paginator->sort('View Tasks');?></th>
+	<?php endif; ?>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -50,9 +59,11 @@ foreach ($users as $user):
 		<td>
 			<?php echo $user['User']['skype']; ?>
 		</td>
-		<td>
-			<?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser', 'master'=>true , $user['User']['id']) );; ?>
+		<?php if (!isset($this->params["pass"][0])): ?>
+		<td>			
+				<?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser', 'master'=>true , $user['User']['id']) );; ?>	
 		</td>
+		<?php endif; ?>
 		<td class="actions">
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
 			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
@@ -66,3 +77,18 @@ foreach ($users as $user):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+<?php if ($timeline): ?>
+	<h3>Resourcing</h3>
+
+	 <div id="vacationcolor">Holiday / Vacation</div>
+	 <div id="othercolor">unavailable (other reason)</div>
+	 
+	 <a href="#" class="GNT_prev">[&lt;&lt;]</a> 
+	<a href="#" class="GNT_prev2">[&lt;]</a> 
+	<a href="#" class="GNT_now">now</a> 
+	<a href="#" class="GNT_next2">[&gt;]</a> 
+	<a href="#" class="GNT_next">[&gt;&gt;]</a> 
+	<br><br>
+
+	<div class="gantt" id="gantt"></div> 
+<?php endif; ?>

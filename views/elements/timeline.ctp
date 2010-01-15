@@ -1,6 +1,8 @@
+<!--Timeline Helper .-->
 <?php if ($timeline): ?>
+	
 	<script language="javascript" type="text/javascript"> 
-	<!--
+	
 	function getDateText(y, m, d){
 		if (m < 10){
 			m = '0'+m;
@@ -62,8 +64,45 @@
 			$('#gantt').setType('month');
 			return false;
 		});
+	
+    <?php if ($duotime): ?>
+		$("#gantt2").gantt({
+			'range' : 20,
+			'tasks':[
+				<?php echo $ganttconsumer; ?>
+			]
+		});
+		$('a.GNT_now3').click(function(){
+			$('#gantt2').setPeriod();
+			return false;
+		});
+		$('a.GNT_next3').click(function(){
+			$('#gantt2').setPeriod('+');
+			return false;
+		});
+		$('a.GNT_next4').click(function(){
+			$('#gantt2').setPeriod('+7');
+			return false;
+		});
+		$('a.GNT_prev3').click(function(){
+			$('#gantt2').setPeriod('-');
+			return false;
+		});
+		$('a.GNT_prev4').click(function(){
+			$('#gantt2').setPeriod('-7');
+			return false;
+		});
+		$('a.GNT_type_date2').click(function(){
+			$('#gantt2').setType('date');
+			return false;
+		});
+		$('a.GNT_type_month2').click(function(){
+			$('#gantt2').setType('month');
+			return false;
+		});
+	<?php endif; ?> 
 	});
-	//-->
+	
 </script>
 <?php endif; ?> 
 

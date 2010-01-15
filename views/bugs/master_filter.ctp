@@ -14,7 +14,6 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('title');?></th>		
 	<th><?php echo $paginator->sort('user_id');?></th>
 	<th class="actions"><?php __('Actions');?></th>
-	<th class="actions"><?php __('Add Another bug to Project');?></th>
 </tr>
 <?php
 $i = 0;
@@ -29,33 +28,22 @@ foreach ($bugs as $bug):
 			<?php echo $bug['Bug']['created']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($priority->display($bug['Bug']['priority']) , array('controller' => 'bugs' , 'action' => 'filter', 'master'=>true, 'priority'=>$bug['Bug']['priority'], 'redalto'=>$this->params["pass"][0]) ); ?>
+			<?php echo $html->link($priority->display($bug['Bug']['priority']) , array('controller' => 'bugs' , 'action' => 'filter', 'master'=>true, 'priority'=>$bug['Bug']['priority'], 'redalto'=>$this->params["named"]['redalto']) ); ?>
 		</td>
 		<td>
-			<?php echo $html->link($bug['Project']['name'] , array('controller' => 'bugs' , 'action' => 'filter', 'master'=>true , 'project'=>$bug['Project']['id'], 'redalto'=>$this->params["pass"][0]) ); ?>
+			<?php echo $html->link($bug['Project']['name'] , array('controller' => 'bugs' , 'action' => 'filter', 'master'=>true , 'project'=>$bug['Project']['id'], 'redalto'=>$this->params["named"]['redalto']) ); ?>
 		</td>
 		<td>
 			<?php echo $bug['Bug']['description']; ?>
+		</td>	
+		<td>
+			<?php echo $html->link($bug['User']['name'] , array('controller' => 'bugs' , 'action' => 'filter','master'=>true , 'user'=>$bug['User']['id'], 'redalto'=>$this->params["named"]['redalto']) ); ?>
 		</td>
-		<?php if ($userid == $bug['User']['id'] ): ?>	
-			<td class="highligted">
-				<?php echo $html->link($bug['User']['name'] , array('controller' => 'bugs' , 'action' => 'filter','master'=>true , 'user'=>$bug['User']['id'], 'redalto'=>$this->params["pass"][0]) ); ?>
-			</td>
-		<?php else: ?>
-			<td>
-				<?php echo $html->link($bug['User']['name'] , array('controller' => 'bugs' , 'action' => 'filter','master'=>true , 'user'=>$bug['User']['id'] , 'redalto'=>$this->params["pass"][0]) ); ?>
-			</td>
-		<?php endif; ?>
 		
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $bug['Bug']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $bug['Bug']['id'])); ?>
 			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $bug['Bug']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $bug['Bug']['id'])); ?>
-			<?php echo $html->link(__('Complete', true), array('action'=>'complete', $bug['Bug']['id'])); ?>
-			
-		</td>
-		<td>
-			<?php echo $html->link(__('Add Another bug to Project', true), array('action'=>'add', $bug['Project']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

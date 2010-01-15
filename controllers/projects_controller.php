@@ -3,7 +3,7 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 	var $helpers = array('Html', 'Form' , 'Priority', 'Tsk');
-	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task');
+	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug');
 	
 	function index() {
 		$this->Project->recursive = 0;
@@ -70,10 +70,47 @@ class ProjectsController extends AppController {
 										'Project.redalto DESC'
 									)
 		) );
+		
+		$redalto = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>1
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0
+										    )
+										)
+						);	
+		$this->set("customerbugs" , $this->Bug->find('count' , 
+										array(
+										    'conditions'=>array(
+										    	 'Bug.redalto'=>'0',
+										         'NOT'=>array(
+										              'Bug.status'=>'OK'
+										         )
+										    )
+										)
+						));	
+		$this->set("redaltobugs" , $this->Bug->find('count' , 
+										array(
+										    'conditions'=>array(
+										    	 'Bug.redalto'=>'1',
+										         'NOT'=>array(
+										              'Bug.status'=>'OK'
+										         )
+										    )
+										)
+						));			
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
-		$this->set("timell" , $this->__generateTimeline($data));
+		$this->set("duotime" , true);
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
 	}
 
 	function master_view($id = null) {
@@ -103,6 +140,15 @@ class ProjectsController extends AppController {
 		$this->set("sumhours" , $this->__calcDuration($prdat));
 		$this->set(compact('usersa'));
 		
+	}
+	
+	function master_reports(){
+		$data = $this->Project->find('all');
+		for ($i = 0; $i < count($data) ; $i++)
+		{
+			$data[$i]['duration'] = $this->__calcDuration($data[$i]);			
+		}
+		$this->set("data" , $data);
 	}
 
 	function master_add() {

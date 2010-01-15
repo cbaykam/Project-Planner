@@ -1,18 +1,13 @@
 <div class="holidays form">
-<?php echo $form->create('Holiday');?>
+<?php echo $form->create('Holiday' , array('url'=>array('controller'=>'holidays' , 'action'=>'add' , $this->params["pass"][0])) );?>
 	<fieldset>
  		<legend><?php __('Add Holiday');?></legend>
 	<?php
 		echo $form->input('description');
 		echo $form->input('start');
 		echo $form->input('end');
-		echo $form->input('user_id');
+		echo $form->input('type' , array('type'=>'select' , 'options'=>array('v'=>'Holiday / Vacation' , 'o'=>'Other') ) );
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('List Holidays', true), array('action'=>'index'));?></li>
-	</ul>
 </div>

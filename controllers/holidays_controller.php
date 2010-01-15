@@ -67,16 +67,14 @@ class HolidaysController extends AppController {
 		$this->set('holiday', $this->Holiday->read(null, $id));
 	}
 
-	function master_add() {
+	function master_add($user) {
 		if (!empty($this->data)) {
+			$this->data["Holiday"]["user_id"] = $user; 
 			$this->Holiday->create();
 			if ($this->Holiday->save($this->data)) {
-				$this->flash(__('Holiday saved.', true), array('action'=>'index'));
-			} else {
-			}
+				$this->redirect(array('controller'=>'users' , 'action'=>'view','master'=>true , $user));
+			} 
 		}
-		$users = $this->Holiday->User->find('list');
-		$this->set(compact('users'));
 	}
 
 	function master_edit($id = null) {

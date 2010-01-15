@@ -189,3 +189,7 @@
 2010-01-14 00:28:14 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/projects/master_index.ctp, line 14]
 2010-01-14 00:28:15 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Milestone.enddate' in 'order clause'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
 2010-01-14 00:28:15 Warning: Warning (2): Invalid argument supplied for foreach() in [APP/views/projects/master_index.ctp, line 14]
+2010-01-14 11:26:34 Warning: Warning (2): Missing argument 1 for HolidaysController::master_add(), called in /var/www/planner/cake/libs/object.php on line 116 and defined in [APP/controllers/holidays_controller.php, line 70]
+2010-01-14 11:26:34 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'user_id' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
+2010-01-14 11:27:35 Warning: Warning (2): Missing argument 1 for HolidaysController::master_add(), called in /var/www/planner/cake/libs/object.php on line 116 and defined in [APP/controllers/holidays_controller.php, line 70]
+2010-01-14 11:27:35 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'user_id' cannot be null</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]

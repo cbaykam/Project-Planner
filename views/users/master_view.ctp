@@ -42,6 +42,7 @@
 </div>
 
 <div id="user_master_view_projects">
+	<h3> Projects </h3>
 	<?php if (count($data["Project"]) == 0): ?>
 		<h3>Not working in any projects</h3>
 	<?php else: ?>
@@ -61,6 +62,43 @@
 		</table>
 	<?php endif; ?>
 </div>
+
+<div id="holidays">
+	<h3> Events  </h3>
+	<?php if (count($data["Holiday"]) == 0): ?>
+		<?php echo $html->link("Add Event" , array('controller' => 'holidays' , 'action' => 'add','master'=>true , $data["User"]["id"]) , array('class'=>'buttonlink') );?>
+	<?php else: ?>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>Description</th>
+				<th>Type</th>
+				<th>Start</th>
+				<th>End</th>
+			</tr>
+			<?php foreach($data["Holiday"] as $holiday):?>
+			
+					<tr>
+						<td><?php echo $holiday["description"]; ?></td>
+						<td>
+							<?php if ($holiday["type"] == 'o'): ?>
+								Other
+							<?php else: ?>
+								Holiday / Vacation
+							<?php endif; ?>
+						</td>
+						<td><?php echo $holiday["start"]; ?></td>
+						<td><?php echo $holiday["end"]; ?></td>
+					</tr>
+			
+			<?php endforeach;?>
+			
+		</table>
+	<?php endif; ?>
+</div>
+
+
+	
+
 
 <div id="user_master_view_addtoproj">
 	<fieldset>

@@ -10,7 +10,8 @@
 		echo $form->input('pmobile' ,array('label'=>'Mobile') );
 		echo $form->input('messenger');
 		echo $form->input('skype');
-		echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'resource' , '1'=>'admin') , 'label'=>'User type'));
+		echo $form->input('redalto' , array('label'=>'Customer or Resource' , 'type'=>'select' , 'options'=>array('1'=>'Resource' , '2'=>'Customer' ) ) );
+		echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'User Admin'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

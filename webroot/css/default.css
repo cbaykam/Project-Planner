@@ -594,3 +594,42 @@ td.actions a {
 	border:10px solid;
 }
 
+/*User page vacation and other divs*/
+
+#vacationcolor{
+	float:none;
+	background-color:#fcd5b5;
+	width:300px;
+	margin-bottom:5px;
+	text-align:right;
+	padding:2px 4px 2px 2px;
+}
+
+#othercolor{
+	float:none;
+	background-color:#ff7c80;
+	width:300px;
+	text-align:right;
+	margin-bottom:5px;
+	padding:2px 4px 2px 2px;
+}
+
+.highligted td tr{
+	background-color:green;
+	color:white;
+}
+
+#attentionrequ{
+	background-color:#ffcc66;
+	padding:2px 2px 2px 2px;
+}
+
+#criticalu{
+	background-color:#ff7c80;
+	padding:2px 2px 2px 2px;
+}
+
+#allok{
+	background-color:#c3d69b;
+	padding:2px 2px 2px 2px;
+}

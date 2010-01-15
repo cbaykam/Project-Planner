@@ -61,10 +61,21 @@ class UsersController extends AppController {
 	}
 
 
-	function master_index() {
+	function master_index($customer = null) {
 		$this->__checkadmin();
 		$this->User->recursive = 1;
+		if ($customer)
+		{
+			$this->paginate = array('conditions'=>array('User.redalto'=>0) );
+			$this->set("timeline" , false);
+		}else{
+			$this->paginate = array('conditions'=>array('User.redalto'=>1) );
+			$this->set("timeline" , true);
+		}
 		$this->set('users', $this->paginate());
+		
+		$users = $this->User->find('all' , array('order'=>array('User.name') ) );
+		$this->set("timell" , $this->__generateTimeline($users));
 	}
 
 	function master_view($id = null) {
@@ -86,6 +97,7 @@ class UsersController extends AppController {
 		$projects = $this->User->Project->find('list');
 		$this->set(compact('projects'));
 	}
+
 
 	function master_edit($id = null) {
 		$this->__checkadmin();
@@ -149,6 +161,47 @@ class UsersController extends AppController {
 	function master_logout()
 	{
 		$this->redirect($this->Auth->logout());
+	}
+	
+	function __generateTimeline($data){
+		$first = true;
+		$timell = '';
+		for ($i = 0; $i < count($data) ; $i++)
+		{
+			
+			if (count($data[$i]["Holiday"]) != 0)
+			{
+				$link = '<a href="/planner/master/users/view/' . $data[$i]["User"]["id"] . '">' . $data[$i]["User"]["name"] . '</a>';
+				$timell .= "{'titles': '". $link ."', 
+								'events':[";
+				foreach ($data[$i]["Holiday"] as $milestone)
+				{
+					$start = $this->__timelineDate($milestone["start"]) ;
+					$end = $this->__timelineDate($milestone["end"]) ;
+					 if ($milestone["type"] == 'o')
+					 {
+					 	$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'#ff7c80'},";	
+					 }else{
+					 	$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'#fcd5b5'},";
+					 }
+					  	
+					 
+							
+				}
+				
+				$timell .= "]},";
+							
+			}else{
+				$link = '<a href="/planner/master/users/view/' . $data[$i]["User"]["id"] . '">' . $data[$i]["User"]["name"] . '</a>';
+				
+				$timell .= "{'titles': '". $link ."', 
+								'events':[
+									{'start_date':'19800120', 'end_date':'19800121', 'color':'#ff7c80'}
+								]},";
+			}
+		}
+		
+		return $timell;
 	}
 
 }
