@@ -67,7 +67,7 @@
 	
     <?php if ($duotime): ?>
 		$("#gantt2").gantt({
-			'range' : 20,
+			'range' : 21,
 			'tasks':[
 				<?php echo $ganttconsumer; ?>
 			]

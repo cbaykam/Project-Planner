@@ -7,7 +7,6 @@ class UsersController extends AppController {
 	
 	function beforeFilter(){
 		 parent::beforeFilter(); 
-		 $this->Auth->allow('add');
 	}
 
 	function index() {
@@ -20,18 +19,6 @@ class UsersController extends AppController {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		$this->set('User', $this->User->read(null, $id));
-	}
-
-	function add() {
-		if (!empty($this->data)) {
-			$this->User->create();
-			if ($this->User->save($this->data)) {
-				$this->flash(__('User saved.', true), array('action'=>'index'));
-			} else {
-			}
-		}
-		$projects = $this->User->Project->find('list');
-		$this->set(compact('projects'));
 	}
 
 	function edit($id = null) {
@@ -126,10 +113,10 @@ class UsersController extends AppController {
 		if ($this->Auth->isAuthorized())
 		{ 
 		   	if ($this->__checkadmin(null , false))
-			{
+			{ 
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			}else{
-				$this->redirect(array('controller'=>'users' , 'action'=>'view' , $this->Auth->user("id")));
+			    $this->redirect(array('controller'=>'projects' , 'action'=>'index'));
 			}
 		}
 	}
@@ -141,19 +128,13 @@ class UsersController extends AppController {
 	function master_login()
 	{
 		if ($this->Auth->isAuthorized())
-		{
-			 $this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
-		}
-		if (!empty($this->data))
-		{
-		   
-			if ($this->__checkadmin(null , false))
+		{ 
+		   	if ($this->__checkadmin(null , false))
 			{
+				 
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
-			}
-			if ($this->Auth->isAuthorized())
-			{
-				$this->redirect(array('controller'=>'users' , 'action'=>'view', $this->Auth->user("id")));
+			}else{
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index'));
 			}
 		}
 	}

@@ -47,6 +47,13 @@
 	    	$this->set("projectsOpen" , $this->Project->find('all'));
 	    }
 	    
+	    /*
+	     * Check Admin Function 
+	     * Checks if the user has admin rights on the project
+	     * $project -> Is the id of the project
+	     * $redir -> If redir is true script will redirect the user to the error page.  
+	     */
+	    
 	    function __checkadmin($project = null , $redir = true){
 	    	$admin = $this->Auth->user('admin');
 	    	if ($project != null)
@@ -92,7 +99,7 @@
 	    	}
 	    }
 	    
-	    function __belongs($model , $user , $item){
+	    function __belongs($model , $user , $item , $redalto){
 	    	$admin = $this->Auth->user('admin');
 	    	if ($admin)
 	    	{    	
@@ -102,7 +109,8 @@
 	    		$dat = $this->$model->find('all', array(
 	    								'conditions'=>array(
 	    									'id'=>$item,
-	    									'user_id'=>$user
+	    									'user_id'=>$user,
+	    									'redalto'=>$redalto
 	    								)
 	    		) );
 	    	
@@ -111,7 +119,7 @@
 	    			return true;
 	    		}
 	    		else{
-	    			return false;
+	    			$this->cakeError("notadmin");
 	    		}	
 	    	}	    	
 	    }

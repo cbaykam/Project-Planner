@@ -6,8 +6,71 @@ class ProjectsController extends AppController {
 	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug');
 	
 	function index() {
-		$this->Project->recursive = 0;
-		$this->set('projects', $this->paginate());
+		$this->UsersProject->recursive = 2;
+		// pagination variable 
+		$this->paginate = array(
+					'UsersProject'=>array(
+							'conditions'=>array(
+								'UsersProject.user_id'=>$this->Auth->user("id")
+							)	
+					)
+		);
+		/*
+		 * Getting all the project ids for the users .
+		 * For seperating the redalto and consumer jobs. 
+		 */
+		$prdat = $this->UsersProject->find('all' , array(
+									'conditions'=>array(
+										'UsersProject.user_id'=>$this->Auth->user("id")
+									)
+		));
+		// the id of all the projects 
+		$prids = array();
+		
+		for ($i = 0 ; $i < count($prdat) ; $i++){
+			array_push($prids, $prdat[$i]["Project"]["id"]);
+		}
+		
+		//consumer projetcts for the timeline .
+		$consumer = $this->Project->find("all" , array(
+									'conditions'=>array(
+											'Project.id'=>$prids,
+											'Project.redalto'=>0
+									)								
+		));
+		
+		//redalto projects for the timeline 
+		$redalto = $this->Project->find("all" , array(
+									'conditions'=>array(
+											'Project.id'=>$prids,
+											'Project.redalto'=>1
+									)								
+		));
+		//top 5 tasks
+		$topfivetasks = $this->Task->find("all" , array(
+												'limit'=>5,
+												'conditions'=>array(
+													'Task.user_id'=>$this->Auth->user("id"),
+													'NOT'=>array(
+														'Task.status'=>100
+													)
+												),
+												'order'=>array(
+													'Task.enddate ASC'
+												)
+		));
+		
+		//get the notices 
+		$this->set('notices' ,$this->Notice->find('all' , array('limit'=>5)));
+		//set the duo variable and the timeline because there will be 2 timelines
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);
+		$this->set("toptasks" , $topfivetasks);
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("toptasks" , $topfivetasks);
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
+		$this->set('projects', $this->paginate('UsersProject'));
+		$this->set("username" , $this->Auth->user('name'));
 	}
 
 	function view($id = null) {
@@ -16,18 +79,6 @@ class ProjectsController extends AppController {
 		}
 		$this->set('project', $this->Project->read(null, $id));
         $this->set("users" , $this->User->find('all'));
-	}
-
-	function add() {
-		if (!empty($this->data)) {
-			$this->Project->create();
-			if ($this->Project->save($this->data)) {
-				$this->flash(__('Project saved.', true), array('action'=>'index'));
-			} else {
-			}
-		}
-		$resources = $this->Project->User->find('list');
-		$this->set(compact('resources'));
 	}
 
 	function edit($id = null) {
@@ -71,6 +122,19 @@ class ProjectsController extends AppController {
 									)
 		) );
 		
+		$topfivetasks = $this->Task->find("all" , array(
+												'limit'=>5,
+												'conditions'=>array(
+													'Task.user_id'=>$this->Auth->user("id"),
+													'NOT'=>array(
+														'Task.status'=>100
+													)
+												),
+												'order'=>array(
+													'Task.enddate ASC'
+												)
+		));
+		
 		$redalto = $this->Project->find('all' , 
 										array(
 										    'conditions'=>array(
@@ -109,6 +173,7 @@ class ProjectsController extends AppController {
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
 		$this->set("duotime" , true);
+		$this->set("toptasks" , $topfivetasks);
 		$this->set("timell" , $this->__generateTimeline($redalto));
 		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
 	}
@@ -156,9 +221,17 @@ class ProjectsController extends AppController {
 		$this->set("colorpicker" , true);
 		if (!empty($this->data)) {
 			$this->data["Project"]["budget"] = $this->__calculatetime($this->data["Project"]["hours"] , $this->data["Project"]["mins"]);
+			// Add the project admin to the project
+				
+		
 			$this->Project->create();
 			if ($this->Project->saveAll($this->data)) {
 				$this->Session->setFlash("Your Project Succesfully Saved");
+				$updat = array();
+				$updat["UsersProject"]["user_id"] = $this->data["Project"]["user_id"];
+				$updat["UsersProject"]["project_id"] = $this->Project->getLastInsertID() ;
+				$this->UsersProject->create();
+				$this->UsersProject->save($updat);
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			} 
 		}
@@ -181,7 +254,9 @@ class ProjectsController extends AppController {
 			$this->data = $this->Project->read(null, $id);
 		}
 	}
-	
+	/*
+	 * Changes the overview of the project.
+	 */
 	function master_changeover($project){	
 	    if (!empty($this->data))
 	    {

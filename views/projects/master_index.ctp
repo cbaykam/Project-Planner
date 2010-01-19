@@ -3,7 +3,6 @@
 <?php echo $javascript->link('jquery.gantt' , false); ?>
 <div id="projectLeftSide">
 	<h1> Welcome : <?php echo $username; ?> </h1>
-	<?php echo $html->link("Bugs and Issues" , array('controller' => 'bugs' , 'action' => 'index','master'=>true) );?>
 	<table border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<th>Project Name</th>
@@ -23,7 +22,7 @@
 					<?php if ($project["Project"]["redalto"]): ?>
 					 <?php echo "Redalto"; ?>
 					<?php else: ?>
-					 <?php echo "Consumer"; ?>
+					 <?php echo "Customer"; ?>
 					<?php endif; ?>
 				</td>
 				<td>
@@ -49,9 +48,6 @@
 	<?php endforeach;?>
 
 	</table>
-
-	<?php echo $html->link("Bugs And Issues" , array('controller' => 'bugs' , 'action' => 'index', 'master'=>true) , array('class'=>'buttonlink') ); ?>
-
 	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
 
 	<h3> Redalto Projects </h3>
@@ -65,7 +61,7 @@
 
 	<div class="gantt" id="gantt"></div> 
 	<br><br><br>
-	<h3> Consumer Projects </h3>
+	<h3> Customer Projects </h3>
 
 	<a href="#" class="GNT_prev3">[&lt;&lt;]</a> 
 	<a href="#" class="GNT_prev4">[&lt;]</a> 
@@ -75,6 +71,41 @@
 	<br><br>
 
 	<div class="gantt" id="gantt2"></div> 
+	
+	<br><br>
+		<h3>My Top 5 Tasks</h3>
+	<?php if(count($toptasks) != 0):?>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>Project</th>
+				<th>Phase</th>
+				<th>Description</th>
+				<th>Priority</th>
+				<th>Due</th>
+				<th>Status</th>
+			</tr>
+			<?php foreach($toptasks as $task):?>
+				<tr>
+					<td><?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $task["Project"]["id"]));?></td>
+					<td><?php echo $task["Milestone"]["name"];?></td>
+					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task["Task"]["id"]));?></td>
+					<td><?php echo $priority->display($task["Task"]["priority"]);?></td>
+					<td><?php echo $task["Task"]["duedate"];?></td>
+					<td><?php echo $task["Task"]["status"];?> %</td>
+				</tr>
+			<?php endforeach;?>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></th>
+			</tr>
+		</table>
+	<?php else:?>
+		<h3>No Tasks assigned for you.</h3>
+	<?php endif;?>
 </div>
 <div id="projectRightSide">
 <?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink') ); ?>
@@ -83,7 +114,7 @@
 	<tr>
 		<td>
 			<?php if ($customerbugs == 0): ?>
-				ok
+				<div id="allok">ok</div>
 			<?php elseif ($customerbugs >= 1 && $customerbugs <= 3  ): ?>
 				<div id="attentionrequ">Attention Required <?php echo $customerbugs; ?> open issues</div>
 			<?php elseif ($customerbugs >= 4): ?>
@@ -122,5 +153,21 @@
 	
 	
 </table>
-
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th></th><th>Notice Board</th>
+	</tr>
+		<?php foreach ($projects as $prj):?>
+				<?php foreach ($prj["Notice"] as $notice):?>
+					<tr>
+						<td><?php echo $notice["created"];?></td>
+						<td><?php echo $notice["title"];?></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><?php echo $notice["noticescol"];?></td>
+					</tr>
+				<?php endforeach;?>
+		<?php endforeach;?>
+	</table>
 </div>
