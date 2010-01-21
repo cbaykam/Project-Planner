@@ -107,7 +107,48 @@ class ProjectsController extends AppController {
 		}
 	}
 
-
+	function allprojects(){
+		$redalto = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>1
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0
+										    )
+										)
+						);
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);	
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
+	}
+	
+	function master_allprojects(){
+		$redalto = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>1
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0
+										    )
+										)
+						);	
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
+	}
+	
 	function master_index() {
 		$this->__checkadmin();
 		$this->Project->recursive = 2;

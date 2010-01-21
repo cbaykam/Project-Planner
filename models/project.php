@@ -77,18 +77,6 @@ class Project extends AppModel {
 								'finderQuery' => '',
 								'counterQuery' => ''
 			),
-			'Bug' => array('className' => 'Bug',
-								'foreignKey' => 'project_id',
-								'dependent' => false,
-								'conditions' => '',
-								'fields' => '',
-								'order' => '',
-								'limit' => '',
-								'offset' => '',
-								'exclusive' => '',
-								'finderQuery' => '',
-								'counterQuery' => ''
-			),
 			'UsersProject' => array('className' => 'UsersProject',
 								'foreignKey' => 'project_id',
 								'dependent' => false,

@@ -108,15 +108,13 @@ class BugsController extends AppController {
 		$this->set('bug', $this->Bug->read(null, $id));
 	}
 
-	function master_add($project) {
+	function master_add() {
 		$this->__checkadmin();
 		
 			$prdat = $this->Project->read(null , $project);	
 		
 		
 		if (!empty($this->data)) {
-			
-			$this->data["Bug"]["project_id"] = $project;
 			
 			
 			if ($prdat["Project"]["redalto"] == 1)

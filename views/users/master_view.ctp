@@ -95,11 +95,6 @@
 		</table>
 	<?php endif; ?>
 </div>
-
-
-	
-
-
 <div id="user_master_view_addtoproj">
 	<fieldset>
 	<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'toproject','master'=>true , $data["User"]["id"]))); ?>

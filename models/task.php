@@ -29,6 +29,12 @@ class Task extends AppModel {
 								'conditions' => '',
 								'fields' => '',
 								'order' => ''
+			),
+			'Bug'=>array('className' => 'Milestone',
+						 'foreignKey' => 'milestone_id',
+						 'conditions' => '',
+						 'fields' => '',
+						 'order' => ''	
 			)
 	);
 	

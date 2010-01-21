@@ -1,5 +1,5 @@
 <div class="users form">
-<?php echo $form->create('User' , array('url'=>array('controller'=>'users' , 'action'=>'add' , 'master'=>true) ));?>
+<?php echo $form->create('User' , array('url'=>array('controller'=>'users' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0]) ));?>
 	<fieldset>
  		<legend><?php __('Add user');?></legend>
 	<?php
@@ -10,8 +10,14 @@
 		echo $form->input('pmobile' ,array('label'=>'Mobile') );
 		echo $form->input('messenger');
 		echo $form->input('skype');
-		echo $form->input('redalto' , array('label'=>'Customer or Resource' , 'type'=>'select' , 'options'=>array('1'=>'Resource' , '2'=>'Customer' ) ) );
-		echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'User Admin'));
+		if(isset($this->params["pass"][0])){
+			echo $form->input('redalto' , array('type'=>'hidden' , 'value'=>'0' ) );
+		}else{
+			echo $form->input('redalto' , array('type'=>'hidden' , 'value'=>'1' ) );
+			echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'User Admin'));
+		}
+		
+		
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

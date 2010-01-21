@@ -4,11 +4,16 @@
 <?php if (!isset($this->params["pass"][0])): ?>
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 <?php else: ?>
-<?php echo $html->link(__('Add Customer', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
+<?php echo $html->link(__('Add Customer', true), array('controller'=>'users' , 'action'=>'add','master'=>true , 1) , array('class'=>'buttonlink')); ?>
 <?php endif; ?>
 <br><br>
 <div class="users index">
+<?php if (!isset($this->params["pass"][0])): ?>
 <h2><?php __('users');?></h2>
+<?php else: ?>
+<h2><?php __('Customers');?></h2>
+<?php endif; ?>
+
 <p>
 <?php
 echo $paginator->counter(array(
