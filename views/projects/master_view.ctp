@@ -70,7 +70,9 @@
 			<?php endif; ?>
 			<!--Tasks of the project-->
 			<div id="tasks_in_project">
+				
 						<?php if (count($project["Task"])): ?>
+							<h3>Tasks in the project</h3>
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tr>
 									<th>Id</th>
@@ -89,12 +91,12 @@
 			
 								<tr>
 									<td><?php echo $task["Task"]["id"]; ?></td>
-									<td><?php echo $task["Task"]["created"]; ?></td>
+									<td><?php echo $timecal->format($task["Task"]["created"]); ?></td>
 									<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
 									<td><?php echo $task["Milestone"]["name"]; ?></td>
 									<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
 									<td><?php echo $task["Task"]["status"]; ?> %</td>
-									<td><?php echo $task["Task"]["duedate"]; ?></td>
+									<td><?php echo $timecal->format($task["Task"]["duedate"]); ?></td>
 									<td><?php echo $tsk->duration($task["Activity"]); ?></td>
 									<?php if ($task["Task"]["user_id"] == 0): ?>
 									 <td>
@@ -117,11 +119,11 @@
 							<?php endforeach;?>
 							</table>
 					
-							<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
+							<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"] , 0), array('class'=>'buttonlink') ); ?>
 					
 						<?php else: ?>
 		
-							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?> 
+							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"] , 0), array('class'=>'buttonlink') ); ?> 
 						<?php endif; ?>
 			</div>
 						
@@ -181,7 +183,7 @@
 			<div id="projectStatus">
 				<?php $countstats = count($project["Statuss"]); ?>
 				<?php if ( $countstats == 0): ?>
-					<?php echo $html->link("Change Project Status" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
+					<?php echo $html->link("Current Status" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 				<?php else: ?>
 				    <?php $statindice = $countstats - 1; ?>
 					<table border="0" cellspacing="0" cellpadding="0">

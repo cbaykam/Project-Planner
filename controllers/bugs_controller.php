@@ -3,7 +3,7 @@ class BugsController extends AppController {
 
 	var $name = 'Bugs';
 	var $helpers = array('Html', 'Form' , 'Priority');
-	var $uses = array('Bug', 'Project');
+	var $uses = array('Bug', 'Task', 'Project');
 
 	function index() {
 		$this->Bug->recursive = 0;

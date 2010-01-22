@@ -2,7 +2,7 @@
 class TasksController extends AppController {
 
 	var $name = 'Tasks';
-	var $helpers = array('Html', 'Form' , 'Tsk');
+	var $helpers = array('Html', 'Form' , 'Tsk' , 'Priority');
 	var $uses = array("Task" , "UsersProject" , "User" , "Project" , "Milestone");
 
 	function index() {
@@ -64,9 +64,10 @@ class TasksController extends AppController {
 		$this->set('tasks', $this->paginate());
 	}
 
-	function master_view($id = null , $project) {
+	function master_view($id = null , $project=0) {
 		
 		$this->__checkadmin($project);
+		$this->set('projectid' , $project);
 		if ($id)
 		{
 			$this->Task->recursive = 1 ;
@@ -90,14 +91,35 @@ class TasksController extends AppController {
 	function master_viewuser($user){
 		//View task by resource 	
 		// will add the user  verification $this->__checkadmin($project) is not a good solution for this.
-		
+		$this->__checkadmin($project);
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
 										      "Task.user_id"=>$user,
+											  'Task.type'=> null
 										    )
 										)
 						));
+		
+	}
+	
+	function master_indexjobs($redalto = 0){
+		$this->__checkadmin();
+		if($redalto != 0){
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'redalto'
+						)
+			);
+		}else{
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'customer'
+						)
+			);
+		}
+		$this->set('tasks', $this->paginate());
+		$this->set('redalto' , $redalto);
 	}
 
 	/*
@@ -110,10 +132,20 @@ class TasksController extends AppController {
 	* If fromres = true after adding it will redirect to resource else to the project
 	**/
 	
-	function master_add($project=null , $user=null , $formres = false) {
+	function master_add($project=0 , $user=0 , $formres = 0 , $bug = 0 , $bredalto = 0) {
 		$this->__checkadmin($project);
+		$this->set('buggie' , $bug);
 		if (!empty($this->data)) {
 			$mail = false;
+			
+			if($bug == 1){
+				 if($bredalto == 1){
+				 	$this->data["Task"]["type"] = 'redalto';	
+				 }else{
+				 	$this->data["Task"]["type"] = 'customer';
+				 }
+				
+			}
 			// If no project is specified.
 			if ($this->data["Task"]["project_id"] == "")
 			{
@@ -123,7 +155,7 @@ class TasksController extends AppController {
 			}
 			
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
-			if ($user){
+			if ($user != 0){
 				$this->data["Task"]["user_id"] = $user;
 				$mail = true;
 				$udat = $this->User->findById($user);
@@ -145,9 +177,16 @@ class TasksController extends AppController {
 				}else
 				{
 					//if we have a project
-					if ($project)
+					if ($project != 0)
 					{
 					 	$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+					}else if($bug == 1){
+						if($bredalto == 1){
+							$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs','master'=>true , 1));
+						}else{
+							$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs','master'=>true , 0));
+						}
+						
 					}else{
 						$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $this->data["Task"]["project_id"]));
 					}
@@ -155,8 +194,16 @@ class TasksController extends AppController {
 				
 			} 
 		}
+		//if this is a bug select customers 
+			if($bug == 1){
+				$this->set('customers' , $this->User->find('all' , array(
+										'conditions'=>array(
+											"User.redalto"=>0
+										)
+				)));
+			}
 		// Find user If the user is set get user_id 
-		if ($user)
+		if ($user != 0)
 		{
 			// For the form if the user set.  
 			$this->set("user_id" , $user);
@@ -165,15 +212,20 @@ class TasksController extends AppController {
 		$resources = $this->Project->findById($project);
 		
 		// Setting the user data. Gets all the users in the project and generates a Select box.  
-		$users = array();
-		$i = 0;
-		foreach ($resources["User"] as $res)
-		{
-			$users[$i]["name"] = $res["name"];
-			$users[$i]["id"] = $res["id"];
-			$i++;
+		if($project != 0){
+			$users = array();
+			$i = 0;
+			foreach ($resources["User"] as $res)
+			{
+				$users[$i]["User"]["name"] = $res["name"];
+				$users[$i]["User"]["id"] = $res["id"];
+				$i++;
+			}
+			$this->set("users" , $users);
+		}else{
+			$this->set('users' , $this->User->find('all'));
 		}
-		$this->set("users" , $users);
+			
 		//For setting the task dependency. 
 		$tasks = $this->Task->find('list' , 
 						array(
@@ -285,11 +337,6 @@ class TasksController extends AppController {
 		}
 	}
 	
-	function deneme(){
-		$this->__checkadmin();
-		echo date('ym');
-	}
-	
 	function __slicetask($project){
 		$data = $this->Task->find('all', array(
 								'conditions'=>array(
@@ -324,6 +371,15 @@ class TasksController extends AppController {
 		$this->Email->subject = 'You Have been Assigned To A Task';
 		$message = 'You Are now working on another project please view.';
 		$this->Email->send($message);
+	}
+	
+	function __calcDuration($task){
+		$sum = 0;
+		foreach ($task["Activity"] as $activity)
+		{
+			$sum = $sum + $activity['duration'];
+		}
+		return $sum;
 	}
 
 }

@@ -10,6 +10,7 @@
 	<?php
 		echo $form->input('description');
 	?>
+	<?php if($projectid != 0):?>
 	<select id="ActivityUserId" name="data[Activity][user_id]">
 			<?php foreach($users as $usr):?>
 		
@@ -20,6 +21,7 @@
 					
 				
 		</select>
+	<?php endif;?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

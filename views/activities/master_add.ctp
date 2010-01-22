@@ -1,5 +1,5 @@
 <div class="activities form">
-<?php echo $form->create('Activity' , array('url'=>array('controller'=>'activities' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $this->params["pass"][1]) ) );?>
+<?php echo $form->create('Activity' , array('url'=>array('controller'=>'activities' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $projectid , $this->params["pass"][2]) ) );?>
 	<fieldset>
  		<legend><?php __('Add Activity');?></legend>
  		
@@ -8,6 +8,7 @@
 		echo $form->input('description' , array('type'=>'text') );
 		echo $form->input('date');
 	?>
+	<?php if($projectid != 0):?>
 		<select id="ActivityUserId" name="data[Activity][user_id]">
 			<?php foreach($users as $usr):?>
 		
@@ -18,6 +19,7 @@
 					
 				
 		</select>
+	<?php endif;?>
 		<br><br>
 		<span class="duration">
 			Time Taken

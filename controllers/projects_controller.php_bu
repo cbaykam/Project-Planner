@@ -143,7 +143,6 @@ class ProjectsController extends AppController {
 										    )
 										)
 						);	
-		$this->set('projects' , $this->Project->find('all'));
 		$this->set("timeline" , true);
 		$this->set("duotime" , true);
 		$this->set("timell" , $this->__generateTimeline($redalto));
@@ -160,17 +159,14 @@ class ProjectsController extends AppController {
 										)
 									),
 									'order'=>array(
-										'Project.redalto DESC',
-										'Project.created ASC'
-									),
-									'limit'=>5
+										'Project.redalto DESC'
+									)
 		) );
 		
 		$topfivetasks = $this->Task->find("all" , array(
 												'limit'=>5,
 												'conditions'=>array(
 													'Task.user_id'=>$this->Auth->user("id"),
-													'Task.type'=> null,
 													'NOT'=>array(
 														'Task.status'=>100
 													)
@@ -180,19 +176,37 @@ class ProjectsController extends AppController {
 												)
 		));
 		
-		$this->set("customerbugs" , $this->Task->find('count' , 
+		$redalto = $this->Project->find('all' , 
 										array(
 										    'conditions'=>array(
-										    	 'Task.type'=>'customer',
-										    	 'Task.enddate'=>'0000-00-00'
+										      'Project.redalto'=>1
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0
+										    )
+										)
+						);	
+		$this->set("customerbugs" , $this->Bug->find('count' , 
+										array(
+										    'conditions'=>array(
+										    	 'Bug.redalto'=>'0',
+										         'NOT'=>array(
+										              'Bug.status'=>'OK'
+										         )
 										    )
 										)
 						));	
-		$this->set("redaltobugs" , $this->Task->find('count' , 
+		$this->set("redaltobugs" , $this->Bug->find('count' , 
 										array(
 										    'conditions'=>array(
-										    	 'Task.type'=>'redalto',
-												 'Task.enddate'=>'0000-00-00'
+										    	 'Bug.redalto'=>'1',
+										         'NOT'=>array(
+										              'Bug.status'=>'OK'
+										         )
 										    )
 										)
 						));			
@@ -201,7 +215,8 @@ class ProjectsController extends AppController {
 		$this->set("timeline" , true);
 		$this->set("duotime" , true);
 		$this->set("toptasks" , $topfivetasks);
-		$this->set("timell" , $this->__generateTimeline($data));
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
 	}
 
 	function master_view($id = null) {
@@ -216,8 +231,7 @@ class ProjectsController extends AppController {
         $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(
         										'conditions'=>array(
-        											'Task.project_id'=>$id,
-        											'Task.type'=>null
+        											'Task.project_id'=>$id
         										)
         ) ));
         // Fetch users in the project 

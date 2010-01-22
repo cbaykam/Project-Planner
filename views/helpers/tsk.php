@@ -43,7 +43,7 @@
 				{
 					return $this->output('-');	
 				}else{
-					return $this->output($date);
+					return $this->output($this->Timecal->format($date));
 				}
 			}
 		}

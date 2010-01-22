@@ -70,10 +70,12 @@ class ActivitiesController extends AppController {
 		$this->set('activity', $this->Activity->read(null, $id));
 	}
 
-	function master_add($task , $project) {
+	function master_add($task , $project=null , $user = null) {
 		$this->__checkadmin($project);
+		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
 		    $this->data["Activity"]["task_id"] = $task;
+		    $this->data["Activity"]["user_id"] = $user;
 		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
 			$this->data["Activity"]["project_id"] = $project;
 			$this->Activity->create();
@@ -84,12 +86,16 @@ class ActivitiesController extends AppController {
 		}
 		$tasks = $this->Activity->Task->find('list');
 		// fetch the users in the project 
-		$this->__usersin($project);
+		if($project != 0){
+			$this->__usersin($project);	
+		}
+		
 		$this->set(compact('tasks'));
 	}
 
-	function master_edit($id = null , $task , $project) {
+	function master_edit($id = null , $task , $project=0) {
 		$this->__checkadmin($project);
+		$this->set("projectid" , $project);
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Activity', true), array('action'=>'index'));
 		}
@@ -103,7 +109,10 @@ class ActivitiesController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Activity->read(null, $id);
 		}
-		$this->__usersin($project);
+		// fetch the users in the project 
+		if($project != 0){
+			$this->__usersin($project);	
+		}
 		$tasks = $this->Activity->Task->find('list');
 		$this->set(compact('tasks'));
 	}

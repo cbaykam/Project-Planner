@@ -22,12 +22,12 @@
 			<td><?php echo $depend["Task"]["id"] . ' [ Status ' . $depend["Task"]["status"]; ?> % ]</td>
 		</tr>
 	<?php endif; ?>
-	
-	<tr>
-		<td>Project Phase</td>
-		<td><?php echo $task["Milestone"]["name"];?></td>
-	</tr>
-	
+	<?php if($projectid != 0):?>
+		<tr>
+			<td>Project Phase</td>
+			<td><?php echo $task["Milestone"]["name"];?></td>
+		</tr>
+	<?php endif;?>
 	<tr>
 		<td>Last Update</td>
 		<td>
@@ -51,9 +51,9 @@
 	</tr>
 	
 </table>
-<ul>
-<li><?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $this->params["pass"][1]) ); ?></li>
-</ul>
+
+<?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
+
  <?php if (count($task["Activity"]) != 0): ?>
   
 
@@ -75,10 +75,10 @@
  	
  			<tr>
  				<td><?php echo $act["date"] ?></td>
- 				<td><?php echo $act["user_id"] ?></td>
+ 				<td><?php echo $task["User"]["name"] ?></td>
  				<td><?php echo $act["description"] ?></td>
  				<td><?php echo $timecal->show($act["duration"]); ?></td>
- 				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit','master'=>true , $act["id"] , $task["Task"]["id"] , $this->params["pass"][1]) ); ?></td>
+ 				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit','master'=>true , $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>
  			</tr>
  	
  	<?php endforeach;?>
@@ -89,6 +89,6 @@
  <?php else: ?>
  	<h3>There are no notes in this task at this time.</h3>
  <?php endif; ?>
- <ul>
- <li><?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view','master'=>true , $this->params["pass"][1]) ); ?></li>
- </ul>
+ <?php if($projectid != 0):?>
+		<?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view','master'=>true , $projectid), array('class'=>'buttonlink') ); ?></li>
+ <?php endif;?>	
