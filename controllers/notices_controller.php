@@ -28,31 +28,6 @@ class NoticesController extends AppController {
 		$this->set(compact('projects'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Notice->save($this->data)) {
-				$this->flash(__('The Notice has been saved.', true), array('action'=>'index'));
-			} else {
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Notice->read(null, $id);
-		}
-		$projects = $this->Notice->Project->find('list');
-		$this->set(compact('projects'));
-	}
-
-	function delete($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
-		}
-		if ($this->Notice->del($id)) {
-			$this->flash(__('Notice deleted', true), array('action'=>'index'));
-		}
-	}
 
 
 	function master_index() {
@@ -77,15 +52,19 @@ class NoticesController extends AppController {
 		
 	}
 
-	function master_add($project) {
+	function master_add($project = 0) {
 		$this->__checkadmin();
 		if (!empty($this->data)) {
 			$this->data["Notice"]["project_id"] = $project;
 			$this->Notice->create();
 			if ($this->Notice->save($this->data)) {
-				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true, $project));
-			} else {
-			}
+				if($project == 0){
+					$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
+				}else{
+					$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true, $project));
+				}
+				
+			} 
 		}
 		$projects = $this->Notice->Project->find('list');
 		$this->set(compact('projects'));
@@ -115,7 +94,7 @@ class NoticesController extends AppController {
 			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
 		}
 		if ($this->Notice->del($id)) {
-			$this->flash(__('Notice deleted', true), array('action'=>'index'));
+			$this->redirect(array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));
 		}
 	}
 

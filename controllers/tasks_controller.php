@@ -256,6 +256,9 @@ class TasksController extends AppController {
 			$this->data["Task"]["project_id"] = $project;
 			$this->data["Task"]["creator"] = $this->Auth->user("id");
 			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
+			if($this->data["Task"]["status"] == 100){
+				$this->data["Task"]["completed"] = 1;
+			}
 			$date = date('yd');
 			$this->data["Task"]["time"] = time();
 			$this->Task->id = $this->data["Task"]["id"];
@@ -317,6 +320,7 @@ class TasksController extends AppController {
 		$this->__checkadmin($project);
 		$data["Task"]["enddate"] = date("Y-m-d");
 		$data["Task"]["status"] = 100;
+		$data["Task"]["completed"] = '1' ;
 		$this->Task->id = $task;
 		$this->Task->save($data);
 		$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));

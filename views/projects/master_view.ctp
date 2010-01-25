@@ -44,7 +44,7 @@
 									 			</form>
 										<?php endif; ?>
 									</td>
-									<td><?php echo $milestone['name']; ?></td>
+									<td style="background:<?php echo $milestone['color'];?>;"><?php echo $milestone['name']; ?></td>
 									<td><?php echo $milestone['status']; ?></td>
 									<td>
 										<?php if ($milestone['completed'] != '0000-00-00'): ?>

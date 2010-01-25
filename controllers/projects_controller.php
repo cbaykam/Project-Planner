@@ -3,7 +3,7 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 	var $helpers = array('Html', 'Form' , 'Priority', 'Tsk');
-	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug');
+	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice');
 	
 	function index() {
 		$this->UsersProject->recursive = 2;
@@ -195,7 +195,11 @@ class ProjectsController extends AppController {
 												 'Task.enddate'=>'0000-00-00'
 										    )
 										)
-						));			
+						));	
+		$this->set('notices' , $this->Notice->find('all' , array(
+												'conditions'=>array(),
+												'limit'=>4
+		)));		
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);

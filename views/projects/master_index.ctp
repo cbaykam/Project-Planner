@@ -104,18 +104,21 @@
 	<tr>
 		<th></th><th>Notice Board</th>
 	</tr>
-		<?php foreach ($projects as $prj):?>
-				<?php foreach ($prj["Notice"] as $notice):?>
+		
+				<?php foreach ($notices as $notice):?>
 					<tr>
-						<td><?php echo $notice["created"];?></td>
-						<td><?php echo $notice["title"];?></td>
+						<td><?php echo $notice["Notice"]["created"];?></td>
+						<td><?php echo $notice["Notice"]["title"];?></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><?php echo $notice["noticescol"];?></td>
+						<td><?php echo $notice["Notice"]["noticescol"];?></td>
 					</tr>
 				<?php endforeach;?>
-		<?php endforeach;?>
+		<tr>
+			<td></td>
+			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));?></th>
+		</tr>
 	</table>
 	<?php echo $html->link('Add Notice' , array('controller'=>'notices' , 'action'=>'add' , 'master'=>true) , array('class'=>'buttonlink'))?>
 </div>

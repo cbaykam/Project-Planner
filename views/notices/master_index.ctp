@@ -8,8 +8,7 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('project_id');?></th>
+	<th><?php echo $paginator->sort('title');?></th>
 	<th><?php echo $paginator->sort('noticescol');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -23,10 +22,7 @@ foreach ($notices as $notice):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $notice['Notice']['id']; ?>
-		</td>
-		<td>
-			<?php echo $notice['Notice']['project_id']; ?>
+			<?php echo $notice['Notice']['title']; ?>
 		</td>
 		<td>
 			<?php echo $notice['Notice']['noticescol']; ?>
@@ -46,7 +42,7 @@ foreach ($notices as $notice):
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Notice', true), array('action'=>'add')); ?></li>
-	</ul>
+	
+    <?php echo $html->link(__('New Notice', true), array('action'=>'add') , array('class'=>'buttonlink'')); ?>
+	
 </div>

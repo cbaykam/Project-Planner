@@ -4,7 +4,7 @@
 	{  
 	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority' , 'Text');
 	    var $components = array('Auth' , 'Session' , 'Email');
-	    var $uses = array('Project' , 'User');
+	    var $uses = array('Project' , 'User' , 'Milestone' , 'Task');
 	    
 		function beforeFilter()
 	    {
@@ -141,8 +141,15 @@
 		}
 	    
 	    function __calculatetime($hour , $minute){
-		$duration = ($hour * 60) + $minute;
-		return $duration;
-	}
+			$duration = ($hour * 60) + $minute;
+			return $duration;
+		}
+		
+		function __milestoneComplete($tasks){
+			
+			foreach($milestones as $mile){
+				
+			}
+		}
 	}
 ?>
