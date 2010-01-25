@@ -329,7 +329,7 @@ class ProjectsController extends AppController {
 			
 			if (count($data[$i]["Milestone"]) != 0)
 			{
-				$link = '<a href="/planner/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+				$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 				$timell .= "{'titles': '". $link ."', 
 								'events':[";
 				foreach ($data[$i]["Milestone"] as $milestone)
