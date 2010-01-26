@@ -4,6 +4,7 @@ class UsersController extends AppController {
 	var $name = 'Users';
 	var $helpers = array('Html', 'Form');
 	var $uses = array('User' , 'Project');
+	var $logoutUrls = array('/master/users/logout' , '/users/logout');
 	
 	function beforeFilter(){
 		 parent::beforeFilter(); 
@@ -36,6 +37,20 @@ class UsersController extends AppController {
 		
 		$users = $this->User->find('all' , array('order'=>array('User.name') ) );
 		$this->set("timell" , $this->__generateTimeline($users));
+	}
+	
+	function master_available(){
+		$this->__checkadmin();
+		$this->paginate = array('conditions'=>array('User.redalto'=>1) );
+		$this->set("timeline" , true);
+		$users = $this->User->find('all' , array('order'=>array('User.name') ) );
+		$this->set("timell" , $this->__generateTimeline($users));
+	}
+	
+	function master_listview(){
+		$this->__checkadmin();
+		$this->paginate = array('conditions'=>array('User.redalto'=>1) );
+		$this->set('users', $this->paginate());
 	}
 
 	function master_view($id = null) {
@@ -87,6 +102,9 @@ class UsersController extends AppController {
 	}
 	
 	function login(){
+		if( in_array($this->Session->read('Auth.redirect') , $this->logoutUrls) ){
+			$this->Session->write('Auth.redirect' , '/');
+		}
 		if ($this->Auth->isAuthorized())
 		{ 
 		   	if ($this->__checkadmin(null , false))
@@ -99,11 +117,25 @@ class UsersController extends AppController {
 	}
 	
 	function logout(){
+		$this->Session->destroy();
 		$this->redirect($this->Auth->logout());
+	}
+	
+	function sessiondestroy(){
+		$this->Session->destroy();
+		$this->redirect(array('controller'=>'users' , 'action'=>'logout'));
+	}
+	
+	function master_sessiondestroy(){
+		$this->Session->destroy();
+		$this->redirect(array('controller'=>'users' , 'action'=>'logout'));
 	}
 	
 	function master_login()
 	{
+		if( in_array($this->Session->read('Auth.redirect') , $this->logoutUrls) ){
+			$this->Session->write('Auth.redirect' , '/');
+		}
 		if ($this->Auth->isAuthorized())
 		{ 
 		   	if ($this->__checkadmin(null , false))
@@ -118,6 +150,7 @@ class UsersController extends AppController {
 	
 	function master_logout()
 	{
+		$this->Session->destroy();
 		$this->redirect($this->Auth->logout());
 	}
 	

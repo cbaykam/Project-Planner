@@ -6,12 +6,21 @@ class ProjectsController extends AppController {
 	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice');
 	
 	function index() {
+		
 		$this->UsersProject->recursive = 2;
 		// pagination variable 
 		$this->paginate = array(
 					'UsersProject'=>array(
 							'conditions'=>array(
-								'UsersProject.user_id'=>$this->Auth->user("id")
+								'UsersProject.user_id'=>$this->Auth->user("id"),
+								'NOT'=>array(
+									'Project.currstats'=>array('complete' , 'arch')
+								),
+								'order'=>array(
+									'Project.redalto DESC',
+									'Project.created ASC'
+								),
+								'limit'=>5
 							)	
 					)
 		);
@@ -72,6 +81,14 @@ class ProjectsController extends AppController {
 		$this->set('projects', $this->paginate('UsersProject'));
 		$this->set("username" , $this->Auth->user('name'));
 	}
+	
+	function timeline(){
+		
+	}
+	
+	function listview(){
+		
+	}
 
 	function view($id = null) {
 		if (!$id) {
@@ -79,32 +96,6 @@ class ProjectsController extends AppController {
 		}
 		$this->set('project', $this->Project->read(null, $id));
         $this->set("users" , $this->User->find('all'));
-	}
-
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Project', true), array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Project->save($this->data)) {
-				$this->flash(__('The Project has been saved.', true), array('action'=>'index'));
-			} else {
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Project->read(null, $id);
-		}
-		$resources = $this->Project->User->find('list');
-		$this->set(compact('resources'));
-	}
-
-	function delete($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Project', true), array('action'=>'index'));
-		}
-		if ($this->Project->del($id)) {
-			$this->flash(__('Project deleted', true), array('action'=>'index'));
-		}
 	}
 
 	function allprojects(){
@@ -129,6 +120,7 @@ class ProjectsController extends AppController {
 	}
 	
 	function master_allprojects(){
+		$this->__checkadmin();
 		$redalto = $this->Project->find('all' , 
 										array(
 										    'conditions'=>array(
@@ -148,6 +140,33 @@ class ProjectsController extends AppController {
 		$this->set("duotime" , true);
 		$this->set("timell" , $this->__generateTimeline($redalto));
 		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
+	}
+	
+	function master_timeline(){
+		$this->__checkadmin();
+		$redalto = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>1
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0
+										    )
+										)
+						);	
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);
+		$this->set("timell" , $this->__generateTimeline($redalto));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
+	}
+	
+	function master_listview(){
+		$this->__checkadmin();
+		$this->set('projects' , $this->Project->find('all'));
 	}
 	
 	function master_index() {
@@ -239,6 +258,7 @@ class ProjectsController extends AppController {
 	}
 	
 	function master_reports(){
+		$this->__checkadmin();
 		$data = $this->Project->find('all');
 		for ($i = 0; $i < count($data) ; $i++)
 		{
@@ -288,7 +308,8 @@ class ProjectsController extends AppController {
 	/*
 	 * Changes the overview of the project.
 	 */
-	function master_changeover($project){	
+	function master_changeover($project){
+		$this->__checkadmin($project);	
 	    if (!empty($this->data))
 	    {
 	    	 $this->Project->id = $project;

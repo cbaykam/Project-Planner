@@ -5,4 +5,3 @@
     echo $form->input('password');
     echo $form->end('Login');
 ?>
-
