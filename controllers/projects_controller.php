@@ -15,13 +15,14 @@ class ProjectsController extends AppController {
 								'UsersProject.user_id'=>$this->Auth->user("id"),
 								'NOT'=>array(
 									'Project.currstats'=>array('complete' , 'arch')
-								),
-								'order'=>array(
-									'Project.redalto DESC',
-									'Project.created ASC'
-								),
-								'limit'=>5
-							)	
+								)
+							 ),
+							 'order'=>array(
+							 	'Project.redalto DESC',
+							 	'Project.created ASC'
+							 ),
+							 'limit'=>5
+								
 					)
 		);
 		/*
@@ -30,8 +31,16 @@ class ProjectsController extends AppController {
 		 */
 		$prdat = $this->UsersProject->find('all' , array(
 									'conditions'=>array(
-										'UsersProject.user_id'=>$this->Auth->user("id")
-									)
+										'UsersProject.user_id'=>$this->Auth->user("id"),
+										'NOT'=>array(
+											'Project.currstats'=>array('complete' , 'arch')
+										 )
+									 ),
+							 		'order'=>array(
+							 			'Project.redalto DESC',
+							 			'Project.created ASC'
+							 		),
+							 		'limit'=>5
 		));
 		// the id of all the projects 
 		$prids = array();
@@ -73,10 +82,8 @@ class ProjectsController extends AppController {
 		$this->set('notices' ,$this->Notice->find('all' , array('limit'=>5)));
 		//set the duo variable and the timeline because there will be 2 timelines
 		$this->set("timeline" , true);
-		$this->set("duotime" , true);
 		$this->set("toptasks" , $topfivetasks);
 		$this->set("timell" , $this->__generateTimeline($redalto));
-		$this->set("toptasks" , $topfivetasks);
 		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
 		$this->set('projects', $this->paginate('UsersProject'));
 		$this->set("username" , $this->Auth->user('name'));
