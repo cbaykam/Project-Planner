@@ -1,15 +1,15 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
-<?php if (!isset($this->params["pass"][0])): ?>
+<?php if ($iscustomer != 1): ?>
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 <?php else: ?>
 <?php echo $html->link(__('Add Customer', true), array('controller'=>'users' , 'action'=>'add','master'=>true , 1) , array('class'=>'buttonlink')); ?>
 <?php endif; ?>
 <br><br>
 <div class="users index">
-<?php if (!isset($this->params["pass"][0])): ?>
-<h2><?php __('users');?></h2>
+<?php if ($iscustomer != 1): ?>
+<h2><?php __('Resources');?></h2>
 <?php else: ?>
 <h2><?php __('Customers');?></h2>
 <?php endif; ?>
@@ -25,12 +25,14 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('pwork');?></th>
-	<th><?php echo $paginator->sort('pmobile');?></th>
+	<th><?php echo $paginator->sort('Phone' , 'pwork');?></th>
+	<th><?php echo $paginator->sort( 'Mobile' , 'pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
 	<th><?php echo $paginator->sort('skype');?></th>
-	<?php if (!isset($this->params["pass"][0])): ?>
+	<?php if ($iscustomer != 1): ?>
 	<th><?php echo $paginator->sort('View Tasks');?></th>
+	<?php else:?>
+	<th><?php echo $paginator->sort('website');?></th>
 	<?php endif; ?>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
@@ -64,14 +66,18 @@ foreach ($users as $user):
 		<td>
 			<?php echo $user['User']['skype']; ?>
 		</td>
-		<?php if (!isset($this->params["pass"][0])): ?>
+		<?php if ($iscustomer != 1): ?>
 		<td>			
 				<?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser', 'master'=>true , $user['User']['id']) );; ?>	
+		</td>
+		<?php else: ?>
+		<td>
+			<?php echo $user['User']['website']; ?>
 		</td>
 		<?php endif; ?>
 		<td class="actions">
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id'] , $iscustomer), null, sprintf(__('Are you sure you want to delete '.$user['User']['name'].'?', true), $user['User']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

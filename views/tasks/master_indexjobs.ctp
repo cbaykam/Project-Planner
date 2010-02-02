@@ -16,6 +16,7 @@
 	<th><?php echo $paginator->sort('status');?></th>
 	<th><?php echo $paginator->sort('datedone');?></th>
 	<th><?php echo $paginator->sort('time');?></th>
+	<th>Actions</th>
   </tr>
   <tr>
     <?php foreach($tasks as $task):?>
@@ -28,6 +29,10 @@
     		<td><?php echo $task["Task"]["status"];?> %</td>
     		<td><?php echo $tsk->done($task["Task"]["enddate"]);?></td>
     		<td><?php echo $tsk->duration($task["Activity"]); ?></td>
+    		<td>
+    			<?php echo $html->link('Edit' , array('controller'=>'tasks' , 'action'=>'jobedit','master'=>true ,$task["Task"]['id'], $redalto)); ?> |
+    			<?php echo $html->link('Delete' , array('controller'=>'tasks' , 'action'=>'delete','master'=>true ,$task["Task"]['id'], 0,$redalto) , null , 'Are You Sure You want to delete job '. $task["Task"]['name'] .'?'); ?>
+    		</td>
     	</tr>
     <?php endforeach;?>
   </tr>

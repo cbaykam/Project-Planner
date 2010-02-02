@@ -1,7 +1,11 @@
 <div class="users form">
 <?php echo $form->create('User' , array('url'=>array('controller'=>'users' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0]) ));?>
 	<fieldset>
- 		<legend><?php __('Add user');?></legend>
+	 <?php if($this->params["pass"][0] == 1):?>
+ 		<legend><?php __('Add Customer');?></legend>
+ 	<?php else:?>
+ 		<legend><?php __('Add Resource');?></legend>
+ 	<?php endif;?>
 	<?php
 		echo $form->input('name');
 		echo $form->input('email');
@@ -12,6 +16,7 @@
 		echo $form->input('skype');
 		if(isset($this->params["pass"][0])){
 			echo $form->input('redalto' , array('type'=>'hidden' , 'value'=>'0' ) );
+			echo $form->input('website');
 		}else{
 			echo $form->input('redalto' , array('type'=>'hidden' , 'value'=>'1' ) );
 			echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'User Admin'));

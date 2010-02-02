@@ -17,8 +17,8 @@
 	<br><br>
 	
 	
-	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
-
+	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?>
+	<?php echo $html->link("Standard Milestones" , array('controller'=>'standarts' , 'action'=>'index' , 'master'=>true ) , array('class'=>'buttonlink'))?>
 	
 		<h3>My Top 5 Tasks</h3>
 	<?php if(count($toptasks) != 0):?>
@@ -107,7 +107,7 @@
 		
 				<?php foreach ($notices as $notice):?>
 					<tr>
-						<td><?php echo $notice["Notice"]["created"];?></td>
+						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
 						<td><?php echo $notice["Notice"]["title"];?></td>
 					</tr>
 					<tr>

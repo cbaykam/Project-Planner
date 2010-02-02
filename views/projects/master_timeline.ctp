@@ -2,6 +2,7 @@
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
 
+<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
 
 
 <table style="width:250px;">
@@ -9,26 +10,14 @@
     <td></td>
     <th>Standard Project Milestones</th>
   </tr>
-  <tr>
-    <td>Phase 1</td>
-    <td style="background:#d7e4bd;">Consult (Assess & Specify)</td>
-  </tr>
-  <tr>
-    <td>Phase 2</td>
-    <td style="background:#fcd5b5;">Design (Graphic Design)</td>
-  </tr>
-  <tr>
-    <td>Phase 3</td>
-    <td style="background:#b9cde5;">Build (Web Development)</td>
-  </tr>
-  <tr>
-    <td>Phase 4</td>
-    <td style="background:#ffff99;">Test (ORT)</td>
-  </tr>
-  <tr>
-    <td>Phase 5</td>
-    <td style="background:#ff99ff;">Launch (UAT & Client Handover)</td>
-  </tr>
+  <?php $i = 1;?>
+  <?php foreach ($stmileston as $stmls):?>
+  	<tr>
+	    <td>Phase <?php echo $i;?></td>
+	    <?php $i++;?>
+	    <td style="background:<?php echo $stmls["Standart"]["color"]?>;"><?php echo $stmls["Standart"]["name"]?></td>
+  	</tr>
+  <?php endforeach;?>
 </table>
 <br><br>
 

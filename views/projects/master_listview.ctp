@@ -1,3 +1,4 @@
+<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
 
 <table border="0" cellspacing="0" cellpadding="0">
 		<tr>

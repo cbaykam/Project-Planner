@@ -4,15 +4,10 @@
  		<legend><?php __('Edit Notice');?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('project_id');
-		echo $form->input('noticescol');
+		echo $form->input('title' , array('label'=>'Title'));
+		echo $form->input('noticescol' , array('label'=>'Message'));
+		echo $form->input('date');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Notice.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Notice.id'))); ?></li>
-		<li><?php echo $html->link(__('List Notices', true), array('action'=>'index'));?></li>
-	</ul>
 </div>

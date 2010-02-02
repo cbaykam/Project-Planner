@@ -222,10 +222,20 @@ class ProjectsController extends AppController {
 										    )
 										)
 						));	
+						
+		//get the projects in of the users to get the notices. 
+		$projuserar = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id'=>$this->Auth->user('id'))));
+		$projectsusersin = array(0=>'0');
+		for ($i = 0; $i < count($projuserar); $i++) {
+			$projectsusersin[] = $projuserar[$i]['UsersProject']['project_id'];	
+		}
 		$this->set('notices' , $this->Notice->find('all' , array(
-												'conditions'=>array(),
+												'conditions'=>array(
+													'Notice.project_id'=>$projectsusersin
+												),
 												'limit'=>4
-		)));		
+		)));
+				
 		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
 		$this->set("timeline" , true);
@@ -293,8 +303,9 @@ class ProjectsController extends AppController {
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			} 
 		}
-		$users = $this->Project->User->find('list' , array('conditions'=>array('User.admin'=>'0') ) );
-		$this->set(compact('users'));
+		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
+		$customers = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'0') ) );
+		$this->set(compact('users' , 'customers'));
 	}
 
 	function master_edit($id = null) {

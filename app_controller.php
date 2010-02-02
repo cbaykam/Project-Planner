@@ -4,7 +4,7 @@
 	{  
 	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority' , 'Text');
 	    var $components = array('Auth' , 'Session' , 'Email');
-	    var $uses = array('Project' , 'User' , 'Milestone' , 'Task');
+	    var $uses = array('Project' , 'User' , 'Milestone' , 'Task' , 'Standart');
 	    
 		function beforeFilter()
 	    {
@@ -22,6 +22,8 @@
             //get projects 
              
             $this->__getProjects();
+           
+            $this->__standartmiles();
             	    
             //check if user is logged in 
             if ($this->Auth->user('id') != 0 )
@@ -150,6 +152,10 @@
 			foreach($milestones as $mile){
 				
 			}
+		}
+		
+		function __standartmiles(){
+			$this->set('stmileston' , $this->Standart->find('all'));
 		}
 	}
 ?>

@@ -77,7 +77,7 @@ class NoticesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Notice->save($this->data)) {
-				$this->flash(__('The Notice has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));
 			} else {
 			}
 		}

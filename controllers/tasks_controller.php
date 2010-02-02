@@ -305,14 +305,65 @@ class TasksController extends AppController {
 		$this->set(compact('tasks' , 'milestones'));
 		
 	}
+	
+	function master_jobedit($id,$redalto){
+		$this->__checkadmin();
+		if (!empty($this->data)) {
+			$mail = false;
+			// If no project is specified.
+			
+			$this->data["Task"]["project_id"] = 0;
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
+			if($this->data["Task"]["status"] == 100){
+				$this->data["Task"]["completed"] = 1;
+			}
+			$date = date('yd');
+			$this->data["Task"]["time"] = time();
+			$this->Task->id = $this->data["Task"]["id"];
+			if ($this->Task->save($this->data)) {
+				//redirection part
+				$this->redirect(array('controller'=>'tasks', 'action'=>'indexjobs', 'master'=>true, $redalto));
+				
+			} 
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->Task->read(null, $id);
+		}
 
-	function master_delete($id = null , $project) {
+		// Fetching the project data will get the users too . 
+		$resources = $this->User->find('all' , array(
+									'conditions'=>array(
+										'User.redalto'=>1
+									)
+		));
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		$users = array();
+		$i = 0;
+		foreach ($resources as $res)
+		{
+			$users[$i]["name"] = $res["User"]["name"];
+			$users[$i]["id"] = $res["User"]["id"];
+			$i++;
+		}
+		$this->set("users" , $users);
+		// get the list of projects
+		$this->set(compact('tasks' , 'milestones'));
+	}
+
+	function master_delete($id = null , $project , $redalto = 0) {
 		$this->__checkadmin($project);
 		if (!$id) {
 			$this->flash(__('Invalid Task', true), array('action'=>'index'));
 		}
 		if ($this->Task->del($id)) {
-			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project));
+			if($project == 0){
+					$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , 'master'=>true , $redalto));	
+			}else{
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project));
+			}
+			
 		}
 	}
 	

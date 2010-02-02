@@ -403,10 +403,13 @@ label {
 	font-size: 110%;
 	padding-right: 20px;
 	width:170px;
+	vertical-align:top;
 }
 input, textarea {
 	clear: both;
 	padding: 2px;
+	font-size:14px;
+	font-family:Arial;
 }
 select {
 	font-size: 10px;

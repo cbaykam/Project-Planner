@@ -1,7 +1,7 @@
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 <div class="users index">
 
-<h2><?php __('users');?></h2>
+<h2><?php __('Resources');?></h2>
 
 
 <p>
@@ -15,8 +15,8 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('pwork');?></th>
-	<th><?php echo $paginator->sort('pmobile');?></th>
+	<th><?php echo $paginator->sort('Phone','pwork');?></th>
+	<th><?php echo $paginator->sort('Mobile','pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
 	<th><?php echo $paginator->sort('skype');?></th>
 	<?php if (!isset($this->params["pass"][0])): ?>
@@ -61,7 +61,7 @@ foreach ($users as $user):
 		<?php endif; ?>
 		<td class="actions">
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete '.$user['User']['name'].'?', true), $user['User']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

@@ -22,10 +22,11 @@ class UsersController extends AppController {
 		$this->set('User', $this->User->read(null, $id));
 	}
 
-	function master_index($customer = null) {
+	function master_index($customer = 0) {
 		$this->__checkadmin();
 		$this->User->recursive = 1;
-		if ($customer)
+		$this->set('iscustomer', $customer);
+		if ($customer != 0)
 		{
 			$this->paginate = array('conditions'=>array('User.redalto'=>0) );
 			$this->set("timeline" , false);
@@ -43,7 +44,7 @@ class UsersController extends AppController {
 		$this->__checkadmin();
 		$this->paginate = array('conditions'=>array('User.redalto'=>1) );
 		$this->set("timeline" , true);
-		$users = $this->User->find('all' , array('order'=>array('User.name') ) );
+		$users = $this->User->find('all' , array('order'=>array('User.name') , 'conditions'=>array('User.redalto'=>'1') ) );
 		$this->set("timell" , $this->__generateTimeline($users));
 	}
 	
@@ -76,28 +77,46 @@ class UsersController extends AppController {
 		$projects = $this->User->Project->find('list');
 		$this->set(compact('projects'));
 	}
+	
+	function remind(){
+		if(!empty($this->data)){
+			
+		}
+	}
 
 
 	function master_edit($id = null) {
 		$this->__checkadmin();
-		$this->set("userDat" , $this->User->read(null, $id));
+		$userdat = $this->User->read(null, $id);
+		$this->set("userDat" , $userdat);
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
+			if($this->data['User']['password'] == Security::hash('', null, true)){
+				unset($this->data["User"]["password"]);
+			}
 			if ($this->User->save($this->data)) {
-				$this->redirect(array('controller'=>'users' , 'action'=>'index', 'master'=>true));
+				//redirection
+				if($userdat["User"]["redalto"] == 0){
+					$this->redirect(array('controller'=>'users' , 'action'=>'index', 'master'=>true , 1));	
+				}else{
+					$this->redirect(array('controller'=>'users' , 'action'=>'listview', 'master'=>true , 0));
+				}
+				
 			} 
 		}
 	}
 
-	function master_delete($id = null) {
+	function master_delete($id = null , $customer = 0) {
 		$this->__checkadmin();
-		if (!$id) {
-			$this->flash(__('Invalid User', true), array('action'=>'index'));
-		}
 		if ($this->User->del($id)) {
-			$this->flash(__('User deleted', true), array('action'=>'index'));
+			if($customer == 0){
+				$this->redirect(array('controller'=>'users', 'action'=>'listview','master'=>true));	
+			}else{
+				$this->redirect(array('controller'=>'users', 'action'=>'index','master'=>true , $customer));
+			}
+			
 		}
 	}
 	
@@ -193,6 +212,10 @@ class UsersController extends AppController {
 		}
 		
 		return $timell;
+	}
+	
+	function __remindpass(){
+		
 	}
 
 }
