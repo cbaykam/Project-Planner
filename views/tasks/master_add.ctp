@@ -4,18 +4,18 @@
 	 <?php if($buggie == 0):?>
  		<legend><?php __('Add Task');?></legend>
  	<?php else:?>
- 		<legend><?php __('Add Issue');?></legend>
+ 		<legend><?php __('Create Job');?></legend>
 	<?php endif;?>
 	<?php
 		echo $form->input('name');
 		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') ) );
 		echo $form->input('status' , array('type'=>'select', 'options'=>array('0'=>'0%' , '10'=>'10%' , '20'=>'20%', '30'=>'30%', '40'=>'40%', '50'=>'50%', '60'=>'60%', '70'=>'70%', '80'=>'80%', '90'=>'90%', '100'=>'100%') ) );
 		echo $form->input('description');
-		echo $form->input('startdate');
-		echo $form->input('duedate');
+		echo $form->input('startdate' , array('label'=>'Start Date'));
+		echo $form->input('duedate', array('label'=>'Due Date'));
 		if ($this->params["pass"][1] == 0)
 		{
-			 echo '<label for="TaskUserId">Please Select A User for the task</label>'; 
+			 echo '<label for="TaskUserId">Assign a Resource</label>'; 
 		     echo '<select id="TaskUserId" name="data[Task][user_id]">
 					<option value="">(None)</option>';
 				foreach ($users as $usr)

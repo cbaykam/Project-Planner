@@ -304,7 +304,7 @@ class ProjectsController extends AppController {
 			} 
 		}
 		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
-		$customers = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'0') ) );
+		$customers = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'0') , 'order'=>array('User.name') ) );
 		$this->set(compact('users' , 'customers'));
 	}
 

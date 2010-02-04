@@ -1,9 +1,10 @@
 <?php if($redalto == 0):?>
-  <h3>WEBSITE BUGS, MAINTENANCE & SUPPORT</h3>
-  <?php echo $html->link('Add Request' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 0) , array('class'=>'buttonlink'));?>
+  <h1>Customer Support Jobs</h1>
+  Tracking of customer operational support issues
+	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 0) , array('class'=>'buttonlink'));?>
 <?php else:?>
   <h3>REDALTO.APPS ISSUE TRACKER</h3>
-    <?php echo $html->link('Add Request' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
+    <?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
 <?php endif;?>
 <?php if(count($tasks) != 0):?> 
 <table>

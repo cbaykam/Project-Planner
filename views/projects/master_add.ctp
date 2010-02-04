@@ -8,7 +8,7 @@
 		echo $form->input('name');
 		echo $form->input('overview' , array('type'=>'textfield') );
 		echo $form->input('user_id' , array('label'=>'Project Manager'));
-		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer Maintanance' , '1'=>'Redalto Project') ) );
+		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer Project' , '1'=>'Redalto Project') ) );
 		echo $form->input('customer_id');
 	?>
 	<br><br>
