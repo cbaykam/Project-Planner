@@ -133,6 +133,7 @@ class UsersController extends AppController {
 			    $this->redirect(array('controller'=>'projects' , 'action'=>'index'));
 			}
 		}
+	
 	}
 	
 	function logout(){
