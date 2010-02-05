@@ -60,7 +60,7 @@
 					<?php endforeach;?>
 					<tr>
 						<td></td><td></td><td></td><td></td><td></td>
-						<th><?php echo $html->link('View All Milestones' , array('controller' => 'milestones' , 'action' => 'view', 'master'=>true , $project['Project']['id']) ); ?></th>
+						<th><?php echo $html->link('View All Milestones' , array('controller' => 'milestones' , 'action' => 'index', 'master'=>true , $project['Project']['id']) ); ?></th>
 					</tr>
 				</table>
 			</div>

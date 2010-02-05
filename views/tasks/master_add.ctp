@@ -36,12 +36,11 @@
 			<?php echo $form->input('project_id'); ?>
 		<?php else:?>
 			<?php echo $form->input('project_id' , array('type'=>'hidden' , 'value'=>'0')); ?>
-			<label for="TaskCustomer">Please Select the customer</label>
-			<select id="TaskUserId" name="data[Task][customer]">
-				<?php foreach ($customers as $cust):?>
-					<option value="<?php echo $cust["User"]["name"];?>"><?php echo $cust["User"]["name"];?></option>
-				<?php endforeach;?>
-			</select>
+			<?php if ($this->params['pass'][4] == 0): ?>
+				<?php echo $form->input('customer')?>
+			<?php else:?>
+				<?php echo $form->input('customer' , array('type'=>'hidden' , 'value'=>'redalto')); ?>
+			<?php endif; ?>
 			<?php echo $form->input('task_id' , array('type'=>'hidden' , 'value'=>'0')); ?>
 		<?php endif;?>
 	<?php else: ?>

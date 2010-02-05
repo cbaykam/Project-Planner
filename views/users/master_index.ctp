@@ -1,3 +1,4 @@
+<?php $paginator->options(array('url' => $this->passedArgs));?>
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
@@ -88,6 +89,7 @@ foreach ($users as $user):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+
 <?php if ($timeline): ?>
 	<h3>Resourcing</h3>
 

@@ -121,6 +121,12 @@ class TasksController extends AppController {
 		$this->set('tasks', $this->paginate());
 		$this->set('redalto' , $redalto);
 	}
+	
+	function master_redaltoapprove($id){
+		$this->Task->id = $id;
+		$this->Task->saveField('approved' , 1);
+		$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , 'master'=>true ,1));
+	}
 
 	/*
 	*
@@ -195,13 +201,13 @@ class TasksController extends AppController {
 			} 
 		}
 		//if this is a bug select customers 
-			if($bug == 1){
+			/*if($bug == 1){
 				$this->set('customers' , $this->User->find('all' , array(
 										'conditions'=>array(
 											"User.redalto"=>0
 										)
 				)));
-			}
+			}*/
 		// Find user If the user is set get user_id 
 		if ($user != 0)
 		{

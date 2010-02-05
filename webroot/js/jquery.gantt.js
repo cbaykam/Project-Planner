@@ -92,13 +92,27 @@
 						default:
 							var listUl = $('<ul class="GNT_calList GNT_monthList"></ul>');
 							var month = null;
+							var monthss = new Array();
+							monthss[1] = 'Jan';
+							monthss[2] = 'Feb';
+							monthss[3] = 'Mar';
+							monthss[4] = 'Apr';
+							monthss[5] = 'May';
+							monthss[6] = 'Jun';
+							monthss[7] = 'Jul';
+							monthss[8] = 'Aug';
+							monthss[9] = 'Sep';
+							monthss[10] = 'Oct';
+							monthss[11] = 'Nov';
+							monthss[12] = 'Dec';
 							var remain = gnt.getRemainDate(p.from.y, p.from.m, p.from.d, p.to.y, p.to.m, p.to.d);
 							if (remain > gnt.rangeLimit){
 								remain = gnt.rangeLimit;
 							}
+						
 							for(y=p.from.y;y<=p.to.y;y++){
 								for(m=m;m<=12;m++){
-									month = $('<li><div class="GNT_month">'+y+'/'+m+'</div><div class="GNT_date"></div></li>');
+									month = $('<li><div class="GNT_month">'+monthss[m]+' '+y+'</div><div class="GNT_date"></div></li>');
 									wd = gnt.getRemainDate(y, m, d, y, m+1, 0);
 									if (wd > remain){
 										wd = remain;

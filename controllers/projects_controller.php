@@ -196,7 +196,6 @@ class ProjectsController extends AppController {
 												'limit'=>5,
 												'conditions'=>array(
 													'Task.user_id'=>$this->Auth->user("id"),
-													'Task.type'=> null,
 													'NOT'=>array(
 														'Task.status'=>100
 													)

@@ -1,9 +1,10 @@
 <?php if($redalto == 0):?>
   <h1>Customer Support Jobs</h1>
-  Tracking of customer operational support issues
+  Tracking of customer operational support issues.
 	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 0) , array('class'=>'buttonlink'));?>
 <?php else:?>
-  <h3>REDALTO.APPS ISSUE TRACKER</h3>
+  <h1>REDALTO JOBS</h1>
+  Tracking of Redalto operational and future development issues.
     <?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
 <?php endif;?>
 <?php if(count($tasks) != 0):?> 
@@ -17,6 +18,7 @@
 	<th><?php echo $paginator->sort('status');?></th>
 	<th><?php echo $paginator->sort('datedone');?></th>
 	<th><?php echo $paginator->sort('time');?></th>
+	<th><?php echo $paginator->sort('approved');?></th>
 	<th>Actions</th>
   </tr>
   <tr>
@@ -30,9 +32,15 @@
     		<td><?php echo $task["Task"]["status"];?> %</td>
     		<td><?php echo $tsk->done($task["Task"]["enddate"]);?></td>
     		<td><?php echo $tsk->duration($task["Activity"]); ?></td>
+    			<?php if($redalto == 1):?>
+    				<td><?php echo $tsk->approved($task["Task"]["approved"]); ?></td>
+    			<?php endif;?>
     		<td>
     			<?php echo $html->link('Edit' , array('controller'=>'tasks' , 'action'=>'jobedit','master'=>true ,$task["Task"]['id'], $redalto)); ?> |
     			<?php echo $html->link('Delete' , array('controller'=>'tasks' , 'action'=>'delete','master'=>true ,$task["Task"]['id'], 0,$redalto) , null , 'Are You Sure You want to delete job '. $task["Task"]['name'] .'?'); ?>
+    			<?php if($redalto == 1):?>
+    				| <?php echo $html->link('Approve' , array('controller'=>'tasks' , 'action'=>'redaltoapprove','master'=>true ,$task["Task"]['id']) , null , 'This Will approve the job '. $task["Task"]['name'] .'?'); ?>
+    			<?php endif;?>
     		</td>
     	</tr>
     <?php endforeach;?>

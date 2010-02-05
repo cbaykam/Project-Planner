@@ -19,7 +19,7 @@
 			echo $form->input('website');
 		}else{
 			echo $form->input('redalto' , array('type'=>'hidden' , 'value'=>'1' ) );
-			echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'User Admin'));
+			echo $form->input('admin' , array('type'=>'select' , 'options'=>array('0'=>'No' , '1'=>'Yes') , 'label'=>'Admin Rights'));
 		}
 		
 		

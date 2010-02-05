@@ -45,8 +45,4 @@ foreach ($milestones as $milestone):
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Milestone', true), array('action'=>'add')); ?></li>
-	</ul>
-</div>
+

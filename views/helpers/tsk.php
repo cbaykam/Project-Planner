@@ -46,6 +46,17 @@
 					return $this->output($this->Timecal->format($date));
 				}
 			}
+			
+			function approved($app){
+				switch ($app){
+					case 0:
+						return $this->output('No');
+					break;
+					case 1:
+						return $this->output('Yes');
+					break;
+				}
+			}
 		}
 
 ?>

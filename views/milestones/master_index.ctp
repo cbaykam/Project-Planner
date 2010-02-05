@@ -11,6 +11,9 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('project_id');?></th>
+	<th><?php echo $paginator->sort('startdate');?></th>
+	<th><?php echo $paginator->sort('enddate');?></th>
+	<th><?php echo $paginator->sort('status');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -29,12 +32,20 @@ foreach ($milestones as $milestone):
 			<?php echo $milestone['Milestone']['name']; ?>
 		</td>
 		<td>
-			<?php echo $milestone['Milestone']['project_id']; ?>
+			<?php echo $milestone['Project']['name']; ?>
+		</td>
+		<td>
+			<?php echo $milestone['Milestone']['startdate']; ?>
+		</td>
+		<td>
+			<?php echo $milestone['Milestone']['enddate']; ?>
+		</td>
+		<td>
+			<?php echo $milestone['Milestone']['status']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $milestone['Milestone']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $milestone['Milestone']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $milestone['Milestone']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $milestone['Milestone']['id'])); ?>
+			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $milestone['Milestone']['id'] , $this->params["pass"][0])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $milestone['Milestone']['id'], $this->params["pass"][0]), null, sprintf(__('Are you sure you want to delete %s?', true), $milestone['Milestone']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -44,9 +55,4 @@ foreach ($milestones as $milestone):
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Milestone', true), array('action'=>'add')); ?></li>
-	</ul>
 </div>
