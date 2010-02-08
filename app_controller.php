@@ -9,6 +9,7 @@
 		function beforeFilter()
 	    {
 	    	// Dont use timeline for start
+	    	$this->Auth->authenticate = ClassRegistry::init('User');
 	    	$this->set("timeline" , false);
 	    	$this->set("colorpicker" , false);
 	    	$this->set('user_idd' , $this->Auth->user("id"));

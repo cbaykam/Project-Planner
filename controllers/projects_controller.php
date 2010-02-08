@@ -250,7 +250,7 @@ class ProjectsController extends AppController {
 		}
 		$prdat = $this->Project->read(null, $id);
 		$this->set('project', $prdat);
-        $this->set("users" , $this->User->find('list'));
+        $this->set("users" , $this->User->find('list' , array('conditions'=>array('redalto'=>'1'))));
         // Why fetching seperately 
         $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(
@@ -264,9 +264,12 @@ class ProjectsController extends AppController {
 		$i = 0;
 		foreach ($prdat["User"] as $res)
 		{
-			$usersa[$i]['name'] = $res["name"];
-			$usersa[$i]['id'] = $res["id"];
-			$i++;
+			if($res["redalto"] == 1){
+				$usersa[$i]['name'] = $res["name"];
+				$usersa[$i]['id'] = $res["id"];
+				$i++;
+			}
+			
 		}
 		$this->set("sumhours" , $this->__calcDuration($prdat));
 		$this->set(compact('usersa'));

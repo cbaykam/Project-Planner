@@ -48,6 +48,15 @@
 		<?php echo $form->input('milestone_id' , array('label'=>'Project Phase')); ?>
 	<?php endif; ?>
 	</fieldset>
+	<fieldset>
+		<h3>Recurrance</h3>
+			<?php echo $form->input('recursive' , array('type'=>'select' , 'options'=>array("1"=>'yes' , "0"=>'no')))?>
+			<?php echo $form->input('recduration' , array('label'=>'Duration (Days)'))?>
+			How many Times will task repeat itself. (If you delete the main task it will stop repeating.)
+			<br><br>
+			<?php echo $form->input('rechowmany' , array('label'=>'How many times shall this task repeat'))?>
+	</fieldset>
+	<br><br>
 <?php echo $form->end('Submit');?>
 </div>
 

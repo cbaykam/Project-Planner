@@ -8,6 +8,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter(){
 		 parent::beforeFilter(); 
+		 $this->Auth->allowedActions = array('remindpass' , 'master_remindpass');
 	}
 
 	function index() {
@@ -174,6 +175,58 @@ class UsersController extends AppController {
 		$this->redirect($this->Auth->logout());
 	}
 	
+	function remindpass(){
+		
+		if(!empty($this->data)){
+			$user = $this->User->find('all' , array(
+						'conditions'=>array(
+							'User.email'=>$this->data["User"]["username"]
+						),
+						'limit'=>1
+			));	
+			
+			if(count($user) != 0){
+				$this->__remindmail($user[0]["User"]["email"] , $user[0]["User"]["password"]);
+				$this->Session->setFlash('Mail Sent');	
+				$this->redirect(array('controller'=>'users' , 'action'=>'login' , 'master'=>true));
+			}else{
+				$this->Session->setFlash('Could not find an account with the specified e-mail address.');
+			}
+			
+			
+		}	
+	}
+	
+	function master_remindpass(){
+		
+		if(!empty($this->data)){
+			$user = $this->User->find('all' , array(
+						'conditions'=>array(
+							'User.email'=>$this->data["User"]["username"]
+						),
+						'limit'=>1
+			));	
+			
+			if(count($user) != 0){
+				$this->__remindmail($user[0]["User"]["email"] , $user[0]["User"]["password"]);
+				$this->Session->setFlash('Mail Sent');	
+				$this->redirect(array('controller'=>'users' , 'action'=>'login' , 'master'=>true));
+			}else{
+				$this->Session->setFlash('Could not find an account with the specified e-mail address.');
+			}
+			
+			
+		}
+	}
+	
+	function __remindmail($email , $pass){
+		$this->Email->from    = 'Redalto <project@redalto.com>';
+		$this->Email->to      = $email;
+		$this->Email->subject = 'Your Project Planner Password';
+		$message = 'Your project planner password is:' . $pass;
+		$this->Email->send($message);
+	}
+	
 	function __generateTimeline($data){
 		$first = true;
 		$timell = '';
@@ -213,10 +266,6 @@ class UsersController extends AppController {
 		}
 		
 		return $timell;
-	}
-	
-	function __remindpass(){
-		
 	}
 
 }

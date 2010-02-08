@@ -837,3 +837,4 @@
 2010-01-29 18:39:17 Notice: Notice (8): Undefined variable: adminuser in [APP/views/elements/topnav.ctp, line 2]
 2010-01-29 18:39:17 Notice: Notice (8): Undefined variable: user_idd in [APP/views/elements/topnav.ctp, line 71]
 2010-01-29 18:39:17 Notice: Notice (8): Undefined variable: user_idd in [APP/views/elements/topnav.ctp, line 74]
+2010-02-08 14:47:06 Notice: Notice (8): Undefined variable: ganttconsumer in [APP/views/elements/timeline.ctp, line 72]

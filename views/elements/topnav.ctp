@@ -1,4 +1,4 @@
-<?php $loginurls = array('/' , 'master/users/login');?>
+<?php $loginurls = array('/' , 'master/users/login' , 'master/users/remindpass' , 'users/remindpass');?>
 <?php if ($adminuser): ?>
 	<ul id="qm0" class="qmmc">
 

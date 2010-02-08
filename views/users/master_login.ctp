@@ -4,4 +4,5 @@
     echo $form->input('email');
     echo $form->input('password');
     echo $form->end('Login');
+    echo $html->link('Forgot Password', array('controller'=>'users' , 'action'=>'remindpass'));
 ?>
