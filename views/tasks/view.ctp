@@ -1,63 +1,96 @@
-<div class="tasks view">
-<h2><?php  __('Task');?></h2>
-	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['name']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Project Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['project_id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Status'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['status']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Priority'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['priority']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Type'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['type']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Description'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['description']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Duedate'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['duedate']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Resource Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['resource_id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Dependency'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $task['Task']['dependency']; ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit Task', true), array('action'=>'edit', $task['Task']['id'])); ?> </li>
-		<li><?php echo $html->link(__('Delete Task', true), array('action'=>'delete', $task['Task']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $task['Task']['id'])); ?> </li>
-		<li><?php echo $html->link(__('List Tasks', true), array('action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Task', true), array('action'=>'add')); ?> </li>
-	</ul>
-</div>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th><?php echo $task["Task"]["id"] ?></th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td><?php echo $task["Task"]["name"] ?></td>
+	</tr>
+	<tr>
+		<?php if (isset($task["User"]["name"])): ?>
+			<td>Task Owner</td>
+			<td><?php echo $task["User"]["name"] ?></td>
+		<?php else: ?>
+			<td>Task Owner</td>
+			<td>(None)</td>
+		<?php endif; ?>
+	</tr>
+	<?php if ($depend): ?>
+		<tr>
+			<td>Dependency</td>
+			<td><?php echo $depend["Task"]["id"] . ' [ Status ' . $depend["Task"]["status"]; ?> % ]</td>
+		</tr>
+	<?php endif; ?>
+	<?php if($projectid != 0):?>
+		<tr>
+			<td>Project Phase</td>
+			<td><?php echo $task["Milestone"]["name"];?></td>
+		</tr>
+	<?php endif;?>
+	<tr>
+		<td>Last Update</td>
+		<td>
+			<?php if ($task["Task"]["modified"] == '0000-00-00'): ?>
+				<?php echo $timecal->format($task["Task"]["created"]);?>
+			<?php else: ?>
+				<?php echo $timecal->format($task["Task"]["modified"]);?>
+			<?php endif; ?>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>Due Date</td>
+		<td>
+			<?php echo $tsk->overdue($task["Task"]["duedate"]);?>
+		</td>
+	</tr>
+	<tr>
+		<td>Status</td>
+		<td><?php echo $task["Task"]["status"] ?> %</td>
+	</tr>
+	
+</table>
+<?php if($task["Task"]["user_id"] != null):?>
+<?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
+<?php else:?>
+<h3>You must assign this task to an user before adding any notes.</h3>
+<?php endif;?>
+ <?php if (count($task["Activity"]) != 0): ?>
+  
+
+ <table border="0" cellspacing="0" cellpadding="0">
+ 	<tr>
+ 		<th>Activities / Notes</th>
+ 		<th>&nbsp;</th><th>&nbsp;</th>
+ 		<th>Total :</th>
+ 		<th><?php echo $tsk->duration($task["Activity"]); ?></th>
+ 	</tr>
+ 	<tr>
+ 	     <th>Date</th>
+ 	     <th>By</th>
+ 	     <th>Description</th>
+ 	     <th>Time</th>
+ 	     <th>Actions</th>
+ 	</tr>
+ 	<?php foreach($task["Activity"] as $act):?>
+ 	
+ 			<tr>
+ 				<td><?php echo $act["date"] ?></td>
+ 				<td><?php echo $task["User"]["name"] ?></td>
+ 				<td><?php echo $act["description"] ?></td>
+ 				<td><?php echo $timecal->show($act["duration"]); ?></td>
+ 				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit' , $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>
+ 			</tr>
+ 	
+ 	<?php endforeach;?>
+ 	
+ 	
+ 	
+ </table>
+ <?php else: ?>
+ 	<h3>There are no notes in this task at this time.</h3>
+ <?php endif; ?>
+ <?php if($projectid != 0):?>
+		<?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view', $projectid), array('class'=>'buttonlink') ); ?></li>
+ <?php endif;?>	

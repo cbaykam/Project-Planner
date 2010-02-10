@@ -51,9 +51,11 @@
 	</tr>
 	
 </table>
-
+<?php if($task["Task"]["user_id"] != null):?>
 <?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
-
+<?php else:?>
+<h3>You must assign this task to an user before adding any notes.</h3>
+<?php endif;?>
  <?php if (count($task["Activity"]) != 0): ?>
   
 

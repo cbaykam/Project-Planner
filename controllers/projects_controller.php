@@ -6,65 +6,27 @@ class ProjectsController extends AppController {
 	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice');
 	
 	function index() {
-		
-		$this->UsersProject->recursive = 2;
-		// pagination variable 
-		$this->paginate = array(
-					'UsersProject'=>array(
-							'conditions'=>array(
-								'UsersProject.user_id'=>$this->Auth->user("id"),
-								'NOT'=>array(
-									'Project.currstats'=>array('complete' , 'arch')
-								)
-							 ),
-							 'order'=>array(
-							 	'Project.redalto DESC',
-							 	'Project.created ASC'
-							 ),
-							 'limit'=>5
-								
-					)
-		);
-		/*
-		 * Getting all the project ids for the users .
-		 * For seperating the redalto and consumer jobs. 
-		 */
-		$prdat = $this->UsersProject->find('all' , array(
+		$this->Project->recursive = 2;
+		// find the projects user in 
+		$userProjs = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id'=>$this->Auth->user("id"))));
+		$pui = array();
+		foreach($userProjs as $puai){
+			$pui[] = $puai["Project"]["id"];
+		}
+		$data = $this->Project->find('all' , array(
 									'conditions'=>array(
-										'UsersProject.user_id'=>$this->Auth->user("id"),
+										'Project.id'=>$pui,
 										'NOT'=>array(
 											'Project.currstats'=>array('complete' , 'arch')
-										 )
-									 ),
-							 		'order'=>array(
-							 			'Project.redalto DESC',
-							 			'Project.created ASC'
-							 		),
-							 		'limit'=>5
-		));
-		// the id of all the projects 
-		$prids = array();
+										)
+									),
+									'order'=>array(
+										'Project.redalto DESC',
+										'Project.created ASC'
+									),
+									'limit'=>5
+		) );
 		
-		for ($i = 0 ; $i < count($prdat) ; $i++){
-			array_push($prids, $prdat[$i]["Project"]["id"]);
-		}
-		
-		//consumer projetcts for the timeline .
-		$consumer = $this->Project->find("all" , array(
-									'conditions'=>array(
-											'Project.id'=>$prids,
-											'Project.redalto'=>0
-									)								
-		));
-		
-		//redalto projects for the timeline 
-		$redalto = $this->Project->find("all" , array(
-									'conditions'=>array(
-											'Project.id'=>$prids,
-											'Project.redalto'=>1
-									)								
-		));
-		//top 5 tasks
 		$topfivetasks = $this->Task->find("all" , array(
 												'limit'=>5,
 												'conditions'=>array(
@@ -78,31 +40,105 @@ class ProjectsController extends AppController {
 												)
 		));
 		
-		//get the notices 
-		$this->set('notices' ,$this->Notice->find('all' , array('limit'=>5)));
-		//set the duo variable and the timeline because there will be 2 timelines
-		$this->set("timeline" , true);
-		$this->set("toptasks" , $topfivetasks);
-		$this->set("timell" , $this->__generateTimeline($redalto));
-		$this->set("ganttconsumer" , $this->__generateTimeline($consumer));
-		$this->set('projects', $this->paginate('UsersProject'));
+		$this->set("customerbugs" , $this->Task->find('count' , 
+										array(
+										    'conditions'=>array(
+										    	 'Task.type'=>'customer',
+										    	 'Task.enddate'=>'0000-00-00',
+										    	 'Task.user_id'=>$this->Auth->User('id')
+										    )
+										)
+						));	
+		$this->set("redaltobugs" , $this->Task->find('count' , 
+										array(
+										    'conditions'=>array(
+										    	 'Task.type'=>'redalto',
+												 'Task.enddate'=>'0000-00-00',
+												 'Task.user_id'=>$this->Auth->User('id')
+										    )
+										)
+						));	
+						
+		//get the projects in of the users to get the notices. 
+		$projuserar = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id'=>$this->Auth->user('id'))));
+		$projectsusersin = array(0=>'0');
+		for ($i = 0; $i < count($projuserar); $i++) {
+			$projectsusersin[] = $projuserar[$i]['UsersProject']['project_id'];	
+		}
+		$pui[] = 0;
+		$this->set('notices' , $this->Notice->find('all' , array(
+												'conditions'=>array(
+													'Notice.project_id'=>$pui
+												),
+												'limit'=>4
+		)));
+				
+		$this->set('projects', $data);
 		$this->set("username" , $this->Auth->user('name'));
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);
+		$this->set("toptasks" , $topfivetasks);
+		$this->set("timell" , $this->__generateTimeline($data , false));
 	}
 	
 	function timeline(){
-		
+		$redalto = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>1,
+											  'Project.id'=>$this->__fetchProjects()
+										    )
+										)
+						);
+		$consumer = $this->Project->find('all' , 
+										array(
+										    'conditions'=>array(
+										      'Project.redalto'=>0,
+											  'Project.id'=>$this->__fetchProjects()
+										    )
+										)
+						);	
+		$this->set("timeline" , true);
+		$this->set("duotime" , true);
+		$this->set("timell" , $this->__generateTimeline($redalto , false));
+		$this->set("ganttconsumer" , $this->__generateTimeline($consumer , false));
 	}
 	
 	function listview(){
 		
+		$this->set('projects' , $this->Project->find('all' , array('conditions'=>array('Project.id'=>$this->__fetchProjects()))));
 	}
 
-	function view($id = null) {
+	function view($id) {
+		$this->__belongs(true , $id);
 		if (!$id) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
-		$this->set('project', $this->Project->read(null, $id));
-        $this->set("users" , $this->User->find('all'));
+		$prdat = $this->Project->read(null, $id);
+		$this->set('project', $prdat);
+        $this->set("users" , $this->User->find('list' , array('conditions'=>array('redalto'=>'1'))));
+        // Why fetching seperately 
+        $this->Task->recursive = 1;
+        $this->set("tasks" , $this->Task->find('all' , array(
+        										'conditions'=>array(
+        											'Task.project_id'=>$id,
+        											'Task.type'=>null
+        										)
+        ) ));
+        // Fetch users in the project 
+		$usersa = array();
+		$i = 0;
+		foreach ($prdat["User"] as $res)
+		{
+			if($res["redalto"] == 1){
+				$usersa[$i]['name'] = $res["name"];
+				$usersa[$i]['id'] = $res["id"];
+				$i++;
+			}
+			
+		}
+		$this->set("sumhours" , $this->__calcDuration($prdat));
+		$this->set(compact('usersa'));
 	}
 
 	function allprojects(){
@@ -362,7 +398,7 @@ class ProjectsController extends AppController {
 		$milestone['Milestone']['name'] = 'Consult (Assess & Specify)';
 	}
 	
-	function __generateTimeline($data){
+	function __generateTimeline($data , $master = true){
 		$first = true;
 		$timell = '';
 		for ($i = 0; $i < count($data) ; $i++)
@@ -370,7 +406,12 @@ class ProjectsController extends AppController {
 			
 			if (count($data[$i]["Milestone"]) != 0)
 			{
-				$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+				if($master){
+					$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+				}else{
+					$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+				}
+				
 				$timell .= "{'titles': '". $link ."', 
 								'events':[";
 				foreach ($data[$i]["Milestone"] as $milestone)
@@ -408,6 +449,7 @@ class ProjectsController extends AppController {
 		}
 		return $sum;
 	}
+	
 	
 	
 

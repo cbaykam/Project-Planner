@@ -15,6 +15,29 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
+	
+	function edit($id = null) {
+		$this->__belongs(false , null , 'User' , $id);
+		$userdat = $this->User->read(null, $id);
+		$this->set("userDat" , $userdat);
+		if (!$id && empty($this->data)) {
+			$this->flash(__('Invalid User', true), array('action'=>'index'));
+		}
+		if (!empty($this->data)) {
+			if($this->data['User']['password'] == Security::hash('', null, true)){
+				unset($this->data["User"]["password"]);
+			}
+			if ($this->User->save($this->data)) {
+				//redirection
+				if($userdat["User"]["redalto"] == 0){
+					$this->redirect(array('controller'=>'projects' , 'action'=>'index'));	
+				}else{
+					$this->redirect(array('controller'=>'projects' , 'action'=>'index'));
+				}
+				
+			} 
+		}
+	}
 
 	function view($id = null) {
 		if (!$id) {

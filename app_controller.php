@@ -1,10 +1,9 @@
 <?php
-	
 	class AppController extends Controller
 	{  
 	    var $helpers = array('Html' , 'Javascript', 'Time' , 'Timecal' , 'Priority' , 'Text');
 	    var $components = array('Auth' , 'Session' , 'Email');
-	    var $uses = array('Project' , 'User' , 'Milestone' , 'Task' , 'Standart');
+	    var $uses = array('Project' , 'User' , 'Milestone' , 'Task' , 'Standart', 'UsersProject');
 	    
 		function beforeFilter()
 	    {
@@ -102,29 +101,67 @@
 	    	}
 	    }
 	    
-	    function __belongs($model , $user , $item , $redalto){
-	    	$admin = $this->Auth->user('admin');
-	    	if ($admin)
-	    	{    	
-	    		return true;
-	    	}else
-	    	{
-	    		$dat = $this->$model->find('all', array(
-	    								'conditions'=>array(
-	    									'id'=>$item,
-	    									'user_id'=>$user,
-	    									'redalto'=>$redalto
-	    								)
-	    		) );
+	    function __belongs($isproj = false , $project = null , $model = null , $id = null , $customer = false){
+	    		//Are you checking access to a project
 	    	
-	    		if (count($dat) != 0)
-	    		{	
-	    			return true;
+	    	if($isproj){
+	    				
+	    			//is the user admin of the project
+	    			
+	    			if($customer){
+	    				//does customers have the right for the action
+	    				if($this->Auth->user('redalto') == 0){
+	    					return true;
+	    				}else{
+	    					$this->cakeError("notadmin");
+	    				}
+	    			}else{
+	    				
+		    			if($this->__checkadmin($project , false)){
+		    				$this->set('Administrator' , true);
+		    				return true;
+		    				
+		    			}else{
+		    				// Does the user have the rights ? 
+		    				$userin = $this->UsersProject->find('all' , array(
+		    												'conditions'=>array(
+		    													'UsersProject.user_id'=>$this->Auth->user("id"),
+		    													'UsersProject.project_id'=>$project
+		    												)
+		    				));
+		    				if(count($userin) == 0){
+		    					
+		    					$this->cakeError("notadmin");
+		    				}else{
+		    					return true;
+		    				}
+		    			}
+	    			}
+	    		}else{
+	    			//This is not a project
+	    			
+	    			if($model != 'User'){
+	    				$userin = $this->$model->find("all" , array(
+	    										'conditions'=>array(
+	    											'id'=>$id,
+	    											'user_id'=>$this->Auth->user("id")
+	    										)
+	    				));
+	    			}else{
+	    				if($this->Auth->user("id") == $id){
+	    					return true;
+	    				}else{
+	    					$this->cakeError("notadmin");
+	    				}
+	    			}
+	    			
+	    			
+	    			if(count($userin) != 0){
+	    				return true;
+	    			}else{
+	    				$this->cakeError("notadmin");
+	    			}
 	    		}
-	    		else{
-	    			$this->cakeError("notadmin");
-	    		}	
-	    	}	    	
 	    }
 	    
 	    function __timelineDate($date){
@@ -158,5 +195,15 @@
 		function __standartmiles(){
 			$this->set('stmileston' , $this->Standart->find('all'));
 		}
+		
+		function __fetchProjects(){
+			$userProjs = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id'=>$this->Auth->user("id"))));
+			$pui = array();
+			foreach($userProjs as $puai){
+				$pui[] = $puai["Project"]["id"];
+			}
+			return $pui;
+		}
+	
 	}
 ?>

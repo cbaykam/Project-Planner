@@ -17,15 +17,26 @@ class ActivitiesController extends AppController {
 		$this->set('activity', $this->Activity->read(null, $id));
 	}
 
-	function add() {
+	function add($task , $project=null , $user = null) {
+		$this->__belongs(true ,$project);
+		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
+		    $this->data["Activity"]["task_id"] = $task;
+		    $this->data["Activity"]["user_id"] = $user;
+		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
+			$this->data["Activity"]["project_id"] = $project;
 			$this->Activity->create();
 			if ($this->Activity->save($this->data)) {
-				$this->flash(__('Activity saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task , $project) );
 			} else {
 			}
 		}
 		$tasks = $this->Activity->Task->find('list');
+		// fetch the users in the project 
+		if($project != 0){
+			$this->__usersin($project);	
+		}
+		
 		$this->set(compact('tasks'));
 	}
 

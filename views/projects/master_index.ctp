@@ -55,8 +55,8 @@
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-<?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink') ); ?>
-<table border="0" cellspacing="0" cellpadding="0" style="width:200px;">
+<?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink2') ); ?>
+<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
 	<tr><th>Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
@@ -79,7 +79,7 @@
 </table>
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" style="width:200px;">
+<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
 	<tr><th>Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>
@@ -120,5 +120,6 @@
 			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));?></th>
 		</tr>
 	</table>
-	<?php echo $html->link('Add Notice' , array('controller'=>'notices' , 'action'=>'add' , 'master'=>true) , array('class'=>'buttonlink'))?>
+	<?php echo $html->link('Add Notice' , array('controller'=>'notices' , 'action'=>'add' , 'master'=>true) , array('class'=>'buttonlink2'))?>
 </div>
+

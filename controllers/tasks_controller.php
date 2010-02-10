@@ -1,34 +1,161 @@
 <?php
+App::import('Vendor', 'timecalc');
 class TasksController extends AppController {
 
 	var $name = 'Tasks';
 	var $helpers = array('Html', 'Form' , 'Tsk' , 'Priority');
 	var $uses = array("Task" , "UsersProject" , "User" , "Project" , "Milestone");
 
+	function beforeFilter(){
+		parent::beforeFilter();
+		$this->Auth->allowedActions = array('crontask');
+	}
+	
 	function index() {
 		$this->Task->recursive = 0;
 		$this->set('tasks', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Task', true), array('action'=>'index'));
+	function view($id = null , $project=0) {
+		
+		$this->__belongs(false , null , 'Task' , $id);
+		$this->set('projectid' , $project);
+		if ($id)
+		{
+			$this->Task->recursive = 1 ;
+			$tdata = $this->Task->findById($id);
+			
+			if ($tdata["Task"]["dependency"] != 0)
+			{
+				$this->Task->recursive = 0 ; 
+				$dependent = $this->Task->findById($tdata["Task"]["dependency"]);	
+				$this->set("depend" , $dependent);
+			}else
+			{
+				$this->set("depend" , false);
+			}
+			$this->set("task" , $tdata);
+		}else{
+			$this->setFlash("Could Not Find the Task With Specified ID .");
 		}
-		$this->set('task', $this->Task->read(null, $id));
 	}
-
-	function add() {
+	
+	function add($project=0 , $user=0 , $formres = 0 , $bug = 0 , $bredalto = 0) {
+		
+		$this->set('buggie' , $bug);
 		if (!empty($this->data)) {
+			$mail = false;
+			
+			if($bug == 1){
+				 if($bredalto == 1){
+				 	$this->data["Task"]["type"] = 'redalto';	
+				 }else{
+				 	$this->data["Task"]["type"] = 'customer';
+				 }
+				
+			}
+			// If no project is specified.
+			if ($this->data["Task"]["project_id"] == "")
+			{
+				$this->data["Task"]["project_id"] = $project;	
+			}else{
+				$project = $this->data["Task"]["project_id"];
+			}
+			
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
+			if ($user != 0){
+				$this->data["Task"]["user_id"] = $user;
+				$mail = true;
+				$udat = $this->User->findById($user);
+			}
+			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
+			$date = date('yd');
+			$this->data["Task"]["id"] = $date."-".$project."-" . $this->__slicetask($project);
+			$this->data["Task"]["time"] = time();
 			$this->Task->create();
 			if ($this->Task->save($this->data)) {
-				$this->flash(__('Task saved.', true), array('action'=>'index'));
-			} else {
-			}
+				if ($mail)
+				{
+					$this->__eTaskNotification($udat['User']['email']);
+				}
+				//redirection part
+				if ($formres == 1)
+				{
+					$this->redirect(array('controller'=>'tasks' , 'action'=>'viewuser', $user));
+				}else
+				{
+					//if we have a project
+					if ($project != 0)
+					{
+					 	$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
+					}else if($bug == 1){
+						if($bredalto == 1){
+							$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs', 1));
+						}else{
+							$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs', 0));
+						}
+						
+					}else{
+						$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $this->data["Task"]["project_id"]));
+					}
+				}
+				
+			} 
 		}
-		$projects = $this->Task->Project->find('list');
-		$resources = $this->Task->Resource->find('list');
-		$this->set(compact('projects', 'resources'));
+		//if this is a bug select customers 
+			/*if($bug == 1){
+				$this->set('customers' , $this->User->find('all' , array(
+										'conditions'=>array(
+											"User.redalto"=>0
+										)
+				)));
+			}*/
+		// Find user If the user is set get user_id 
+		if ($user != 0)
+		{
+			// For the form if the user set.  
+			$this->set("user_id" , $user);
+		}
+		// Fetching the project data will get the users too . 
+		$resources = $this->Project->findById($project);
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		if($project != 0){
+			$users = array();
+			$i = 0;
+			foreach ($resources["User"] as $res)
+			{
+				$users[$i]["User"]["name"] = $res["name"];
+				$users[$i]["User"]["id"] = $res["id"];
+				$i++;
+			}
+			$this->set("users" , $users);
+		}else{
+			$this->set('users' , $this->User->find('all'));
+		}
+			
+		//For setting the task dependency. 
+		$tasks = $this->Task->find('list' , 
+						array(
+							'conditions'=>array(
+								'Task.project_id'=>$project
+							)	
+		) );
+		// Set the milestones. To generate the lists. 
+		$milestones = $this->Milestone->find('list' , 
+						array(
+							'conditions'=>array(
+								'project_id'=>$project
+							)
+						) 
+		);
+		// get the list of projects
+		$projects = $this->Project->find('list' , array('conditions' => array('Project.id'=>$this->__fetchProjects())));
+		// Generate the lists
+		$this->set(compact('projects' , 'tasks' , 'milestones'));
 	}
+
+	
 
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
@@ -47,6 +174,21 @@ class TasksController extends AppController {
 		$resources = $this->Task->Resource->find('list');
 		$this->set(compact('projects','resources'));
 	}
+	
+	function viewuser($user){
+		//View task by resource 	
+		// will add the user  verification $this->__checkadmin($project) is not a good solution for this.
+		$this->__belongs(false , null , 'User' , $user);
+		$this->set("tasks" , $this->Task->find('all' , 
+										array(
+										    'conditions'=>array(
+										      "Task.user_id"=>$user,
+											  'Task.type'=> null
+										    )
+										)
+						));
+		
+	}
 
 	function delete($id = null) {
 		if (!$id) {
@@ -55,6 +197,26 @@ class TasksController extends AppController {
 		if ($this->Task->del($id)) {
 			$this->flash(__('Task deleted', true), array('action'=>'index'));
 		}
+	}
+	
+	function indexjobs($redalto = 0){
+		if($redalto != 0){
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'redalto',
+							'Task.user_id'=>$this->Auth->user("id")
+						)
+			);
+		}else{
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'customer',
+							'Task.user_id'=>$this->Auth->user("id")
+						)
+			);
+		}
+		$this->set('tasks', $this->paginate());
+		$this->set('redalto' , $redalto);
 	}
 
 
@@ -441,6 +603,52 @@ class TasksController extends AppController {
 			$sum = $sum + $activity['duration'];
 		}
 		return $sum;
+	}
+	
+	function crontask(){
+		
+		$this->layout = null;
+		$this->Task->recursive = 0 ;
+		$recursives = $this->Task->find('all' , 
+							array(
+								'conditions'=>array(
+										'Task.recursive'=>'1'	
+								)			
+							)
+		);
+		
+		foreach($recursives as $rec){
+			
+			if($rec["Task"]["rectimesrun"] < $rec["Task"]["rechowmany"]){
+				
+				$timecal = new timecalc;
+				$project = $rec["Task"]["project_id"];
+				$duration = $rec["Task"]["recduration"];
+				$recdata["Task"]["project_id"] = $project;
+				$date = date('yd');
+				$recdata["Task"]["id"] = $date."-".$project."-" . $this->__slicetask($project);
+				$recdata["Task"]["startdate"] = date("Y-m-d");
+				$recdata["Task"]["duedate"] = $timecal->addDays($duration , "Y-m-d");
+				$recdata["Task"]["user_id"] = $rec["Task"]["user_id"];
+				$recdata["Task"]["name"] = $rec["Task"]["name"];
+				$recdata["Task"]["priority"] = $rec["Task"]["priority"];
+				$recdata["Task"]["type"] = $rec["Task"]["type"];
+				$recdata["Task"]["description"] = $rec["Task"]["description"];
+				$recdata["Task"]["milestone_id"] = $rec["Task"]["milestone_id"];
+				$recdata["Task"]["customer"] = $rec["Task"]["customer"];
+				$recdata["Task"]["approved"] = $rec["Task"]["approved"];
+				$recdata["Task"]["creator"] = $rec["Task"]["creator"];
+				$recdata["Task"]["status"] = 0;
+				$recdata["Task"]["time"] = time();
+				$this->Task->create();
+				$this->Task->save($recdata);
+				unset($recdata);
+				$newrec = $rec["Task"]["rectimesrun"] + 1 ;
+				$this->Task->id = $rec["Task"]["id"];
+				$this->Task->saveField('rectimesrun' , $newrec);
+			}
+			
+		}
 	}
 
 }

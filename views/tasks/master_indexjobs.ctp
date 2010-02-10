@@ -18,7 +18,9 @@
 	<th><?php echo $paginator->sort('status');?></th>
 	<th><?php echo $paginator->sort('datedone');?></th>
 	<th><?php echo $paginator->sort('time');?></th>
+	<?php if($redalto == 1):?>
 	<th><?php echo $paginator->sort('approved');?></th>
+	<?php endif;?>
 	<th>Actions</th>
   </tr>
   <tr>

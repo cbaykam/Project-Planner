@@ -73,7 +73,7 @@
 				
 						<?php if (count($project["Task"])): ?>
 							<h3>Tasks in the project</h3>
-							<table border="0" cellspacing="0" cellpadding="0">
+							<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 								<tr>
 									<th>Id</th>
 									<th>Created</th>
@@ -126,6 +126,31 @@
 							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $project["Project"]["id"] , 0), array('class'=>'buttonlink') ); ?> 
 						<?php endif; ?>
 			</div>
+			<div id="users_in_project">
+				<?php if (count($project["User"]) != 0): ?>
+					<table border="0" cellspacing="0" cellpadding="0" style="width:95%">
+					<thead>
+						<th style="width:70%;">Users in the Project</th>
+						<th>Actions</th>
+					</thead>
+					<?php foreach($project["User"] as $usr):?>
+						<tr>
+							<td><?php echo $html->link($usr["name"] , array('controller' => 'users' , 'action' => 'view','master'=>true , $usr["id"]) ); ?></td>
+							<td><?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add' , 'master'=>true ,$project["Project"]["id"] , $usr["id"]) ); ?> | <?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser' , 'master'=>true, $usr["id"], $project["Project"]["id"]) ); ?> | <?php echo $html->link("Kick User" , array('controller' => 'users_projects' , 'action' => 'delete','master'=>true , $project["Project"]["id"] , $usr["id"]) ); ?>
+						</tr>
+					<?php endforeach;?>
+					</table>
+				<?php else: ?>
+					No Users In the project please use the form below to add one.
+				<?php endif; ?>
+				
+				<fieldset style="width:95%;">
+					<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'add','master'=>true , $project["Project"]["id"]))); ?>
+					<?php echo $form->input("user_id" , array('label'=>'Resource') ); ?>
+					<input type="submit" value="Add User to Project"/>	
+					</form>
+				</fieldset>
+			</div>	
 						
 	</div>
 	<!--Start of the right side Div-->
@@ -138,7 +163,7 @@
 				
 				
 				<?php if (count($project["Notice"]) != 0 ): ?>
-					<table border="0" cellspacing="0" cellpadding="0">
+					<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 						<tr>
 							<th>Date</th>
 							<th>Notice</th>
@@ -158,7 +183,7 @@
 			<!--Links of the project-->
 			<div id="project_links_menu">
 				<?php if (count($project["Link"]) != 0): ?>
-						<table border="0" cellspacing="0" cellpadding="0">
+						<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 							<tr>
 								<th class="noborder">Project Links</th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add','master'=>true, $project["Project"]["id"] ) ); ?></th>
 							</tr>
@@ -186,7 +211,7 @@
 					<?php echo $html->link("Current Status" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
 				<?php else: ?>
 				    <?php $statindice = $countstats - 1; ?>
-					<table border="0" cellspacing="0" cellpadding="0">
+					<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 						<tr><th>Project Status</th><th><?php echo $html->link("Change" , array('controller' => 'statusses' , 'action' => 'add','master'=>true , $project["Project"]["id"]) ); ?></th></tr>
 						<tr>
 							<td><?php echo $project["Statuss"][$statindice]['created'] ?></td>
@@ -201,7 +226,7 @@
 			</div>
 			<!--Show the budgeting.-->
 			<div id="budgeting">
-				<table border="0" cellspacing="0" cellpadding="0" style="width:180px;">
+				<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 					<tr>
 						<th>Budgeting</th>
 						<th></th>
@@ -218,31 +243,8 @@
 		
 			</div>
    
+   			
 	</div>
 	
 	<!--Show users in the project-->
-	<div id="users_in_project">
-				<?php if (count($project["User"]) != 0): ?>
-					<table border="0" cellspacing="0" cellpadding="0">
-					<thead>
-						<th>Users in the Project</th>
-						<th>Actions</th>
-					</thead>
-					<?php foreach($project["User"] as $usr):?>
-						<tr>
-							<td><?php echo $html->link($usr["name"] , array('controller' => 'users' , 'action' => 'view','master'=>true , $usr["id"]) ); ?></td>
-							<td><?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add' , 'master'=>true ,$project["Project"]["id"] , $usr["id"]) ); ?> | <?php echo $html->link("View Tasks" , array('controller' => 'tasks' , 'action' => 'viewuser' , 'master'=>true, $usr["id"], $project["Project"]["id"]) ); ?> | <?php echo $html->link("Kick User" , array('controller' => 'users_projects' , 'action' => 'delete','master'=>true , $project["Project"]["id"] , $usr["id"]) ); ?>
-						</tr>
-					<?php endforeach;?>
-					</table>
-				<?php else: ?>
-					No Users In the project please use the form below to add one.
-				<?php endif; ?>
-				
-				<fieldset>
-					<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'add','master'=>true , $project["Project"]["id"]))); ?>
-					<?php echo $form->input("user_id" , array('label'=>'Resource') ); ?>
-					<input type="submit" value="Add User to Project"/>	
-					</form>
-				</fieldset>
-	</div>	
+	

@@ -50,10 +50,8 @@
 	<li><?php echo $html->link("HOME" , array('controller' => 'projects' , 'action' => 'index') ); ?></li>
 
 	<li><span class="qmdivider qmdividery" ></span></li>
-	<li><?php echo $html->link("CUSTOMERS" , array('controller' => 'users' , 'action' => 'index' , 1) ); ?></li>
-
-	<li><span class="qmdivider qmdividery" ></span></li>
-	<li><a class="qmparent" href="javascript:void(0)">ALL PROJECTS</a>
+	
+	<li><?php echo $html->link("ALL PROJECTS" , array('controller' => 'projects' , 'action' => 'timeline') ); ?>
 
 		<ul>
 			<li><?php echo $html->link("Timeline View" , array('controller' => 'projects' , 'action' => 'timeline') ); ?></li>

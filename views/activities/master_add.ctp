@@ -9,6 +9,7 @@
 		echo $form->input('date');
 	?>
 	<?php if($projectid != 0):?>
+		<label for="ActivityDescription">User</label>
 		<select id="ActivityUserId" name="data[Activity][user_id]">
 			<?php foreach($users as $usr):?>
 		
