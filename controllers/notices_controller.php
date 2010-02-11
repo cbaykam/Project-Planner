@@ -9,11 +9,19 @@ class NoticesController extends AppController {
 		$this->set('notices', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Notice', true), array('action'=>'index'));
-		}
-		$this->set('notice', $this->Notice->read(null, $id));
+	function view($project=null) {
+				
+			$this->set("data" , $this->Notice->find('all' , array(
+								'conditions'=>array(
+									'OR'=>array(
+										'Notice.project_id'=>array('0' , $project)
+									)		
+								),
+								'order'=>array(
+									'Notice.project_id DESC'  
+								)
+			)));
+		
 	}
 
 	function add() {
@@ -37,7 +45,7 @@ class NoticesController extends AppController {
 	}
 
 	function master_view($project=null) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		
 			$this->set("data" , $this->Notice->find('all' , array(
 								'conditions'=>array(
@@ -53,7 +61,7 @@ class NoticesController extends AppController {
 	}
 
 	function master_add($project = 0) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		if (!empty($this->data)) {
 			$this->data["Notice"]["project_id"] = $project;
 			$this->Notice->create();

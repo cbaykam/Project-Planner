@@ -15,6 +15,17 @@ class TasksController extends AppController {
 		$this->Task->recursive = 0;
 		$this->set('tasks', $this->paginate());
 	}
+	
+
+	function complete($task=null , $project=null){
+		$this->__belongs(true , $project);
+		$data["Task"]["enddate"] = date("Y-m-d");
+		$data["Task"]["status"] = 100;
+		$data["Task"]["completed"] = '1' ;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
+	}
 
 	function view($id = null , $project=0) {
 		
@@ -175,6 +186,52 @@ class TasksController extends AppController {
 		$this->set(compact('projects','resources'));
 	}
 	
+	function jobedit($id,$redalto){
+		$this->__belongs(false, null, "Task" ,$id);
+		if (!empty($this->data)) {
+			$mail = false;
+			// If no project is specified.
+			
+			$this->data["Task"]["project_id"] = 0;
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
+			if($this->data["Task"]["status"] == 100){
+				$this->data["Task"]["completed"] = 1;
+			}
+			$date = date('yd');
+			$this->data["Task"]["time"] = time();
+			$this->Task->id = $this->data["Task"]["id"];
+			if ($this->Task->save($this->data)) {
+				//redirection part
+				$this->redirect(array('controller'=>'tasks', 'action'=>'indexjobs',  $redalto));
+				
+			} 
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->Task->read(null, $id);
+		}
+
+		// Fetching the project data will get the users too . 
+		$resources = $this->User->find('all' , array(
+									'conditions'=>array(
+										'User.redalto'=>1
+									)
+		));
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		$users = array();
+		$i = 0;
+		foreach ($resources as $res)
+		{
+			$users[$i]["name"] = $res["User"]["name"];
+			$users[$i]["id"] = $res["User"]["id"];
+			$i++;
+		}
+		$this->set("users" , $users);
+		// get the list of projects
+		$this->set(compact('tasks' , 'milestones'));
+	}
+	
 	function viewuser($user){
 		//View task by resource 	
 		// will add the user  verification $this->__checkadmin($project) is not a good solution for this.
@@ -250,10 +307,11 @@ class TasksController extends AppController {
 		}
 	}
 	
-	function master_viewuser($user){
+	function master_viewuser($user , $project){
 		//View task by resource 	
 		// will add the user  verification $this->__checkadmin($project) is not a good solution for this.
 		$this->__checkadmin($project);
+		$this->set('projectIdd' , $project);
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(

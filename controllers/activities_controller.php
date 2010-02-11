@@ -18,7 +18,12 @@ class ActivitiesController extends AppController {
 	}
 
 	function add($task , $project=null , $user = null) {
-		$this->__belongs(true ,$project);
+		if($project == 0){
+			$this->__belongs(false, null , 'Task' , $task);
+		}else{
+			$this->__belongs(true ,$project);
+		}
+		
 		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
 		    $this->data["Activity"]["task_id"] = $task;
@@ -27,7 +32,7 @@ class ActivitiesController extends AppController {
 			$this->data["Activity"]["project_id"] = $project;
 			$this->Activity->create();
 			if ($this->Activity->save($this->data)) {
-				$this->redirect(array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task , $project) );
+				$this->redirect(array('controller'=>'tasks' , 'action'=>'view' , $task , $project) );
 			} else {
 			}
 		}

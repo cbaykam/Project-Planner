@@ -115,6 +115,9 @@ class ProjectsController extends AppController {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
 		$prdat = $this->Project->read(null, $id);
+		if($prdat["Project"]["user_id"] == $this->Auth->user("id")){
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true ,$id ));
+		}
 		$this->set('project', $prdat);
         $this->set("users" , $this->User->find('list' , array('conditions'=>array('redalto'=>'1'))));
         // Why fetching seperately 
@@ -286,7 +289,7 @@ class ProjectsController extends AppController {
 		}
 		$prdat = $this->Project->read(null, $id);
 		$this->set('project', $prdat);
-        $this->set("users" , $this->User->find('list' , array('conditions'=>array('redalto'=>'1'))));
+        $this->set("users" , $this->User->find('list' , array('conditions'=>array('User.redalto'=>'1' , 'User.admin'=>0))));
         // Why fetching seperately 
         $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(

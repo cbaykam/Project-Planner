@@ -242,3 +242,5 @@
 2010-02-08 19:38:35 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '1008-1008-0' for key 'PRIMARY'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
 2010-02-08 19:39:44 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '1008-1008-0' for key 'PRIMARY'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
 2010-02-09 21:59:44 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1052: Column 'user_id' in where clause is ambiguous</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
+2010-02-11 16:50:42 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1052: Column 'id' in where clause is ambiguous</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
+2010-02-11 16:52:37 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1052: Column 'user_id' in where clause is ambiguous</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]

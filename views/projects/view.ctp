@@ -82,7 +82,11 @@
 								<tr>
 									<td><?php echo $task["Task"]["id"]; ?></td>
 									<td><?php echo $timecal->format($task["Task"]["created"]); ?></td>
+									<?php if($task["User"]["id"] == $user_idd):?>
 									<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view', $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
+									<?php else:?>
+									<td><?php echo $task["Task"]["name"]?></td>
+									<?php endif;?>
 									<td><?php echo $task["Milestone"]["name"]; ?></td>
 									<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
 									<td><?php echo $task["Task"]["status"]; ?> %</td>
@@ -113,7 +117,7 @@
 							<?php endforeach;?>
 							</table>
 					
-							<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add', $project["Project"]["id"] , $user_idd), array('class'=>'buttonlink') ); ?>
+							<?php echo $html->link("Add A Task for Yourself" , array('controller' => 'tasks' , 'action' => 'add', $project["Project"]["id"] , $user_idd), array('class'=>'buttonlink') ); ?>
 					
 						<?php else: ?>
 		
@@ -128,7 +132,11 @@
 					</thead>
 					<?php foreach($project["User"] as $usr):?>
 						<tr>
+							<?php if($usr["id"] == $user_idd):?>
 							<td><?php echo $html->link($usr["name"] , array('controller' => 'users' , 'action' => 'view', $usr["id"]) ); ?></td>
+							<?php else:?>
+									<td><?php echo $usr["name"]?></td>
+							<?php endif;?>
 						</tr>
 					<?php endforeach;?>
 					</table>

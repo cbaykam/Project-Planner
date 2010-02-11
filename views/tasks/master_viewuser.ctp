@@ -36,4 +36,4 @@
 <?php endforeach;?>
 </table>
 
-   <?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , 0 ,$tasks[0]["User"]["id"] , true ) , array('class'=>'buttonlink') ); ?>
+   <?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $projectIdd ,$tasks[0]["User"]["id"] , true ) , array('class'=>'buttonlink') ); ?>

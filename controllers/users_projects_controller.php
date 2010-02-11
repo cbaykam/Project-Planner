@@ -62,7 +62,7 @@ class UsersProjectsController extends AppController {
 	}
 
 	function master_add($project) {
-		$this->__checkadmin();
+		$this->__checkadmin($project);
 		
 		if (!empty($this->data)) {
 			$udat = $this->User->findById($this->data["UsersProject"]['user_id']);

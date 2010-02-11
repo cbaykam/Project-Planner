@@ -141,10 +141,12 @@
 	    			//This is not a project
 	    			
 	    			if($model != 'User'){
+	    				$field = $model . ".id";
+	    				$ufield = $model . ".user_id";
 	    				$userin = $this->$model->find("all" , array(
 	    										'conditions'=>array(
-	    											'id'=>$id,
-	    											'user_id'=>$this->Auth->user("id")
+	    											$field=>$id,
+	    											$ufield=>$this->Auth->user("id")
 	    										)
 	    				));
 	    			}else{

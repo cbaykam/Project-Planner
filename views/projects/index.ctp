@@ -51,7 +51,7 @@
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-<?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports'), array('class'=>'buttonlink2') ); ?>
+
 <table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
 	<tr><th>Customer Maintenance & Support Issues</th></tr>
 	<tr>

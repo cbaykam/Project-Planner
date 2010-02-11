@@ -40,10 +40,9 @@ class UsersController extends AppController {
 	}
 
 	function view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid User', true), array('action'=>'index'));
-		}
-		$this->set('User', $this->User->read(null, $id));
+		$this->set("data" , $this->User->findById($id));
+		$this->Project->recursive = 0;
+		$this->set("projects" , $this->Project->find("all"));
 	}
 
 	function master_index($customer = 0) {
