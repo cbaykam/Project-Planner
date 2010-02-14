@@ -239,7 +239,8 @@ class TasksController extends AppController {
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
-										      "Task.user_id"=>$user
+										      "Task.user_id"=>$user,
+											  'Task.type'=> null
 										    )
 										)
 						));
@@ -314,7 +315,8 @@ class TasksController extends AppController {
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
-										      "Task.user_id"=>$user
+										      "Task.user_id"=>$user,
+											  'Task.type'=> null
 										    )
 										)
 						));
