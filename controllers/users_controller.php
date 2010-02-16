@@ -24,7 +24,7 @@ class UsersController extends AppController {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if($this->data['User']['password'] == Security::hash('', null, true)){
+			if($this->data['User']['password'] == ''){
 				unset($this->data["User"]["password"]);
 			}
 			if ($this->User->save($this->data)) {
@@ -116,7 +116,7 @@ class UsersController extends AppController {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if($this->data['User']['password'] == Security::hash('', null, true)){
+			if($this->data['User']['password'] == ''){
 				unset($this->data["User"]["password"]);
 			}
 			if ($this->User->save($this->data)) {

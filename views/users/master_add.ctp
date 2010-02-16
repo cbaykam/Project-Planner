@@ -1,11 +1,14 @@
-<div class="users form">
+
+ <?php if($this->params["pass"][0] == 1):?>
+ 	<div id="pagetitle"><h1><?php __('Add Customer');?></h1></div>
+ <?php else:?>
+ 	<div id="pagetitle"><h1><?php __('Add Resource');?></h1></div>
+ <?php endif;?>
+ <div id="projectLeftSide">
 <?php echo $form->create('User' , array('url'=>array('controller'=>'users' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0]) ));?>
 	<fieldset>
-	 <?php if($this->params["pass"][0] == 1):?>
- 		<legend><?php __('Add Customer');?></legend>
- 	<?php else:?>
- 		<legend><?php __('Add Resource');?></legend>
- 	<?php endif;?>
+
+ 	
 	<?php
 		echo $form->input('name');
 		echo $form->input('email');
@@ -26,4 +29,4 @@
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
-</div>
+	</div>

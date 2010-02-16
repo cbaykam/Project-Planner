@@ -1,7 +1,8 @@
+<div id="pagetitle"><h1><?php __('Edit user');?></h1></div>
+<div id="projectLeftSide">
 <div class="users form">
 <?php echo $form->create('user' , array('url'=>array('controller'=>'users' , 'action'=>'edit','master'=>true , $userDat["User"]["id"])) );?>
 	<fieldset>
- 		<legend><?php __('Edit user');?></legend>
 	<?php
 		echo $form->input('User.id' ,array('value'=>$userDat["User"]["id"]));
 		echo $form->input('User.name' ,array('value'=>$userDat["User"]["name"], 'label'=>'Name'));
@@ -19,3 +20,4 @@
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
+<div id="projectLeftSide">

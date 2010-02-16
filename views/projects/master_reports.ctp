@@ -1,4 +1,5 @@
-<h3> Project Duration </h3>
+<div id="pagetitle"><h1>Project Reports </h1></div>
+<div id="projectLeftSide">
 <table border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	    <th>Project</th>
@@ -24,3 +25,4 @@
 	<?php endforeach;?>
 	
 </table>
+</div>

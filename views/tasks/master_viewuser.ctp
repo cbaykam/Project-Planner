@@ -1,5 +1,8 @@
+<div id="pagetitle"><h1>Resource</h1></div>
+<div id="projectLeftSide">
+<?php if(isset($tasks[0]["User"]["name"])):?>
 <table border="0" cellspacing="0" cellpadding="0" style="width:300px;">
-	<tr><th>Resource</th><th></th></tr>
+	<tr><th></th><th></th></tr>
 	<tr>
 		<td>Name</td>
 		<td><?php echo $tasks[0]["User"]["name"]; ?></td>
@@ -35,5 +38,8 @@
 		</tr>
 <?php endforeach;?>
 </table>
-
+<?php else:?>
+	<h2>No Tasks for the User</h2>
+<?php endif;?>
    <?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $projectIdd ,$tasks[0]["User"]["id"] , true ) , array('class'=>'buttonlink') ); ?>
+</div>

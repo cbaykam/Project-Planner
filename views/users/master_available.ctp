@@ -1,8 +1,10 @@
+<div id="pagetitle"><h1>Resourcing</h1></div>
+<div id="projectLeftSide">
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
-<h3>Resourcing</h3>
+
 
 	 <div id="vacationcolor">Holiday / Vacation</div>
 	 <div id="othercolor">unavailable (other reason)</div>
@@ -15,3 +17,4 @@
 	<br><br>
 
 	<div class="gantt" id="gantt"></div> 
+</div> 

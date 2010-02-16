@@ -1,7 +1,7 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
-
+<div id="projectLeftSide">
 <?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
 
 
@@ -42,3 +42,4 @@
 	<br><br>
 
 <div class="gantt" id="gantt2"></div> 
+</div> 

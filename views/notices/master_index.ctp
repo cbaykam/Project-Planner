@@ -1,5 +1,5 @@
-<div class="notices index">
-<h2><?php __('Notices');?></h2>
+<div id="pagetitle"><h1><?php __('Notices');?></h1></div>
+<div id="projectLeftSide">
 <p>
 <?php
 echo $paginator->counter(array(
@@ -39,14 +39,16 @@ foreach ($notices as $notice):
 	</tr>
 <?php endforeach; ?>
 </table>
-</div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<div class="actions">
-	
-    <?php echo $html->link(__('New Notice', true), array('action'=>'add') , array('class'=>'buttonlink'')); ?>
-	
+ <?php echo $html->link(__('New Notice', true), array('action'=>'add') , array('class'=>'buttonlink'')); ?>
 </div>
+
+
+	
+   
+	
+

@@ -1,8 +1,9 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
+<div id="pagetitle"><h1> Welcome : <?php echo $username; ?> </h1></div>	
 <div id="projectLeftSide">
-	<h1> Welcome : <?php echo $username; ?> </h1>
+
 	
 	<h3> Top 5 Projects This Week </h3>
 

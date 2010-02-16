@@ -2,20 +2,19 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
+<div class="users index">
+<?php if ($iscustomer != 1): ?>
+<div id="pagetitle"><h1><?php __('Resources');?></h1></div>
+<?php else: ?>
+<div id="pagetitle"><h1><?php __('Customers');?></h1></div>
+<?php endif; ?>
+<div id="projectLeftSide">
+<p>
 <?php if ($iscustomer != 1): ?>
 <?php echo $html->link(__('Add Resource', true), array('controller'=>'users' , 'action'=>'add','master'=>true) , array('class'=>'buttonlink')); ?>
 <?php else: ?>
 <?php echo $html->link(__('Add Customer', true), array('controller'=>'users' , 'action'=>'add','master'=>true , 1) , array('class'=>'buttonlink')); ?>
 <?php endif; ?>
-<br><br>
-<div class="users index">
-<?php if ($iscustomer != 1): ?>
-<h2><?php __('Resources');?></h2>
-<?php else: ?>
-<h2><?php __('Customers');?></h2>
-<?php endif; ?>
-
-<p>
 <?php
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
@@ -83,12 +82,13 @@ foreach ($users as $user):
 	</tr>
 <?php endforeach; ?>
 </table>
-</div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+</div>
+
 
 <?php if ($timeline): ?>
 	<h3>Resourcing</h3>
@@ -105,3 +105,4 @@ foreach ($users as $user):
 
 	<div class="gantt" id="gantt"></div> 
 <?php endif; ?>
+</div>

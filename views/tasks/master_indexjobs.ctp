@@ -1,11 +1,17 @@
 <?php if($redalto == 0):?>
-  <h1>Customer Support Jobs</h1>
+  <div id="pagetitle"><h1>Customer Support Jobs</h1>
   Tracking of customer operational support issues.
+	</div>
+<?php else:?>
+  <div id="pagetitle"><h1>REDALTO JOBS</h1>
+  Tracking of Redalto operational and future development issues.
+  </div>  
+<?php endif;?>
+<div id="projectLeftSide">
+<?php if($redalto == 0):?>
 	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 0) , array('class'=>'buttonlink'));?>
 <?php else:?>
-  <h1>REDALTO JOBS</h1>
-  Tracking of Redalto operational and future development issues.
-    <?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
+	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
 <?php endif;?>
 <?php if(count($tasks) != 0):?> 
 <table>
@@ -49,3 +55,4 @@
   </tr>
 </table>
 <?php endif;?>
+</div>

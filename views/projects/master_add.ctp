@@ -1,9 +1,10 @@
+<div id="pagetitle"><h1><?php __('Add Project');?></h1></div>
 <?php echo $javascript->link('jquery-1.3.2.min' , false); ?>
 <?php echo $javascript->link('milestones' , false); ?>
-<div class="projects form">
+<div id="projectLeftSide">
 <?php echo $form->create('Project');?>
 	<fieldset>
- 		<legend><?php __('Add Project');?></legend>
+ 		
 	<?php
 		echo $form->input('name');
 		echo $form->input('overview' , array('type'=>'textfield') );

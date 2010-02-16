@@ -1,10 +1,10 @@
-<h2><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h2>
+<div id="pagetitle"><h1><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h1></div>
 	
 	<div id="projectLeftSide">
 			<!--Project Overview -->
 			<div id="projectOverview">
 				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
-					<tr><th class="noborder">Project Overview</th><th class="nobordercorner"><?php echo $html->link("Edit" , array('controller' => 'projects' , 'action' => 'changeover','master'=>true , $project["Project"]["id"]) ); ?></th></tr>
+					<tr><th class="noborder">Project Overview</th><th><?php echo $html->link("Edit" , array('controller' => 'projects' , 'action' => 'changeover','master'=>true , $project["Project"]["id"]) ); ?></th></tr>
 					<tr><td class="noborder"><?php echo $project["Project"]["overview"]; ?></td><td></td></tr>
 					
 				</table>
@@ -15,7 +15,7 @@
 			
 				<?php if (count($project['Milestone']) != 0): ?>
 					<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
-						<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
+						<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th><?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add','master' => true , $project["Project"]["id"]) ); ?></th></tr>
 						<tr>
 							<th>Due Date</th>
 							<th>Owner</th>
