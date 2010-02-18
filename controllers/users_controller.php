@@ -2,7 +2,7 @@
 class UsersController extends AppController {
 
 	var $name = 'Users';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form' , 'Usr');
 	var $uses = array('User' , 'Project');
 	var $logoutUrls = array('/master/users/logout' , '/users/logout');
 	

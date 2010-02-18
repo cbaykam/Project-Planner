@@ -17,6 +17,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Mobile','pmobile');?></th>
 	<th><?php echo $paginator->sort('messenger');?></th>
 	<th><?php echo $paginator->sort('skype');?></th>
+	<th><?php echo $paginator->sort('admin');?></th>
 	<?php if (!isset($this->params["pass"][0])): ?>
 	<th><?php echo $paginator->sort('View Tasks');?></th>
 	<?php endif; ?>
@@ -51,6 +52,9 @@ foreach ($users as $user):
 		</td>
 		<td>
 			<?php echo $user['User']['skype']; ?>
+		</td>
+		<td>
+			<?php echo $usr->rights($user['User']['admin']); ?>
 		</td>
 		<?php if (!isset($this->params["pass"][0])): ?>
 		<td>			

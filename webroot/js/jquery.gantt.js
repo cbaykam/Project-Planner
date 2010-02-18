@@ -215,7 +215,8 @@
 							}
 							if (p.tasks[i]['events'][j].color){
 								$(barbody, trObj).css({
-									'background-color': p.tasks[i]['events'][j].color
+									'background-color': p.tasks[i]['events'][j].color,
+									'height':'20px'
 								});
 							}
 						
@@ -227,7 +228,7 @@
 								'position': 'relative',
 								'margin-top': '5px',
 								'margin-bottom': '5px',
-								'float':'left'
+								'float':'left',
 							});
 							gnt_tbl.append(trObj);
 						}

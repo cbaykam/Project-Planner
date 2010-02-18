@@ -5,17 +5,16 @@
 	padding: 0px;
 	font-size: 12px;
 	border-top:none;
-	border-left:1px solid;
 	border-bottom-width: 1px;
-	border-right-style: solid;
-	border-left-style: solid;
 	border-bottom-style: solid;
 	border-right-color: #333333;
+	border-right:1px solid;
 	border-bottom-color: #333333;
 }
 .GNT_tbl th, .GNT_tbl td {
 	background-image: url(images/gnt_cell01.png);
 	background-repeat: no-repeat;
+	border-bottom: none;
 	background-position: left top;
 	padding:0px;
 }
@@ -77,6 +76,8 @@
 	color:black;
 	border-left:1px solid;
 	border-top:none;
+	padding-right:3px;
+	padding-top:5px;
 }
 .GNT_tbl .GNT_chart {
 	background-repeat: repeat-x;
@@ -109,5 +110,5 @@
 }
 
 .GNT_bar_body{
-	
+	height:20px;
 }

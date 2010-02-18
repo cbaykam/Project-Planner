@@ -1,4 +1,11 @@
-<div id="pagetitle"><h1><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h1></div>
+<div id="pagetitle"><h1>
+	<?php if($project["Project"]["redalto"] == 1):?>
+		<?php echo $project["Project"]["name"] ?>
+	<?php else:?>
+		<?php echo $project["Project"]["customer"] . ': ' . $project["Project"]["name"] ?>
+	<?php endif;?>
+
+</h1></div>
 	
 	<div id="projectLeftSide">
 			<!--Project Overview -->
@@ -29,7 +36,7 @@
 							<?php if ($milestone['key'] == 1): ?>	
 								<tr>
 									<td><?php echo $timecal->format($milestone['enddate']); ?></td>
-									<td width="200">
+									<td class="tdformdiv">
 										<?php if (isset($milestone['User']['name'])): ?>
 											<?php echo $milestone['User']['name']; ?>
 										<?php else: ?>
@@ -46,7 +53,7 @@
 									</td>
 									<td style="background:<?php echo $milestone['color'];?>;"><?php echo $milestone['name']; ?></td>
 									<td><?php echo $milestone['status']; ?></td>
-									<td>
+									<td class="tdformdiv">
 										<?php if ($milestone['completed'] != '0000-00-00'): ?>
 											<?php echo $milestone['completed']; ?>
 										<?php else: ?>
@@ -99,7 +106,7 @@
 									<td><?php echo $timecal->format($task["Task"]["duedate"]); ?></td>
 									<td><?php echo $tsk->duration($task["Activity"]); ?></td>
 									<?php if ($task["Task"]["user_id"] == 0): ?>
-									 <td>
+									 <td class="tdformdiv">
 										<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' , 'master'=>true, $task["Task"]["id"] , $project["Project"]["id"]) ) ); ?>
 										 <select id="TaskUsersa" name="data[Task][usersa]">
 										   <option value="">Select one</option>
@@ -114,7 +121,7 @@
 										<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
 									<td><?php echo $tsk->done($task["Task"]["enddate"]); ?></td>
-									<td><?php echo $html->link("[d]" , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?> | <?php echo $html->link("[e]" , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?> | <?php echo $html->link("[c]" , array('controller' => 'tasks' , 'action' => 'complete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
+									<td><?php echo $html->link("[d]" , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) , array() , "Please confirm that you want to permenantly remove this task" ); ?> <?php echo $html->link("[e]" , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?> <?php echo $html->link("[c]" , array('controller' => 'tasks' , 'action' => 'complete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
 								</tr>		
 							<?php endforeach;?>
 							</table>

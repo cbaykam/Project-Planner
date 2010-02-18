@@ -2,7 +2,7 @@
 class MilestonesController extends AppController {
 
 	var $name = 'Milestones';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form', 'Color');
 
 	function index() {
 		$this->Milestone->recursive = 0;
@@ -83,7 +83,7 @@ class MilestonesController extends AppController {
 				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 			} 
 		}
-		$users = $this->Milestone->User->find('list');
+		$users = $this->Milestone->User->find('list' , array('conditions'=>array('User.redalto'=>1)));
 		$this->set(compact('users'));
 	}
 

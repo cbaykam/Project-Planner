@@ -4,22 +4,27 @@
 <div id="projectLeftSide">
 <?php echo $form->create('Project');?>
 	<fieldset>
- 		
+	<div class="input select">
+	<label for="ProjectCustomer">Customer</label>
+	<select id="ProjectCustomer" name="data[Project][customer]">
+ 	<?php foreach($customerdata as $customer):?>
+		<option value="<?php echo $customer["User"]["name"]?>"><?php echo $customer["User"]["name"]?></option>
+ 	<?php endforeach;?>
+ 	</select>
+ 	</div>
 	<?php
-		echo $form->input('name');
+		echo $form->input('name' , array('label'=>'Project Name'));
 		echo $form->input('overview' , array('type'=>'textfield') );
 		echo $form->input('user_id' , array('label'=>'Project Manager'));
 		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer Project' , '1'=>'Redalto Project') ) );
-		echo $form->input('customer_id');
 	?>
-	<br><br>
+	<br>
 		<span class="duration">
 			Budget 
 		</span>
 	    	<input id="ProjectName" type="text" value="" maxlength="128" name="data[Project][hours]" size="4"/>	
 				Hrs
-			<input id="ProjectName" type="text" value="" maxlength="128" name="data[Project][mins]" size="4"/>
-			Mins
+			<input id="ProjectName" type="hidden" value="0" size="4"/>
 	<div id="milestones">
 		<a href="#" id="addMilestones">Add Standart Milestones</a>
 	</div>

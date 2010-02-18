@@ -57,8 +57,8 @@
 </div>
 <div id="projectRightSide">
 <?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink2') ); ?>
-<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
-	<tr><th>Customer Maintenance & Support Issues</th></tr>
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
 			<?php if ($customerbugs == 0): ?>
@@ -71,7 +71,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="actiontd">
 			<?php echo $html->link( "View Details" , array('controller' => 'tasks' , 'action' => 'indexjobs' ,'master'=>true ) ); ?>
 		</td>
 	</tr>
@@ -80,8 +80,8 @@
 </table>
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
-	<tr><th>Redalto Apps Issue Tracking</th></tr>
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+	<tr><th class="rightsideheader">Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>
 			<?php if ($redaltobugs == 0): ?>
@@ -94,16 +94,16 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="actiontd">
 			<?php echo $html->link( "View Details" , array('controller' => 'tasks' , 'action' => 'indexjobs' ,'master'=>true , 1 ) ); ?>
 		</td>
 	</tr>
 	
 	
 </table>
-<table border="0" cellspacing="0" cellpadding="0">
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
 	<tr>
-		<th></th><th>Notice Board</th>
+		<th></th><th class="rightsideheader">Notice Board</th>
 	</tr>
 		
 				<?php foreach ($notices as $notice):?>

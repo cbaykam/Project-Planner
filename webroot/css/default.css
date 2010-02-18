@@ -31,7 +31,6 @@ ul {
 }
 
 a {
-	text-decoration: none;
 	color: #528DC8;
 }
 
@@ -93,6 +92,10 @@ img.right {
 	padding: 47px 0 0 3px;
 	font-size: 10px;
 	color: #110E0F;
+}
+
+.rightsideheader{
+	font-size:1.1em;
 }
 
 #logo a {
@@ -465,11 +468,15 @@ table {
 	color: #333;
 }
 th {
+	background-color:#cccccc;
+	padding-left:4px;
 }
 th a {
 	display: block;
 	padding: 2px 4px;
 	text-decoration: none;
+	background-color:#cccccc;
+	color:red;
 }
 th a:hover {
 	color: #333;
@@ -477,13 +484,29 @@ th a:hover {
 }
 table tr td {
 	vertical-align: top;
-	padding: 3px 3px 3px 3px;
+	padding: 3px 15px 3px 4px;	
 }
-table tr.altrow td {
+
+table td{
+	height:30px;
 }
+
+table tr.altrow td {	
+}
+
+td.actiontd a{
+	background-color:#cccccc;
+	padding:2px 2px 2px 2px;
+}
+
+td.actiontd a:hover{
+	background-color:#ffffff;
+	padding:2px 2px 2px 2px;
+	color:#000000;
+}
+
 td.actions {
 	text-align: center;
-	white-space: nowrap;
 }
 td.actions a {
 	margin: 0px 6px;
@@ -670,15 +693,24 @@ td.actions a {
 
 	#qm0 a	
 	{	
-		padding:5px 4px 5px 5px;
-		color:#ffffff;
+		padding:5px 4px 8px 5px;
+		color:#575757;
 		font-family:Arial;
 		font-size:10px;
+		font-weight:bold;
 		text-decoration:none;
-		background:#8AC015;
+		background:#e5e5e5;
 	}
-
-
+	
+	#qm0 a:hover	
+	{	
+		padding:5px 4px 8px 5px;
+		color:#000000;
+		font-family:Arial;
+		font-size:10px;
+		font-weight:bold;
+		background:#ffffff;
+	}
 	
 	#qm0 div, #qm0 ul	
 	{	
@@ -687,7 +719,7 @@ td.actions a {
 		background-color:transparent;
 		border-width:1px;
 		border-style:none;
-		background:#8AC015;
+		background:#e5e5e5;
 	}
 
 
@@ -704,8 +736,11 @@ td.actions a {
 
 	#qm0 div a:hover, #qm0 ul a:hover	
 	{	
-		background-color:#fff600;
-		color:#CC0000;
+		background-color:#ffffff;
+		color:#000000;
+		font-weight:bold;
+		font-family:arial;
+		font-size:11px;
 	}
 
 
@@ -713,6 +748,7 @@ td.actions a {
 	{	
 		background-color:#DADADA;
 		color:#CC0000;
+		font-weight:bold;
 	}
 
 

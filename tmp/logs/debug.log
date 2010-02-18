@@ -929,3 +929,6 @@
 2010-02-11 16:57:57 Notice: Notice (8): Undefined variable: adminuser in [APP/views/elements/topnav.ctp, line 2]
 2010-02-11 16:57:57 Notice: Notice (8): Undefined variable: user_idd in [APP/views/elements/topnav.ctp, line 69]
 2010-02-11 16:57:57 Notice: Notice (8): Undefined variable: user_idd in [APP/views/elements/topnav.ctp, line 72]
+2010-02-17 16:43:23 Notice: Notice (8): Undefined index:  customer_id in [APP/controllers/projects_controller.php, line 416]
+2010-02-17 16:43:23 Notice: Notice (8): Undefined variable: ganttconsumer in [APP/views/elements/timeline.ctp, line 72]
+2010-02-17 16:43:57 Notice: Notice (8): Undefined variable: ganttconsumer in [APP/views/elements/timeline.ctp, line 72]

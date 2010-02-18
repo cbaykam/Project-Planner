@@ -345,8 +345,9 @@ class ProjectsController extends AppController {
 			} 
 		}
 		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
-		$customers = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'0') , 'order'=>array('User.name') ) );
-		$this->set(compact('users' , 'customers'));
+		$cust = $this->User->find('all' , array('conditions'=>array('User.redalto'=>0)));
+		$this->set(compact('users'));
+		$this->set('customerdata' , $cust);
 	}
 
 	function master_edit($id = null) {
@@ -396,6 +397,10 @@ class ProjectsController extends AppController {
 		$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true ));
 	}
 	
+	function master_admin(){
+		
+	}
+	
 	function __addMilestones($project){
 		$milestone['Milestone']['project_id'] = $project;
 		$milestone['Milestone']['name'] = 'Consult (Assess & Specify)';
@@ -410,7 +415,12 @@ class ProjectsController extends AppController {
 			if (count($data[$i]["Milestone"]) != 0)
 			{
 				if($master){
-					$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+					if($data[$i]["Project"]["redalto"] == 1){
+						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+					}else{
+						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':' . $data[$i]["Project"]["name"] . '</a>';
+					}
+					
 				}else{
 					$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 				}

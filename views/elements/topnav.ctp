@@ -37,6 +37,9 @@
 	<li><?php echo $html->link('MY ACCOUNT', array('controller'=>'users' ,'action'=>'edit' ,'master'=>true , $user_idd)); ?></li>
 	
 	<li><span class="qmdivider qmdividery" ></span></li>
+	<li><?php echo $html->link('ADMIN', array('controller'=>'projects' ,'action'=>'admin' ,'master'=>true)); ?></li>
+	
+	<li><span class="qmdivider qmdividery" ></span></li>
 	<li><?php echo $html->link('LOGOUT', array('controller'=>'users' ,'action'=>'sessiondestroy')); ?></li>
 
 <li class="qmclear">&nbsp;</li></ul>
