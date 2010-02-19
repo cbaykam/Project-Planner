@@ -6,24 +6,24 @@
 
 	
 	<h3> Top 5 Projects This Week </h3>
-
-	<a href="#" class="GNT_prev">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev2">[&lt;]</a> 
-	<a href="#" class="GNT_now">now</a> 
-	<a href="#" class="GNT_next2">[&gt;]</a> 
-	<a href="#" class="GNT_next">[&gt;&gt;]</a> 
-	<br><br>
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev2"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next2"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
 
 	<div class="gantt" id="gantt"></div> 
+	<div style="width:80%; text-align:right;">
+		<br><br>
+		<?php echo $html->link('View All' , array('controller'=>'projects' , 'action'=>'listview' , 'master'=>true) , array('class'=>'careful')) ?>
+	</div>
 	<br><br>
-	
-	
-	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?>
-	<?php echo $html->link("Standard Milestones" , array('controller'=>'standarts' , 'action'=>'index' , 'master'=>true ) , array('class'=>'buttonlink'))?>
 	
 		<h3>My Top 5 Tasks</h3>
 	<?php if(count($toptasks) != 0):?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
 			<tr>
 				<th>Project</th>
 				<th>Phase</th>
@@ -43,20 +43,37 @@
 				</tr>
 			<?php endforeach;?>
 			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></th>
+				<td></td><td></td><td></td><td></td><td></td>
+				<td class="careful"><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></td>
 			</tr>
 		</table>
+		<?php echo $html->link("Add Task" , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , $user_idd , true) , array('class'=>'buttonlink'))?>
 	<?php else:?>
 		<h3>No Tasks assigned for you.</h3>
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-<?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink2') ); ?>
+<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+	<tr>
+		<th></th><th class="rightsideheader">Notice Board</th>
+	</tr>
+		
+				<?php foreach ($notices as $notice):?>
+					<tr>
+						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
+						<td><b><?php echo $notice["Notice"]["title"];?></b></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><?php echo $notice["Notice"]["noticescol"];?></td>
+					</tr>
+				<?php endforeach;?>
+		<tr>
+			<td></td>
+			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));?></th>
+		</tr>
+	</table>
+	<br><br>
 <table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
 	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
 	<tr>
@@ -101,26 +118,6 @@
 	
 	
 </table>
-<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
-	<tr>
-		<th></th><th class="rightsideheader">Notice Board</th>
-	</tr>
-		
-				<?php foreach ($notices as $notice):?>
-					<tr>
-						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
-						<td><?php echo $notice["Notice"]["title"];?></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><?php echo $notice["Notice"]["noticescol"];?></td>
-					</tr>
-				<?php endforeach;?>
-		<tr>
-			<td></td>
-			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index' , 'master'=>true));?></th>
-		</tr>
-	</table>
-	<?php echo $html->link('Add Notice' , array('controller'=>'notices' , 'action'=>'add' , 'master'=>true) , array('class'=>'buttonlink2'))?>
+
 </div>
 

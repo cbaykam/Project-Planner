@@ -44,8 +44,8 @@
     				<td><?php echo $tsk->approved($task["Task"]["approved"]); ?></td>
     			<?php endif;?>
     		<td>
-    			<?php echo $html->link('Edit' , array('controller'=>'tasks' , 'action'=>'jobedit','master'=>true ,$task["Task"]['id'], $redalto)); ?> |
-    			<?php echo $html->link('Delete' , array('controller'=>'tasks' , 'action'=>'delete','master'=>true ,$task["Task"]['id'], 0,$redalto) , null , 'Are You Sure You want to delete job '. $task["Task"]['name'] .'?'); ?>
+    			<?php echo $html->link($html->image("ico_modify.gif") , array('controller'=>'tasks' , 'action'=>'jobedit','master'=>true ,$task["Task"]['id'], $redalto)  , null , null , false); ?> 
+    			<?php echo $html->link($html->image("ico_delete.gif") , array('controller'=>'tasks' , 'action'=>'delete','master'=>true ,$task["Task"]['id'], 0,$redalto) , null , 'Are You Sure You want to delete job '. $task["Task"]['name'] .'?' , false); ?>
     			<?php if($redalto == 1):?>
     				| <?php echo $html->link('Approve' , array('controller'=>'tasks' , 'action'=>'redaltoapprove','master'=>true ,$task["Task"]['id']) , null , 'This Will approve the job '. $task["Task"]['name'] .'?'); ?>
     			<?php endif;?>

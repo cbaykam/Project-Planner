@@ -1,18 +1,21 @@
-<div class="tasks form">
+<div id="pagetitle"><h1>
+	<?php if($buggie == 0):?>
+		<?php __('Add Task');?>
+	<?php else:?>
+		<?php __('Create Job');?>
+	<?php endif;?>
+</h1></div>
+<div id="projectLeftSide">
 <?php echo $form->create('Task' , array('url'=>array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $this->params["pass"][1], $this->params["pass"][2] , $this->params["pass"][3] , $this->params["pass"][4]) ) );?>
 	<fieldset>
-	 <?php if($buggie == 0):?>
- 		<legend><?php __('Add Task');?></legend>
- 	<?php else:?>
- 		<legend><?php __('Create Job');?></legend>
-	<?php endif;?>
 	<?php
+		echo $form->input('milestone_id' , array('label'=>'Project Phase'));
 		echo $form->input('name');
-		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') ) );
-		echo $form->input('status' , array('type'=>'select', 'options'=>array('0'=>'0%' , '10'=>'10%' , '20'=>'20%', '30'=>'30%', '40'=>'40%', '50'=>'50%', '60'=>'60%', '70'=>'70%', '80'=>'80%', '90'=>'90%', '100'=>'100%') ) );
+		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') , 'selected'=>'2' ) );
+		echo $form->input('status' , array('type'=>'hidden', 'value'=>'0'));
 		echo $form->input('description');
-		echo $form->input('startdate' , array('label'=>'Start Date'));
-		echo $form->input('duedate', array('label'=>'Due Date'));
+		echo $form->input('startdate' , array('label'=>'Start Date' , 'dateFormat'=>'DMY'));
+		echo $form->input('duedate', array('label'=>'Due Date', 'dateFormat'=>'DMY'));
 		if ($this->params["pass"][1] == 0)
 		{
 			 echo '<label for="TaskUserId">Assign a Resource</label>'; 
@@ -45,7 +48,7 @@
 		<?php endif;?>
 	<?php else: ?>
 		<?php echo $form->input('task_id' , array('label'=>'Dependency' , 'empty'=>'(None)')); ?>
-		<?php echo $form->input('milestone_id' , array('label'=>'Project Phase')); ?>
+		
 	<?php endif; ?>
 	</fieldset>
 	<fieldset>

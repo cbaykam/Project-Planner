@@ -120,6 +120,14 @@ class UsersProjectsController extends AppController {
 		}
 	}
 	
+	function master_delete( $project ,$id ) {
+		$dat = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id' => $id, 'UsersProject.project_id'=>$project)));
+		if ($this->UsersProject->del($dat[0]["UsersProject"]["id"])) {
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project));
+		}
+	}
+	
+	
 	function __eProjectNotification($email){
 		$this->Email->from    = 'Redalto <project@redalto.com>';
 		$this->Email->to      = $email;

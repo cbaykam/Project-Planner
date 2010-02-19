@@ -212,7 +212,7 @@ class ProjectsController extends AppController {
 	
 	function master_listview(){
 		$this->__checkadmin();
-		$this->set('projects' , $this->Project->find('all'));
+		$this->set('projects' , $this->Project->find('all', array('order'=>'Project.redalto')));
 	}
 	
 	function master_index() {
@@ -398,7 +398,7 @@ class ProjectsController extends AppController {
 	}
 	
 	function master_admin(){
-		
+		$this->__checkadmin();
 	}
 	
 	function __addMilestones($project){

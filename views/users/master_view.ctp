@@ -1,5 +1,6 @@
-<h1> <?php echo $data["User"]["name"]; ?> </h1>
-<div id="user_master_view_userinfo">
+<div id="pagetitle"><h1><?php echo $data["User"]["name"]; ?> </h1></div>
+<div id="projectLeftSide">
+
  <table border="0" cellspacing="0" cellpadding="0">
  	<tr>
  		<td><b>Email</b></td>
@@ -15,7 +16,7 @@
  	</tr>
  	
  </table>
-</div>
+
 <div id="user_master_view_tasks">
 	<?php if (count($data["Task"]) == 0): ?>
 		<h3>No Tasks for this user</h3>
@@ -107,4 +108,5 @@
 	    </select>	
 	<input type="submit" value="Add User To Project"/>
 	</fieldset>
+</div>
 </div>

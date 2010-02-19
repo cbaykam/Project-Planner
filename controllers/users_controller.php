@@ -92,9 +92,8 @@ class UsersController extends AppController {
 				if($customer != null){
 					$this->redirect(array('controller'=>'users' , 'action'=>'index','master'=>true , 1));
 				}else{
-					$this->redirect(array('controller'=>'users' , 'action'=>'index','master'=>true));
+					$this->redirect(array('controller'=>'users' , 'action'=>'listview','master'=>true));
 				}
-				$this->redirect(array('controller'=>'users' , 'action'=>'index','master'=>true));
 			} 
 		}
 		$projects = $this->User->Project->find('list');

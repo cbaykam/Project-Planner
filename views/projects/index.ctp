@@ -5,13 +5,13 @@
 	<h1> Welcome : <?php echo $username; ?> </h1>
 	
 	<h3> Top 5 Projects This Week </h3>
-
-	<a href="#" class="GNT_prev">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev2">[&lt;]</a> 
-	<a href="#" class="GNT_now">now</a> 
-	<a href="#" class="GNT_next2">[&gt;]</a> 
-	<a href="#" class="GNT_next">[&gt;&gt;]</a> 
-	<br><br>
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev2"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next2"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
 
 	<div class="gantt" id="gantt"></div> 
 	<br><br>
@@ -51,7 +51,26 @@
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th></th><th>Notice Board</th>
+	</tr>
+		
+				<?php foreach ($notices as $notice):?>
+					<tr>
+						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
+						<td><?php echo $notice["Notice"]["title"];?></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><?php echo $notice["Notice"]["noticescol"];?></td>
+					</tr>
+				<?php endforeach;?>
+		<tr>
+			<td></td>
+			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index'));?></th>
+		</tr>
+	</table><br><br>
 <table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
 	<tr><th>Customer Maintenance & Support Issues</th></tr>
 	<tr>
@@ -96,24 +115,5 @@
 	
 	
 </table>
-<table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<th></th><th>Notice Board</th>
-	</tr>
-		
-				<?php foreach ($notices as $notice):?>
-					<tr>
-						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
-						<td><?php echo $notice["Notice"]["title"];?></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><?php echo $notice["Notice"]["noticescol"];?></td>
-					</tr>
-				<?php endforeach;?>
-		<tr>
-			<td></td>
-			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index'));?></th>
-		</tr>
-	</table>
+
 </div>

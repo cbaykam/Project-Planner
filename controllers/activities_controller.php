@@ -4,7 +4,13 @@ class ActivitiesController extends AppController {
 	var $name = 'Activities';
 	var $helpers = array('Html', 'Form');
 	var $uses = array('Activity' , 'Project');
-
+	var $components = array('FileUpload');
+	
+	function beforeFilter(){
+		parent::beforeFilter();
+		$this->FileUpload->uploadDir = 'files';
+	}
+	
 	function index() {
 		$this->Activity->recursive = 0;
 		$this->set('activities', $this->paginate());
@@ -90,6 +96,9 @@ class ActivitiesController extends AppController {
 		$this->__checkadmin($project);
 		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
+			if($this->FileUpload->success){
+				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
+			}
 		    $this->data["Activity"]["task_id"] = $task;
 		    $this->data["Activity"]["user_id"] = $user;
 		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);

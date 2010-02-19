@@ -76,8 +76,8 @@ foreach ($users as $user):
 		</td>
 		<?php endif; ?>
 		<td class="actions">
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $user['User']['id'] , $iscustomer), null, sprintf(__('Are you sure you want to delete '.$user['User']['name'].'?', true), $user['User']['id'])); ?>
+			<?php echo $html->link($html->image('ico_modify.gif'), array('action'=>'edit', $user['User']['id']) , null , null , false); ?>
+			<?php echo $html->link($html->image('ico_delete.gif'), array('action'=>'delete', $user['User']['id'] , $iscustomer), null, sprintf(__('Are you sure you want to delete '.$user['User']['name'].'?', true), $user['User']['id']) , null , false); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

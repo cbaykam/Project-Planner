@@ -547,7 +547,7 @@ td.actions a {
 	width:28%;
 	float:right;
 	background-color :#ffffcc;
-	padding: 5px 5px 5px 15px;
+	padding: 20px 10px 20px 15px;
 	position : absolute;
 	right:20px;
 }
@@ -666,17 +666,17 @@ td.actions a {
 
 #attentionrequ{
 	background-color:#ffcc66;
-	padding:2px 2px 2px 2px;
+	padding:6px 2px 6px 4px;
 }
 
 #criticalu{
 	background-color:#ff7c80;
-	padding:2px 2px 2px 2px;
+	padding:6px 2px 6px 4px;
 }
 
 #allok{
 	background-color:#c3d69b;
-	padding:2px 2px 2px 2px;
+	padding:6px 2px 6px 4px;
 }
 
 .hiddenmenu{
@@ -786,6 +786,30 @@ td.actions a {
 	#qm0 .qmritemcontent	
 	{	
 		padding:0px 0px 0px 4px;
+	}
+	
+	.careful{
+		font-size:1.1em;
+		font-weight:bold;
+		padding: 4px 4px 4px 4px;
+	}
+	
+	.careful:hover{
+		background-color:#cccccc;
+		color:red;	
+		padding: 4px 4px 4px 4px;
+	}
+	
+	.forwardback{
+		padding:10px 10px 10px 10px ;
+	}
+	
+	#nowsq{
+		font-weight:bold;
+		padding: 10px 5px 10px 5px;
+		vertical-align: top;
+		font-size : 14px;
+		text-decoration:none;
 	}
 
 /*END Horizontal menu*/

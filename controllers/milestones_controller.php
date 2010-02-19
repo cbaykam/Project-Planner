@@ -3,6 +3,7 @@ class MilestonesController extends AppController {
 
 	var $name = 'Milestones';
 	var $helpers = array('Html', 'Form', 'Color');
+	var $uses = array('Milestone' , 'Task');
 
 	function index() {
 		$this->Milestone->recursive = 0;
@@ -110,7 +111,16 @@ class MilestonesController extends AppController {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}
 		if ($this->Milestone->del($id)) {
-			$this->redirect(array('controller'=>'milestones' , 'action'=>'index' , 'master'=>true ,$project));
+			$related = $this->Task->find('all' , array('conditions'=>array('Task.milestone_id'=>$id)));
+			foreach($related as $tsk){
+				$this->Task->id = $tsk["Task"]["id"];
+				$this->Task->saveField('milestone_id' , 0);
+			}
+			if(isset($project)){
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true ,$project));
+			}else{
+				$this->redirect(array('controller'=>'milestones' , 'action'=>'index' , 'master'=>true ,$project));
+			}			
 		}
 	}
 	

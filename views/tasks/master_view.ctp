@@ -1,8 +1,6 @@
+<div id="pagetitle"><h1>Task : <?php echo $task["Task"]["id"] ?> </h1></div>	
+<div id="projectLeftSide">
 <table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<th><?php echo $task["Task"]["id"] ?></th>
-		<th>&nbsp;</th>
-	</tr>
 	<tr>
 		<td>Name</td>
 		<td><?php echo $task["Task"]["name"] ?></td>
@@ -62,7 +60,7 @@
  <table border="0" cellspacing="0" cellpadding="0">
  	<tr>
  		<th>Activities / Notes</th>
- 		<th>&nbsp;</th><th>&nbsp;</th>
+ 		<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
  		<th>Total :</th>
  		<th><?php echo $tsk->duration($task["Activity"]); ?></th>
  	</tr>
@@ -70,6 +68,7 @@
  	     <th>Date</th>
  	     <th>By</th>
  	     <th>Description</th>
+ 	     <th>File</th>
  	     <th>Time</th>
  	     <th>Actions</th>
  	</tr>
@@ -79,6 +78,7 @@
  				<td><?php echo $act["date"] ?></td>
  				<td><?php echo $task["User"]["name"] ?></td>
  				<td><?php echo $act["description"] ?></td>
+ 				<td><a href="<?php echo Configure::read('appPath')?>files/<?php echo $act["file"]?>" taget="_blank"><?php echo $act["file"]?></a></td>
  				<td><?php echo $timecal->show($act["duration"]); ?></td>
  				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit','master'=>true , $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>
  			</tr>
@@ -94,3 +94,5 @@
  <?php if($projectid != 0):?>
 		<?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view','master'=>true , $projectid), array('class'=>'buttonlink') ); ?></li>
  <?php endif;?>	
+ </div>
+"

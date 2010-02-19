@@ -1,5 +1,6 @@
-<div class="milestones index">
-<h2><?php __('Milestones');?></h2>
+<div id="pagetitle"><h1><?php __('Milestones');?> </h1></div>
+<div id="projectLeftSide">
+
 <p>
 <?php
 echo $paginator->counter(array(
@@ -44,15 +45,16 @@ foreach ($milestones as $milestone):
 			<?php echo $milestone['Milestone']['status']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $milestone['Milestone']['id'] , $this->params["pass"][0])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $milestone['Milestone']['id'], $this->params["pass"][0]), null, sprintf(__('Are you sure you want to delete %s?', true), $milestone['Milestone']['name'])); ?>
+			<?php echo $html->link($html->image("ico_modify.gif"), array('action'=>'edit', $milestone['Milestone']['id'] , $this->params["pass"][0]) , null , null , false); ?>
+			<?php echo $html->link($html->image("ico_delete.gif"), array('action'=>'delete', $milestone['Milestone']['id'], $this->params["pass"][0]), null, sprintf(__('Are you sure you want to delete %s?', true), $milestone['Milestone']['name']) , null , false); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
-</div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+</div>
+

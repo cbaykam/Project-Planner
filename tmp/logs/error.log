@@ -295,3 +295,5 @@
 2010-02-17 16:42:56 Warning: Warning (2): fopen(/var/www/planner/app/tmp/cache/cake_core_dir_map) [<a href='http://php.net/function.fopen'>function.fopen</a>]: failed to open stream: Permission denied in [CORE/cake/libs/file.php, line 156]
 2010-02-17 16:42:56 Warning: Warning (2): fopen(/var/www/planner/app/tmp/cache/cake_core_file_map) [<a href='http://php.net/function.fopen'>function.fopen</a>]: failed to open stream: Permission denied in [CORE/cake/libs/file.php, line 156]
 2010-02-17 16:42:56 Warning: Warning (2): fopen(/var/www/planner/app/tmp/cache/cake_core_default_en_us) [<a href='http://php.net/function.fopen'>function.fopen</a>]: failed to open stream: Permission denied in [CORE/cake/libs/file.php, line 156]
+2010-02-18 15:53:04 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Array' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
+2010-02-18 15:54:16 Warning: Warning (512): <span style = "color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Array' in 'field list'</span> in [CORE/cake/libs/model/datasources/dbo_source.php, line 525]
