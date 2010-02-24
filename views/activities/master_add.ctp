@@ -2,8 +2,14 @@
 <div id="projectLeftSide">
 <?php echo $form->create('Activity' , array( 'type'=>'file' , 'url'=>array('controller'=>'activities' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $projectid , $this->params["pass"][2]) ) );?>
 	<fieldset>
+	<label for="taskName">Task </label>
+	<span id="taskName"><b><?php echo $tdata["Task"]["name"]?></b></span>
+	<br><br>
+	<label for="taskName">Task Id</label>
+	<span id="taskName"><?php echo $tdata["Task"]["id"]?></span>
+	<br><br>
 	<?php
-		echo $form->input('description' , array('type'=>'textfield') );
+		echo $form->input('description' , array('type'=>'textfield' , 'label'=>'Add a note or description of activity that has been done') );
 		echo $form->input('date');
 	?>
 		<label for="ActivityHour">Time Taken</label>
@@ -52,7 +58,12 @@
 			Mins
 			<br><br>
 			<?php echo $form->input('file', array('type'=>'file')); ?> 	
-		
+			<label for="taskName">User</label>
+			<select id="ActivityUser" name="data[Activity][user_id]">
+			<?php foreach($users as $uss):?>
+				<option value="<?php echo $uss["id"]?>" <?php if($uss["id"] == $usss):?>SELECTED<?php endif;?>><?php echo $uss["name"]?></option>
+			<?php endforeach;?>
+			</select>
 	</fieldset>
 	<?php echo $form->end('Submit');?>
 	<br>

@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
 	<tr>
 		<th><?php echo $task["Task"]["id"] ?></th>
 		<th>&nbsp;</th>
@@ -59,7 +59,7 @@
  <?php if (count($task["Activity"]) != 0): ?>
   
 
- <table border="0" cellspacing="0" cellpadding="0">
+ <table>
  	<tr>
  		<th>Activities / Notes</th>
  		<th>&nbsp;</th><th>&nbsp;</th>

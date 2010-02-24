@@ -18,7 +18,7 @@
 	
 		<h3>My Top 5 Tasks</h3>
 	<?php if(count($toptasks) != 0):?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table>
 			<tr>
 				<th>Project</th>
 				<th>Phase</th>
@@ -51,7 +51,7 @@
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
 	<tr>
 		<th></th><th>Notice Board</th>
 	</tr>
@@ -71,7 +71,7 @@
 			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index'));?></th>
 		</tr>
 	</table><br><br>
-<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
+<table style="width:70%;">
 	<tr><th>Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
@@ -94,7 +94,7 @@
 </table>
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" style="width:70%;">
+<table style="width:70%;">
 	<tr><th>Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>

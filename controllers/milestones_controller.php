@@ -2,7 +2,7 @@
 class MilestonesController extends AppController {
 
 	var $name = 'Milestones';
-	var $helpers = array('Html', 'Form', 'Color');
+	var $helpers = array('Html', 'Form', 'Color', 'Tsk');
 	var $uses = array('Milestone' , 'Task');
 
 	function index() {
@@ -81,6 +81,7 @@ class MilestonesController extends AppController {
 			$this->data["Milestone"]["project_id"] = $project;
 			$this->Milestone->create();
 			if ($this->Milestone->save($this->data)) {
+				$this->__addMilestones($this->data , $project);
 				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 			} 
 		}
@@ -150,6 +151,24 @@ class MilestonesController extends AppController {
 	
 	function master_standart(){
 		$this->layout ='ajax';
+	}
+	
+	function __addMilestones($data , $project){
+		foreach($data["Mile"] as $milestone){
+			if($milestone["add"] == 1){
+					$rec["Milestone"]["project_id"] = $project;
+					$rec["Milestone"]["name"] = $milestone["name"];
+					$rec["Milestone"]["startdate"] = $milestone["startdate"];
+					$rec["Milestone"]["enddate"] = $milestone["enddate"];
+					$rec["Milestone"]["key"] = $milestone["key"];
+					$rec["Milestone"]["status"] = $milestone["status"];
+					$rec["Milestone"]["color"] = $milestone["color"];
+					$rec["Milestone"]["order"] = $milestone["order"];
+					$this->Milestone->create();
+					$this->Milestone->save($rec);
+			}
+			
+		}
 	}
 
 }

@@ -1,7 +1,7 @@
 <div id="pagetitle"><h1><?php echo $data["User"]["name"]; ?> </h1></div>
 <div id="projectLeftSide">
 
- <table border="0" cellspacing="0" cellpadding="0">
+ <table>
  	<tr>
  		<td><b>Email</b></td>
  		<td><?php echo $data["User"]["email"]; ?></td>
@@ -18,50 +18,74 @@
  </table>
 
 <div id="user_master_view_tasks">
-	<?php if (count($data["Task"]) == 0): ?>
-		<h3>No Tasks for this user</h3>
-	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+	<?php if($data["User"]["redalto"] == 1): ?>
+		<?php if (count($data["Task"]) == 0): ?>
+			<h3>No Tasks for this user</h3>
+		<?php else: ?>
+			<table>
+			
+				<tr>
+					<th>Task Name</th>
+					<th>Status</th>
+					<th>Priority</th>
+				</tr>
+			<?php foreach($data["Task"] as $task):?>
 		
-			<tr>
-				<th>Task Name</th>
-				<th>Status</th>
-				<th>Priority</th>
-			</tr>
-		<?php foreach($data["Task"] as $task):?>
-	
-			<tr>
-				<td><?php echo $html->link($task["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["id"]) );?></td>
-				<td><?php echo $task["status"];?> %</td>
-				<td><?php echo $priority->display($task["priority"]);?></td>
-			</tr>
-	
-		<?php endforeach;?>
-	
-		</table>
-	<?php endif; ?>
+				<tr>
+					<td><?php echo $html->link($task["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["id"]) );?></td>
+					<td><?php echo $task["status"];?> %</td>
+					<td><?php echo $priority->display($task["priority"]);?></td>
+				</tr>
+		
+			<?php endforeach;?>
+		
+			</table>
+		<?php endif; ?>
+	<?php endif;?>
 </div>
 
 <div id="user_master_view_projects">
+	
 	<h3> Projects </h3>
-	<?php if (count($data["Project"]) == 0): ?>
-		<h3>Not working in any projects</h3>
-	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+	<?php if($data["User"]["redalto"] == 1):?>
+		<?php if (count($data["Project"]) == 0): ?>
+			<h3>Not working in any projects</h3>
+		<?php else: ?>
+			<table>
+			
+				<tr>
+					<th>Project Name</th>
+				</tr>
+			<?php foreach($data["Project"] as $prj):?>
 		
-			<tr>
-				<th>Project Name</th>
-			</tr>
-		<?php foreach($data["Project"] as $prj):?>
-	
-			<tr>
-				<td><?php echo $html->link($prj["name"] , array('controller' => 'projects' , 'action' => 'view','master'=>true , $prj["id"]) ); ?></td>
-			</tr>
-	
-		<?php endforeach;?>
-	
-		</table>
-	<?php endif; ?>
+				<tr>
+					<td><?php echo $html->link($prj["name"] , array('controller' => 'projects' , 'action' => 'view','master'=>true , $prj["id"]) ); ?></td>
+				</tr>
+		
+			<?php endforeach;?>
+		
+			</table>
+		<?php endif; ?>
+	<?php else:?>
+		<?php if (count($custProj) == 0): ?>
+			<h3>This Customer does not have any projects</h3>
+		<?php else: ?>
+			<table>
+			
+				<tr>
+					<th>Project Name</th>
+				</tr>
+			<?php foreach($custProj as $prj):?>
+		
+				<tr>
+					<td><?php echo $html->link($prj["Project"]["name"] , array('controller' => 'projects' , 'action' => 'view','master'=>true , $prj["Project"]["id"]) ); ?></td>
+				</tr>
+		
+			<?php endforeach;?>
+		
+			</table>
+		<?php endif; ?>		
+	<?php endif;?>
 </div>
 
 <div id="holidays">
@@ -69,7 +93,7 @@
 	<?php if (count($data["Holiday"]) == 0): ?>
 		<?php echo $html->link("Add Event" , array('controller' => 'holidays' , 'action' => 'add','master'=>true , $data["User"]["id"]) , array('class'=>'buttonlink') );?>
 	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table>
 			<tr>
 				<th>Description</th>
 				<th>Type</th>

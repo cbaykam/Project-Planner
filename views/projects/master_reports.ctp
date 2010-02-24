@@ -1,6 +1,6 @@
 <div id="pagetitle"><h1>Project Reports </h1></div>
 <div id="projectLeftSide">
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
 	<tr>
 	    <th>Project</th>
 	    <th>Completed</th>

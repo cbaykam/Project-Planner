@@ -1,7 +1,7 @@
 <div id="pagetitle"><h1>Resource</h1></div>
 <div id="projectLeftSide">
 <?php if(isset($tasks[0]["User"]["name"])):?>
-<table border="0" cellspacing="0" cellpadding="0" style="width:300px;">
+<table style="width:300px;">
 	<tr><th></th><th></th></tr>
 	<tr>
 		<td>Name</td>
@@ -13,7 +13,7 @@
 	</tr>	
 </table>
 
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
 	<tr>
 		<th>Task List</th><th></th><th></th><th></th><th></th><th></th><th></th>
 	</tr>

@@ -407,6 +407,7 @@ label {
 	padding-right: 20px;
 	width:170px;
 	vertical-align:top;
+	color:#444444;
 }
 input, textarea {
 	clear: both;
@@ -425,10 +426,6 @@ option {
 	padding: 0 3px;
 }
 input[type=checkbox] {
-	clear: left;
-	float: left;
-	margin: 0px 6px 7px 2px;
-	width: auto;
 }
 input[type=radio] {
 	float:left;
@@ -469,7 +466,7 @@ table {
 }
 th {
 	background-color:#cccccc;
-	padding-left:4px;
+	padding: 2px 4px;
 }
 th a {
 	display: block;
@@ -531,7 +528,7 @@ td.actions a {
 	float:left;
 	width:67%;
 	background-color:#ffffff;
-	padding: 10px 10px 10px 10px;
+	padding: 10px 10px 30px 10px;
 }
 
 #pagetitle{
@@ -550,6 +547,38 @@ td.actions a {
 	padding: 20px 10px 20px 15px;
 	position : absolute;
 	right:20px;
+}
+
+#projectRightSide label{
+	width:80px;
+}
+
+#projectRightSide hr{
+	color:#ffffff;
+}
+
+#projectRightSide2 {
+	width:28%;
+	float:right;
+	padding: 20px 10px 20px 15px;
+	position : absolute;
+	right:20px;
+}
+
+#projectRightSide2 td {
+	background-color :#ffffcc;
+}
+
+#projectRightSide2 th {
+	background-color :#edf3fe;
+}
+
+#projectRightSide2 th a{
+	background-color :#edf3fe;
+}
+
+#th22 {
+	background-color :#ffffcc;
 }
 
 .noborder {
@@ -584,7 +613,8 @@ td.actions a {
 	margin-top:10px;
 	margin-right:10px;
 	display:block;
-	width:150px; 
+	width:150px;
+	text-align: center;
 }
 
 .buttonlink:hover{
@@ -697,9 +727,18 @@ td.actions a {
 		color:#575757;
 		font-family:Arial;
 		font-size:10px;
-		font-weight:bold;
 		text-decoration:none;
-		background:#e5e5e5;
+		background:#999999;
+	}
+	
+	.qmmc #activeTab a{
+		background-color:#e5e5e5;
+		font-weight: bolder;
+	}
+	
+	.qmmc #activeTab a:hover{
+		background-color:#e5e5e5;
+		font-weight: bolder;
 	}
 	
 	#qm0 a:hover	
@@ -708,10 +747,9 @@ td.actions a {
 		color:#000000;
 		font-family:Arial;
 		font-size:10px;
-		font-weight:bold;
 		background:#ffffff;
 	}
-	
+		
 	#qm0 div, #qm0 ul	
 	{	
 		padding:10px;
@@ -721,9 +759,7 @@ td.actions a {
 		border-style:none;
 		background:#e5e5e5;
 	}
-
-
-
+	
 	#qm0 div a, #qm0 ul a	
 	{	
 		padding:3px 10px 3px 5px;
@@ -733,7 +769,6 @@ td.actions a {
 		border-style:none;
 	}
 
-
 	#qm0 div a:hover, #qm0 ul a:hover	
 	{	
 		background-color:#ffffff;
@@ -742,7 +777,6 @@ td.actions a {
 		font-family:arial;
 		font-size:11px;
 	}
-
 
 	body #qm0 div .qmactive, body #qm0 div .qmactive:hover	
 	{	

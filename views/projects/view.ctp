@@ -3,7 +3,7 @@
 	<div id="projectLeftSide">
 			<!--Project Overview -->
 			<div id="projectOverview">
-				<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
+				<table class="pleftside">
 					<tr><th class="noborder">Project Overview</th><th class="nobordercorner"></th></tr>
 					<tr><td class="noborder"><?php echo $project["Project"]["overview"]; ?></td><td></td></tr>
 					
@@ -14,7 +14,7 @@
 			<div id="projectKeyMilestones">
 			
 				<?php if (count($project['Milestone']) != 0): ?>
-					<table border="0" cellspacing="0" cellpadding="0" class="pleftside">
+					<table class="pleftside">
 						<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"></th></tr>
 						<tr>
 							<th>Due Date</th>
@@ -63,7 +63,7 @@
 				
 						<?php if (count($project["Task"])): ?>
 							<h3>Tasks in the project</h3>
-							<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+							<table style="width:95%;">
 								<tr>
 									<th>Id</th>
 									<th>Created</th>
@@ -126,7 +126,7 @@
 			</div>
 			<div id="users_in_project">
 				<?php if (count($project["User"]) != 0): ?>
-					<table border="0" cellspacing="0" cellpadding="0" style="width:95%">
+					<table style="width:95%">
 					<thead>
 						<th style="width:70%;">Users in the Project</th>
 					</thead>
@@ -156,7 +156,7 @@
 				
 				
 				<?php if (count($project["Notice"]) != 0 ): ?>
-					<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+					<table style="width:95%;">
 						<tr>
 							<th>Date</th>
 							<th>Notice</th>
@@ -176,7 +176,7 @@
 			<!--Links of the project-->
 			<div id="project_links_menu">
 				<?php if (count($project["Link"]) != 0): ?>
-						<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+						<table style="width:95%;">
 							<tr>
 								<th class="noborder">Project Links</th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add',$project["Project"]["id"] ) ); ?></th>
 							</tr>
@@ -201,7 +201,7 @@
 				<?php if ( $countstats == 0): ?>
 				<?php else: ?>
 				    <?php $statindice = $countstats - 1; ?>
-					<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+					<table style="width:95%;">
 						<tr><th>Project Status</th><th><?php echo $html->link("Change" , array('controller' => 'statusses' , 'action' => 'add' , $project["Project"]["id"]) ); ?></th></tr>
 						<tr>
 							<td><?php echo $project["Statuss"][$statindice]['created'] ?></td>
@@ -216,7 +216,7 @@
 			</div>
 			<!--Show the budgeting.-->
 			<div id="budgeting">
-				<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+				<table style="width:95%;">
 					<tr>
 						<th>Budgeting</th>
 						<th></th>

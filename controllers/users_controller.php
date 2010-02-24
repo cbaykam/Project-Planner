@@ -79,9 +79,14 @@ class UsersController extends AppController {
 
 	function master_view($id = null) {
 		$this->__checkadmin();
-		$this->set("data" , $this->User->findById($id));
+		$data = $this->User->findById($id);
+		$this->set("data" , $data);
 		$this->Project->recursive = 0;
 		$this->set("projects" , $this->Project->find("all"));
+		if($data["User"]["redalto"] == 0){
+			$projet = $this->Project->find('all', array('conditions'=>array('Project.customer'=>$data["User"]["name"])));
+			$this->set('custProj' , $projet);
+		}
 	}
 
 	function master_add($customer = null) {

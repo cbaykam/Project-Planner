@@ -17,6 +17,7 @@
 		echo $form->input('overview' , array('type'=>'textfield') );
 		echo $form->input('user_id' , array('label'=>'Project Manager'));
 		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer' , '1'=>'Redalto') ) );
+		echo $form->input('duedate' , array('label'=>'Due Date', 'dateFormat'=>'DMY'));
 	?>
 	<br>
 		<span class="duration">
@@ -25,9 +26,10 @@
 	    	<input id="ProjectName" type="text" value="" maxlength="128" name="data[Project][hours]" size="4"/>	
 				Hrs
 			<input id="ProjectName" type="hidden" value="0" size="4"/>
-	<div id="milestones">
-		<a href="#" id="addMilestones">Add Standart Milestones</a>
-	</div>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<input type="submit" value="Submit">
+</div>
+<div id="projectRightSide">
+	<?php echo $this->element('milestones'); ?>
+	</form>
 </div>

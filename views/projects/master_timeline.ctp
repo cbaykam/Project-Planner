@@ -2,25 +2,32 @@
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
 <div id="projectLeftSide">
-<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
+<div align="right" style="width:95%;">
+	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
+</div>
 <h3> Customer Projects </h3>
-
-	<a href="#" class="GNT_prev3">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev4">[&lt;]</a> 
-	<a href="#" class="GNT_now3">now</a> 
-	<a href="#" class="GNT_next4">[&gt;]</a> 
-	<a href="#" class="GNT_next3">[&gt;&gt;]</a> 
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev3"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev4"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now3"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next4"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next3"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
 	<br><br>
 
 <div class="gantt" id="gantt2"></div> 
-<br><br><br>
+<br><br>
+<div align="right" style="width:95%;">
+	<?php echo $html->link("Add a Project" , array('controller' => 'projects' , 'action' => 'add','master'=>true) , array('class'=>'buttonlink') ); ?><br><br>
+</div>
 <h3> Redalto Projects </h3>
-
-	<a href="#" class="GNT_prev">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev2">[&lt;]</a> 
-	<a href="#" class="GNT_now">now</a> 
-	<a href="#" class="GNT_next2">[&gt;]</a> 
-	<a href="#" class="GNT_next">[&gt;&gt;]</a> 
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev2"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next2"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
 	<br><br>
 
 	<div class="gantt" id="gantt"></div> 
@@ -43,4 +50,5 @@
   	</tr>
   <?php endforeach;?>
 </table>
+
 </div>

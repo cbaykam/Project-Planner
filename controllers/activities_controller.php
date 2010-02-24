@@ -100,7 +100,7 @@ class ActivitiesController extends AppController {
 				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
 			}
 		    $this->data["Activity"]["task_id"] = $task;
-		    $this->data["Activity"]["user_id"] = $user;
+		    //$this->data["Activity"]["user_id"] = $user;
 		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
 			$this->data["Activity"]["project_id"] = $project;
 			$this->Activity->create();
@@ -115,7 +115,10 @@ class ActivitiesController extends AppController {
 			$this->__usersin($project);	
 		}
 		
-		$this->set(compact('tasks'));
+		$this->set('tdata' , $this->Task->findById($task));
+		$this->set('usss' , $user);
+		
+		$this->set(compact('tasks' , 'users'));
 	}
 
 	function master_edit($id = null , $task , $project=0) {

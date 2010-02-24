@@ -4,7 +4,7 @@
 <div id="projectLeftSide">
 	<h1> Welcome : <?php echo $username; ?> </h1>
 	<?php echo $html->link("Bugs and Issues" , array('controller' => 'bugs' , 'action' => 'index','master'=>true) );?>
-	<table border="0" cellspacing="0" cellpadding="0">
+	<table>
 		<tr>
 			<th>Project Name</th>
 			<th>Type</th>
@@ -78,7 +78,7 @@
 </div>
 <div id="projectRightSide">
 <?php echo $html->link("View Reports" , array('controller' => 'projects' , 'action' => 'reports','master'=>true), array('class'=>'buttonlink') ); ?>
-<table border="0" cellspacing="0" cellpadding="0" style="width:200px;">
+<table style="width:200px;">
 	<tr><th>Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
@@ -101,7 +101,7 @@
 </table>
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" style="width:200px;">
+<table style="width:200px;">
 	<tr><th>Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>

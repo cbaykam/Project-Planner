@@ -1,3 +1,4 @@
+<?php $paginator->options(array('url' => $this->passedArgs));?>
 <?php if($redalto == 0):?>
   <div id="pagetitle"><h1>Customer Support Jobs</h1>
   Tracking of customer operational support issues.

@@ -2,7 +2,7 @@
 
 	<?php foreach($data as $notice):?>
 	
-		<table border="0" cellspacing="0" cellpadding="0" style="width:600px;">
+		<table style="width:600px;">
 			<tr>
 			    <th style="width:70px;"><?php echo $notice["Notice"]["created"]; ?></th>
 			    <th><?php echo $notice["Notice"]["title"]; ?></th>

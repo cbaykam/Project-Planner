@@ -15,15 +15,21 @@
 	</div>
 
 	<div class="gantt" id="gantt"></div> 
-	<div style="width:80%; text-align:right;">
-		<br><br>
-		<?php echo $html->link('View All' , array('controller'=>'projects' , 'action'=>'listview' , 'master'=>true) , array('class'=>'careful')) ?>
-	</div>
-	<br><br>
+	 <br>
+		<table style="width:95%;">
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td width="88" align="center"><?php echo $html->link('View All' , array('controller'=>'projects' , 'action'=>'listview' , 'master'=>true) , array('class'=>'careful')) ?></td>
+		  </tr>
+		</table>
 	
 		<h3>My Top 5 Tasks</h3>
 	<?php if(count($toptasks) != 0):?>
-		<table border="0" cellspacing="0" cellpadding="0" style="width:95%;">
+		<table style="width:95%;">
 			<tr>
 				<th>Project</th>
 				<th>Phase</th>
@@ -36,7 +42,7 @@
 				<tr>
 					<td><?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $task["Project"]["id"]));?></td>
 					<td><?php echo $task["Milestone"]["name"];?></td>
-					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task["Task"]["id"]));?></td>
+					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task["Task"]["id"] , $task["Project"]["id"]));?></td>
 					<td><?php echo $priority->display($task["Task"]["priority"]);?></td>
 					<td><?php echo $timecal->format($task["Task"]["duedate"]);?></td>
 					<td><?php echo $task["Task"]["status"];?> %</td>
@@ -53,7 +59,7 @@
 	<?php endif;?>
 </div>
 <div id="projectRightSide">
-<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<table border="0" style="width:100%;">
 	<tr>
 		<th></th><th class="rightsideheader">Notice Board</th>
 	</tr>
@@ -74,7 +80,7 @@
 		</tr>
 	</table>
 	<br><br>
-<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<table style="width:100%;">
 	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
@@ -97,7 +103,7 @@
 </table>
 <br>
 
-<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+<table style="width:100%;">
 	<tr><th class="rightsideheader">Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>

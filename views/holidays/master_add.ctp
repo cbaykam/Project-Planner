@@ -1,7 +1,7 @@
-<div class="holidays form">
+<div id="pagetitle"><h1><?php __('Add Holiday');?> </h1></div>
+<div id="projectLeftSide">
 <?php echo $form->create('Holiday' , array('url'=>array('controller'=>'holidays' , 'action'=>'add' , $this->params["pass"][0])) );?>
 	<fieldset>
- 		<legend><?php __('Add Holiday');?></legend>
 	<?php
 		echo $form->input('description');
 		echo $form->input('start');

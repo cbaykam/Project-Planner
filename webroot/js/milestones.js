@@ -2,7 +2,7 @@ function addfields(){
 	
 	var html = "<a href='#' id='removeMilestones'>Remove Milestones</a>"; 
 	var loadUrl = baseUrl + 'master/milestones/standart';
-	var obj = $(html).click(function(){
+	var obj = $(html).click(function(event){
 		removefields();
 		event.preventDefault();
 	});
@@ -13,7 +13,7 @@ function addfields(){
 
 function removefields(){
 	var obj = $('<a href="#" id="addMilestones">Add Standard Milestones</a>');
-	obj.click(function(){
+	obj.click(function(event){
 		addfields();
 		event.preventDefault();
 	});

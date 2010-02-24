@@ -31,7 +31,7 @@
 		var nowD = dateObj.getDate();
 	
 		$("#gantt").gantt({
-			'range' : 20,
+			'range' : 18,
 			'tasks':[
 				<?php echo $timell; ?>
 			]
@@ -67,7 +67,7 @@
 	
     <?php if ($duotime): ?>
 		$("#gantt2").gantt({
-			'range' : 21,
+			'range' : 18,
 			'tasks':[
 				<?php echo $ganttconsumer; ?>
 			]

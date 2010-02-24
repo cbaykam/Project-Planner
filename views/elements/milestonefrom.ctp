@@ -3,22 +3,22 @@
 <?php $i = 0;?>
 <?php foreach($stmileston as $stmlstns):?>
 	<?php
-		$mladd = 'Milestone.' . $i . '.add';
-		$mlname = 'Milestone.' . $i . '.name';
-		$mlstart = 'Milestone.' . $i . '.startdate';
-		$mlend = 'Milestone.' . $i . '.enddate';
-		$mlkey = 'Milestone.' . $i . '.key';
-		$mlstats = 'Milestone.' . $i . '.status';
-		$mlclr = 'Milestone.' . $i . '.color';
+		$mladd = 'Mile.' . $i . '.add';
+		$mlname = 'Mile.' . $i . '.name';
+		$mlstart = 'Mile.' . $i . '.startdate';
+		$mlend = 'Mile.' . $i . '.enddate';
+		$mlkey = 'Mile.' . $i . '.key';
+		$mlstats = 'Mile.' . $i . '.status';
+		$mlclr = 'Mile.' . $i . '.color';
 		$mlorder = $i + 1 ;
-		$mlordernm = 'Milestone.' . $i . '.order';
+		$mlordernm = 'Mile.' . $i . '.order';
 		$i++ ;
 	?>
-	<label for="Milestone<?php echo $i-1?>Add">Add This</label>
-	<input type="checkbox" id="Milestone<?php echo $i-1?>Add" value="1" name="data[Milestone][<?php echo $i-1?>][add]">
+	<label for="Mile<?php echo $i-1?>Add">Add This</label>
+	<input type="checkbox" id="Mile<?php echo $i-1?>Add" value="1" name="data[Mile][<?php echo $i-1?>][add]">
 	<?php echo $form->input($mlname , array('label'=>'Description' , 'value'=>$stmlstns["Standart"]["name"]) ); ?>
-	<?php echo $form->input($mlstart, array('dateFormat'=>'DMY')); ?>
-	<?php echo $form->input($mlend, array('dateFormat'=>'DMY')); ?>
+	<?php echo $form->input($mlstart , array('dateFormat'=>'DMY' , 'type'=>'date')); ?>
+	<?php echo $form->input($mlend , array('dateFormat'=>'DMY' , 'type'=>'date')); ?>
 	<?php echo $form->input($mlkey , array('value'=>'1' , 'type'=>'hidden')); ?>
 	<?php echo $form->input($mlstats , array('value'=>'Not Yet Started' , 'type'=>'hidden')); ?>
 	<?php echo $form->input($mlclr , array('type'=>'hidden', 'value'=>$stmlstns["Standart"]["color"])) ?>

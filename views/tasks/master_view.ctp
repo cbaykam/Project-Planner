@@ -1,9 +1,13 @@
 <div id="pagetitle"><h1>Task : <?php echo $task["Task"]["id"] ?> </h1></div>	
 <div id="projectLeftSide">
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
 	<tr>
 		<td>Name</td>
 		<td><?php echo $task["Task"]["name"] ?></td>
+	</tr>
+	<tr>
+		<td>Description</td>
+		<td><?php echo $task["Task"]["description"] ?></td>
 	</tr>
 	<tr>
 		<?php if (isset($task["User"]["name"])): ?>
@@ -49,6 +53,7 @@
 	</tr>
 	
 </table>
+<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' , 'master'=>true , $task["Task"]["id"]) , array('class'=>'buttonlink'));?>
 <?php if($task["Task"]["user_id"] != null):?>
 <?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
 <?php else:?>
@@ -57,7 +62,7 @@
  <?php if (count($task["Activity"]) != 0): ?>
   
 
- <table border="0" cellspacing="0" cellpadding="0">
+ <table>
  	<tr>
  		<th>Activities / Notes</th>
  		<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>

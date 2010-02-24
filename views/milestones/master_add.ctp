@@ -14,7 +14,10 @@
 	?>
 	<?php echo $color->select();?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<input type="submit" value="Submit">
+</div></div>
+<div id="projectRightSide">
+<?php echo $this->element('milestonefrom'); ?>
+	</form>
 </div>
-
 

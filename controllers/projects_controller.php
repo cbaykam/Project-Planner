@@ -289,7 +289,7 @@ class ProjectsController extends AppController {
 		}
 		$prdat = $this->Project->read(null, $id);
 		$this->set('project', $prdat);
-        $this->set("users" , $this->User->find('list' , array('conditions'=>array('User.redalto'=>'1' , 'User.admin'=>0))));
+        $this->set("users" , $this->User->find('list' , array('conditions'=>array('User.redalto'=>'1' ))));
         // Why fetching seperately 
         $this->Task->recursive = 1;
         $this->set("tasks" , $this->Task->find('all' , array(
@@ -334,7 +334,8 @@ class ProjectsController extends AppController {
 				
 		
 			$this->Project->create();
-			if ($this->Project->saveAll($this->data)) {
+			if ($this->Project->save($this->data)) {
+				$this->__addMilestones($this->data , $this->Project->getLastInsertID());
 				$this->Session->setFlash("Your Project Succesfully Saved");
 				$updat = array();
 				$updat["UsersProject"]["user_id"] = $this->data["Project"]["user_id"];
@@ -363,6 +364,8 @@ class ProjectsController extends AppController {
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Project->read(null, $id);
+			$cust = $this->User->find('all' , array('conditions'=>array('User.redalto'=>0)));
+			$this->set('customerdata' , $cust);
 		}
 	}
 	/*
@@ -400,12 +403,7 @@ class ProjectsController extends AppController {
 	function master_admin(){
 		$this->__checkadmin();
 	}
-	
-	function __addMilestones($project){
-		$milestone['Milestone']['project_id'] = $project;
-		$milestone['Milestone']['name'] = 'Consult (Assess & Specify)';
-	}
-	
+
 	function __generateTimeline($data , $master = true){
 		$first = true;
 		$timell = '';
@@ -461,6 +459,24 @@ class ProjectsController extends AppController {
 			$sum = $sum + $activity['duration'];
 		}
 		return $sum;
+	}
+	
+	function __addMilestones($data , $project){
+		foreach($data["Milestone"] as $milestone){
+			if($milestone["add"] == 1){
+					$rec["Milestone"]["project_id"] = $project;
+					$rec["Milestone"]["name"] = $milestone["name"];
+					$rec["Milestone"]["startdate"] = $milestone["startdate"];
+					$rec["Milestone"]["enddate"] = $milestone["enddate"];
+					$rec["Milestone"]["key"] = $milestone["key"];
+					$rec["Milestone"]["status"] = $milestone["status"];
+					$rec["Milestone"]["color"] = $milestone["color"];
+					$rec["Milestone"]["order"] = $milestone["order"];
+					$this->Milestone->create();
+					$this->Milestone->save($rec);
+			}
+			
+		}
 	}
 	
 	

@@ -283,6 +283,20 @@ class TasksController extends AppController {
 		$this->set('tasks', $this->paginate());
 	}
 
+	function master_viewcompleted($project){
+		$this->__checkadmin($project);
+		$this->set('data' , $this->Task->find('all' , array(
+										'conditions'=>array(
+											'Task.project_id'=>$project,
+											'NOT'=>array(
+												'Task.enddate'=>'0000-00-00'
+											)	
+										)
+		)));
+		
+		$this->set('project' , $project);
+	}
+	
 	function master_view($id = null , $project=0) {
 		
 		$this->__checkadmin($project);
@@ -315,8 +329,7 @@ class TasksController extends AppController {
 		$this->set("tasks" , $this->Task->find('all' , 
 										array(
 										    'conditions'=>array(
-										      "Task.user_id"=>$user,
-											  'Task.type'=> null
+										      "Task.user_id"=>$user
 										    )
 										)
 						));

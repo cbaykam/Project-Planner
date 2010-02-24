@@ -1,6 +1,6 @@
 <h1> <?php echo $data["User"]["name"]; ?> </h1>
 <div id="user_master_view_userinfo">
- <table border="0" cellspacing="0" cellpadding="0">
+ <table>
  	<tr>
  		<td><b>Email</b></td>
  		<td><?php echo $data["User"]["email"]; ?></td>
@@ -20,7 +20,7 @@
 	<?php if (count($data["Task"]) == 0): ?>
 		<h3>No Tasks for this user</h3>
 	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table>
 		
 			<tr>
 				<th>Task Name</th>
@@ -46,7 +46,7 @@
 	<?php if (count($data["Project"]) == 0): ?>
 		<h3>Not working in any projects</h3>
 	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table>
 		
 			<tr>
 				<th>Project Name</th>
@@ -68,7 +68,7 @@
 	<?php if (count($data["Holiday"]) == 0): ?>
 		<?php echo $html->link("Add Event" , array('controller' => 'holidays' , 'action' => 'add' , $data["User"]["id"]) , array('class'=>'buttonlink') );?>
 	<?php else: ?>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table>
 			<tr>
 				<th>Description</th>
 				<th>Type</th>
