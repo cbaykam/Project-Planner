@@ -17,7 +17,7 @@
 <?php if(count($tasks) != 0):?> 
 <table>
   <tr>
-    <th><?php echo $paginator->sort('created');?></th>
+    <th><?php echo $paginator->sort('startdate');?></th>
 	<th><?php echo $paginator->sort('priority');?></th>
 	<th><?php echo $paginator->sort('customer');?></th>
 	<th><?php echo $paginator->sort('title');?></th>		
@@ -33,7 +33,7 @@
   <tr>
     <?php foreach($tasks as $task):?>
     	<tr>
-    		<td><?php echo $timecal->format($task["Task"]["created"]);?></td>
+    		<td><?php echo $timecal->format($task["Task"]["startdate"]);?></td>
     		<td><?php echo $priority->display($task["Task"]["priority"]);?></td>
     		<td><?php echo $task["Task"]["customer"];?></td>
     		<td><?php echo $html->link($task["Task"]["name"], array('controller'=>'tasks' , 'action'=>'view' ,'master'=>true , $task["Task"]["id"]));?></td>

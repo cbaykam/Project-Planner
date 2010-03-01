@@ -37,12 +37,12 @@
 	<?php endif; ?>
 	</fieldset>
 	<fieldset>
-		<h3>Recurrance</h3>
-			<?php echo $form->input('recursive' , array('type'=>'select' , 'options'=>array("0"=>'no' , "1"=>'yes' )))?>
-			<?php echo $form->input('recduration' , array('label'=>'Duration (Days)'))?>
+		<h3>Recurrence</h3>
+			<?php echo $form->input('recursive' , array('type'=>'select' , 'options'=>array("0"=>'no' , "1"=>'yes', 'label'=>'Recurring?' )))?>
+			<?php echo $form->input('recduration' , array('label'=>'Frequency' , 'type'=>'select' , 'options'=>array('7'=>'Weekly' , '30'=>'Monthly' , '365'=>'Yearly')))?>
 			How many Times will task repeat itself. (If you delete the main task it will stop repeating.)
 			<br><br>
-			<?php echo $form->input('rechowmany' , array('label'=>'How many times shall this task repeat'))?>
+			<?php echo $form->input('rechowmany' , array('label'=>'Number of recurrences'))?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

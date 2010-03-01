@@ -91,7 +91,7 @@
 							<?php foreach($tasks as $task):?>
 								<?php if($task["Task"]["enddate"] == "0000-00-00"):?>
 								<tr>
-									<td><?php echo $timecal->format($task["Task"]["created"]); ?></td>
+									<td><?php echo $timecal->format($task["Task"]["startdate"]); ?></td>
 									<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
 									<td><?php echo $task["Milestone"]["name"]; ?></td>
 									<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
@@ -113,7 +113,12 @@
 									<?php else: ?>
 										<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
-									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]), null , null , false ); ?> <?php echo $html->link("[c]" , array('controller'=>'tasks' , 'action'=>'complete' , 'master'=>true , $task["Task"]["id"] , $project["Project"]["id"] ))?></td>
+									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]), null , null , false ); ?> 
+									<?php if($task["User"]["completed"] == 0):?>
+										<?php echo $html->link("[c]" , array('controller'=>'tasks' , 'action'=>'complete' , 'master'=>true , $task["Task"]["id"] , $project["Project"]["id"] ) , null , 'Are You sure you want to complete the task?')?></td>
+									<?php else:?>
+										<?php echo $html->link("[u]" , array('controller'=>'tasks' , 'action'=>'uncomplete' , 'master'=>true , $task["Task"]["id"] , $project["Project"]["id"] ) , null , 'Are you sure you want to uncomplete the task?')?></td>
+									<?php endif;?>
 								</tr>	
 								<?php endif;?>	
 							<?php endforeach;?>

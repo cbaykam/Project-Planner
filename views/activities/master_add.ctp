@@ -9,7 +9,7 @@
 	<span id="taskName"><?php echo $tdata["Task"]["id"]?></span>
 	<br><br>
 	<?php
-		echo $form->input('description' , array('type'=>'textfield' , 'label'=>'Add a note or description of activity that has been done') );
+		echo $form->input('description' , array('type'=>'textfield' , 'label'=>'Add a note or description of activity that has been done' , 'rows'=>'10' , 'cols'=>'45' ) );
 		echo $form->input('date');
 	?>
 		<label for="ActivityHour">Time Taken</label>
@@ -65,9 +65,10 @@
 			<?php endforeach;?>
 			</select>
 	</fieldset>
-	<?php echo $form->end('Submit');?>
+	<input type="submit" value="Submit"> <?php echo $html->link('Cancel' , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $this->params["pass"][0]));?>
+	</form>
 	<br>
-	<?php echo $html->link('Cancel' , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $this->params["pass"][0]));?>
+	
 	</div>
 	
 

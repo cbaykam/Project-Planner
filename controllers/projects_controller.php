@@ -351,22 +351,32 @@ class ProjectsController extends AppController {
 		$this->set('customerdata' , $cust);
 	}
 
-	function master_edit($id = null) {
+	function master_edit($id = null , $where = 'main') {
 		$this->__checkadmin($id);
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Project', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
+			$this->Project->id = $id;
 			if ($this->Project->save($this->data)) {
-				$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
+				if($where == 'main'){
+					$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
+				}
+				else if($where == 'list'){
+					$this->redirect(array('controller'=>'projects' , 'action'=>'listview','master'=>true));
+				}
 			} else {
 			}
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Project->read(null, $id);
+			$bb = $this->data["Project"]["budget"] / 60;
+			$this->set('budget' , $bb);
 			$cust = $this->User->find('all' , array('conditions'=>array('User.redalto'=>0)));
 			$this->set('customerdata' , $cust);
 		}
+		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
+		$this->set(compact('users'));
 	}
 	/*
 	 * Changes the overview of the project.
@@ -384,12 +394,17 @@ class ProjectsController extends AppController {
 		}
 	}
 
-	function master_delete($id = null) {
+	function master_delete($id = null , $where = 'main') {
 		$this->__checkadmin($id);
 		if (!$id) {
 		}
 		if ($this->Project->del($id)) {
-			$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
+			if($where == 'main'){
+				$this->redirect(array('controller'=>'projects' , 'action'=>'index','master'=>true));
+			}
+			else if($where == 'list'){
+				$this->redirect(array('controller'=>'projects' , 'action'=>'listview','master'=>true));
+			}
 		}
 	}
 	
@@ -412,6 +427,11 @@ class ProjectsController extends AppController {
 			
 			if (count($data[$i]["Milestone"]) != 0)
 			{
+				if(!$first){
+					$timell .= ",";
+					
+				}
+				$first = false;	
 				if($master){
 					if($data[$i]["Project"]["redalto"] == 1){
 						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
@@ -425,26 +445,49 @@ class ProjectsController extends AppController {
 				
 				$timell .= "{'titles': '". $link ."', 
 								'events':[";
-				foreach ($data[$i]["Milestone"] as $milestone)
+				
+				//foreach ($data[$i]["Milestone"] as $milestone)
+				
+				for($j = 0 ; $j < count($data[$i]["Milestone"]) ; $j++)
 				{
-					$start = $this->__timelineDate($milestone["startdate"]) ;
-					$end = $this->__timelineDate($milestone["enddate"]) ;;
-					 if ($this->__overdue($end) && $milestone["completed"] == '0000-00-00' )
+					
+					$tudo = count($data[$i]["Milestone"]) - 1;
+					$start = $this->__timelineDate($data[$i]["Milestone"][$j]["startdate"]) ;
+					$end = $this->__timelineDate($data[$i]["Milestone"][$j]["enddate"]) ;;
+					 if ($this->__overdue($end) && $data[$i]["Milestone"][$j]["completed"] == '0000-00-00' )
 					 {
-					  	$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(!)</b>', 'color':'" . $milestone['color'] . "'},";
-					 }else{
-					 	if ($milestone["completed"] == '0000-00-00')
-					 	{
-					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $milestone['color'] . "'},";
+					 	
+					 	if($j == $tudo){
+					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(!)</b>', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'}";
 					 	}else{
-					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(OK)</b>', 'color':'" . $milestone['color'] . "'},";
+					 		$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(!)</b>', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'},";
+					 	}
+					  	
+					 }else{
+					 	if ($data[$i]["Milestone"][$j]["completed"] == '0000-00-00')
+					 	{
+					 		if($j == $tudo){
+					 			$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'}";
+					 		}else{
+					 			$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'},";
+					 		}
+					 		
+					 	}else{
+					 		if($j == $tudo){
+					 			$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(OK)</b>', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'}";
+					 		}else{
+					 			$timell .= "{'start_date':'".$start."', 'end_date':'".$end."', 'text':'<b>(OK)</b>', 'color':'" . $data[$i]["Milestone"][$j]['color'] . "'},";
+					 		}
+					 		
 					 	}
 					 	
 					 }
 							
 				}
 				
-				$timell .= "]},";
+					$timell .= "]}";
+				
+				
 							
 			}
 		}

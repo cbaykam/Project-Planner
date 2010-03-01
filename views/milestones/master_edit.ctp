@@ -13,8 +13,9 @@
 		echo $form->input('enddate' , array('label'=>'Due Date', 'dateFormat'=>'DMY'));
 		echo $form->input('status' , array('type'=>'select' , 'options'=>array('Not Yet Started'=>'Not Yet Started' , 'In Progress'=>'In Progress' , 'Done'=>'Done') ));
 	?>
-	<?php echo $color->select();?>
+	<?php echo $color->select($this->data["Milestone"]["color"]);?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
+<?php echo '--->'.$this->data["Milestone"]["color"] ?>
 

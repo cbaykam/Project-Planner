@@ -53,7 +53,7 @@
 	</tr>
 	
 </table>
-<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' , 'master'=>true , $task["Task"]["id"]) , array('class'=>'buttonlink'));?>
+<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' , 'master'=>true , $task["Task"]["id"], $projectid ) , array('class'=>'buttonlink'));?>
 <?php if($task["Task"]["user_id"] != null):?>
 <?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
 <?php else:?>

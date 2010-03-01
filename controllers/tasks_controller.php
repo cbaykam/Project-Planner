@@ -462,7 +462,7 @@ class TasksController extends AppController {
 			}
 			$this->set("users" , $users);
 		}else{
-			$this->set('users' , $this->User->find('all'));
+			$this->set('users' , $this->User->find('all' , array('conditions'=>array('User.redalto'=>'1'))));
 		}
 			
 		//For setting the task dependency. 
@@ -488,6 +488,20 @@ class TasksController extends AppController {
 
 	function master_edit($id = null , $project) {
 		$this->__checkadmin($project);
+		$resources = $this->Project->findById($project);
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		
+			$users = array();
+			$i = 0;
+			foreach ($resources["User"] as $res)
+			{
+				$users[$i]["User"]["name"] = $res["name"];
+				$users[$i]["User"]["id"] = $res["id"];
+				$i++;
+			}
+			$this->set("users" , $users);
+		
 		if (!empty($this->data)) {
 			$mail = false;
 			// If no project is specified.
@@ -616,6 +630,15 @@ class TasksController extends AppController {
 		$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
 	}
 	
+	function master_uncomplete($task=null , $project=null ){
+		$this->__checkadmin($project);
+		$data["Task"]["enddate"] = '0000-00-00';
+		$data["Task"]["completed"] = '0' ;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+	}
+	
 	function master_assign($task , $project)
 	{
 		$this->__checkadmin($project);
@@ -691,34 +714,52 @@ class TasksController extends AppController {
 		foreach($recursives as $rec){
 			
 			if($rec["Task"]["rectimesrun"] < $rec["Task"]["rechowmany"]){
+				if($this->__calcLastRun($rec["Task"]["lastrun"] ,$rec["Task"]["recduration"] )){
+					$timecal = new timecalc;
+					$project = $rec["Task"]["project_id"];
+					$duration = $rec["Task"]["recduration"];
+					$recdata["Task"]["project_id"] = $project;
+					$date = date('yd');
+					$recdata["Task"]["id"] = $date."-".$project."-" . $this->__slicetask($project);
+					$recdata["Task"]["startdate"] = date("Y-m-d");
+					$recdata["Task"]["duedate"] = $timecal->addDays($duration , "Y-m-d");
+					$recdata["Task"]["user_id"] = $rec["Task"]["user_id"];
+					$recdata["Task"]["name"] = $rec["Task"]["name"] ."[recurring]";
+					$recdata["Task"]["priority"] = $rec["Task"]["priority"];
+					$recdata["Task"]["type"] = $rec["Task"]["type"];
+					$recdata["Task"]["description"] = $rec["Task"]["description"];
+					$recdata["Task"]["milestone_id"] = $rec["Task"]["milestone_id"];
+					$recdata["Task"]["customer"] = $rec["Task"]["customer"];
+					$recdata["Task"]["approved"] = $rec["Task"]["approved"];
+					$recdata["Task"]["creator"] = $rec["Task"]["creator"];
+					$recdata["Task"]["status"] = 0;
+					$recdata["Task"]["time"] = time();
+					$this->Task->create();
+					$this->Task->save($recdata);
+					unset($recdata);
+					$newrec = $rec["Task"]["rectimesrun"] + 1 ;
+					$this->Task->id = $rec["Task"]["id"];
+					$this->Task->saveField('rectimesrun' , $newrec);
+					$this->Task->saveField('lastrun' , time());
+				}
 				
-				$timecal = new timecalc;
-				$project = $rec["Task"]["project_id"];
-				$duration = $rec["Task"]["recduration"];
-				$recdata["Task"]["project_id"] = $project;
-				$date = date('yd');
-				$recdata["Task"]["id"] = $date."-".$project."-" . $this->__slicetask($project);
-				$recdata["Task"]["startdate"] = date("Y-m-d");
-				$recdata["Task"]["duedate"] = $timecal->addDays($duration , "Y-m-d");
-				$recdata["Task"]["user_id"] = $rec["Task"]["user_id"];
-				$recdata["Task"]["name"] = $rec["Task"]["name"];
-				$recdata["Task"]["priority"] = $rec["Task"]["priority"];
-				$recdata["Task"]["type"] = $rec["Task"]["type"];
-				$recdata["Task"]["description"] = $rec["Task"]["description"];
-				$recdata["Task"]["milestone_id"] = $rec["Task"]["milestone_id"];
-				$recdata["Task"]["customer"] = $rec["Task"]["customer"];
-				$recdata["Task"]["approved"] = $rec["Task"]["approved"];
-				$recdata["Task"]["creator"] = $rec["Task"]["creator"];
-				$recdata["Task"]["status"] = 0;
-				$recdata["Task"]["time"] = time();
-				$this->Task->create();
-				$this->Task->save($recdata);
-				unset($recdata);
-				$newrec = $rec["Task"]["rectimesrun"] + 1 ;
-				$this->Task->id = $rec["Task"]["id"];
-				$this->Task->saveField('rectimesrun' , $newrec);
 			}
 			
+		}
+	}
+	
+	/* 
+	 * This function calculates the if the cron tas shall run again or not. 
+	 * */
+	
+	function __calcLastRun($lastrun , $days){
+		$dur = $days * 86400;
+		$dur = $dur + $lastrun;
+		
+		if($dur < time()){
+			return true;
+		}else{
+			return false;
 		}
 	}
 

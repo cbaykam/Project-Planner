@@ -9,7 +9,9 @@
 <?php echo $form->create('Task' , array('url'=>array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , $this->params["pass"][0] , $this->params["pass"][1], $this->params["pass"][2] , $this->params["pass"][3] , $this->params["pass"][4]) ) );?>
 	<fieldset>
 	<?php
-		echo $form->input('milestone_id' , array('label'=>'Project Phase'));
+		if($buggie == 0){
+			echo $form->input('milestone_id' , array('label'=>'Project Phase'));
+		}	
 		echo $form->input('name');
 		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') , 'selected'=>'2' ) );
 		echo $form->input('status' , array('type'=>'hidden', 'value'=>'0'));
@@ -52,12 +54,12 @@
 	<?php endif; ?>
 	</fieldset>
 	<fieldset>
-		<h3>Recurrance</h3>
-			<?php echo $form->input('recursive' , array('type'=>'select' , 'options'=>array("0"=>'no' , "1"=>'yes' )))?>
-			<?php echo $form->input('recduration' , array('label'=>'Duration (Days)'))?>
+		<h3>Recurrence</h3>
+			<?php echo $form->input('recursive' , array('type'=>'select' , 'options'=>array("0"=>'no' , "1"=>'yes' , 'label'=>'Recurring?')))?>
+			<?php echo $form->input('recduration' , array('label'=>'Frequency', 'type'=>'select' , 'options'=>array('7'=>'Weekly' , '30'=>'Monthly' , '365'=>'Yearly')))?>
 			How many Times will task repeat itself. (If you delete the main task it will stop repeating.)
 			<br><br>
-			<?php echo $form->input('rechowmany' , array('label'=>'How many times shall this task repeat'))?>
+			<?php echo $form->input('rechowmany' , array('label'=>'Number of recurrences'))?>
 	</fieldset>
 	<br><br>
 <?php echo $form->end('Submit');?>

@@ -2,7 +2,7 @@
 class StandartsController extends AppController {
 
 	var $name = 'Standarts';
-	var $helpers = array('Html', 'Form');
+	var $helpers = array('Html', 'Form' , 'Color');
 
 	function master_index() {
 		$this->__checkadmin();

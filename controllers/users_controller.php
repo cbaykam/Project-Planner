@@ -8,7 +8,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter(){
 		 parent::beforeFilter(); 
-		 $this->Auth->allowedActions = array('remindpass' , 'master_remindpass');
+		 $this->Auth->allowedActions = array('remindpass' , 'master_remindpass' , 'logoutred' , 'master_logoutred' , 'logout' , 'master_logout');
 	}
 
 	function index() {
@@ -24,9 +24,6 @@ class UsersController extends AppController {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if($this->data['User']['password'] == ''){
-				unset($this->data["User"]["password"]);
-			}
 			if ($this->User->save($this->data)) {
 				//redirection
 				if($userdat["User"]["redalto"] == 0){
@@ -120,9 +117,6 @@ class UsersController extends AppController {
 			$this->flash(__('Invalid User', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
-			if($this->data['User']['password'] == ''){
-				unset($this->data["User"]["password"]);
-			}
 			if ($this->User->save($this->data)) {
 				//redirection
 				if($userdat["User"]["redalto"] == 0){
@@ -161,6 +155,18 @@ class UsersController extends AppController {
 			}
 		}
 	
+	}
+	
+	function logoutred(){
+		if($this->Auth->user("id")){
+			$this->redirect(array('controller'=>'projects' , 'action'=>'index'));
+		}
+	}
+	
+	function master_logoutred(){
+		if($this->Auth->user("id")){
+			$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+		}
 	}
 	
 	function logout(){

@@ -58,6 +58,7 @@ class StatussesController extends AppController {
 	function master_index() {
 		$this->__checkadmin();
 		$this->Statuss->recursive = 0;
+		$this->paginate = array('order'=>'Statuss.id DESC');
 		$this->set('statusses', $this->paginate());
 	}
 
@@ -67,7 +68,8 @@ class StatussesController extends AppController {
 										array(
 										    'conditions'=>array(
 										        	'Statuss.project_id'=>$project
-										    )
+										    ),
+										    'order'=>'Statuss.id DESC'
 										)
 						));
 		
@@ -87,14 +89,14 @@ class StatussesController extends AppController {
 		$this->set(compact('projects'));
 	}
 
-	function master_edit($id = null) {
+	function master_edit($id = null , $project) {
 		$this->__checkadmin();
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Statuss', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
 			if ($this->Statuss->save($this->data)) {
-				$this->flash(__('The Statuss has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true, $project));
 			} else {
 			}
 		}
@@ -105,13 +107,13 @@ class StatussesController extends AppController {
 		$this->set(compact('projects'));
 	}
 
-	function master_delete($id = null) {
+	function master_delete($id = null , $project) {
 		$this->__checkadmin();
 		if (!$id) {
 			$this->flash(__('Invalid Statuss', true), array('action'=>'index'));
 		}
 		if ($this->Statuss->del($id)) {
-			$this->flash(__('Statuss deleted', true), array('action'=>'index'));
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true, $project));
 		}
 	}
 

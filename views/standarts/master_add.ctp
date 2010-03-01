@@ -9,7 +9,7 @@
 	<?php
 		echo $form->input('name');
 	?>
-	<label for="color">Color:</label><input type="text" id="color" name="data[Standart][color]" value="#123456" /><div id="picker"></div>
+	<?php echo $color->st();?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

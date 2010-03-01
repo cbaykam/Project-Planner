@@ -31,7 +31,9 @@
 				<?php else: ?>
 							<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
-									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project), null , null , false ); ?></td>
+									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project), null , null , false ); ?>
+										<?php echo $html->link("[u]" , array('controller'=>'tasks' , 'action'=>'uncomplete' , 'master'=>true , $task["Task"]["id"] , $project ) , null , 'Are you sure you want to uncomplete the task?')?>
+									</td>
 								</tr>		
 							<?php endforeach;?>
 							

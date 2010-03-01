@@ -1,4 +1,4 @@
-<div id="pagetitle"><h1>Resource</h1></div>
+<div id="pagetitle"><h1>My Tasks</h1></div>
 <div id="projectLeftSide">
 <?php if(isset($tasks[0]["User"]["name"])):?>
 <table style="width:300px;">
@@ -41,5 +41,4 @@
 <?php else:?>
 	<h2>No Tasks for the User</h2>
 <?php endif;?>
-   <?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add','master'=>true , $projectIdd ,$tasks[0]["User"]["id"] , true ) , array('class'=>'buttonlink') ); ?>
 </div>

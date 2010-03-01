@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-02-10 15:02:52 : 1265806852*/
+/* App schema generated on: 2010-02-24 02:02:59 : 1266972239*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -19,6 +19,7 @@ class AppSchema extends CakeSchema {
 		'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'duration' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 		'description' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 2048),
+		'file' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 1024),
 		'created' => array('type' => 'date', 'null' => false, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
@@ -67,7 +68,8 @@ class AppSchema extends CakeSchema {
 		'currstats' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 10),
 		'overview' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'budget' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'customer_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+		'customer' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 1024),
+		'duedate' => array('type' => 'date', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'date', 'null' => false, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);

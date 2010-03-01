@@ -15,7 +15,6 @@
 	</div>
 
 	<div class="gantt" id="gantt"></div> 
-	 <br>
 		<table style="width:95%;">
 		  <tr>
 		    <td></td>
@@ -50,7 +49,7 @@
 			<?php endforeach;?>
 			<tr>
 				<td></td><td></td><td></td><td></td><td></td>
-				<td class="careful"><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></td>
+				<td width="88" class="careful"><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></td>
 			</tr>
 		</table>
 		<?php echo $html->link("Add Task" , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , $user_idd , true) , array('class'=>'buttonlink'))?>
@@ -58,8 +57,8 @@
 		<h3>No Tasks assigned for you.</h3>
 	<?php endif;?>
 </div>
-<div id="projectRightSide">
-<table border="0" style="width:100%;">
+<div id="projectRightSide2">
+<table border="0" style="width:100%;" cellpadding="0" cellspacing="0">
 	<tr>
 		<th></th><th class="rightsideheader">Notice Board</th>
 	</tr>
@@ -80,7 +79,7 @@
 		</tr>
 	</table>
 	<br><br>
-<table style="width:100%;">
+<table style="width:100%;" cellpadding="0" cellspacing="0">
 	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
@@ -103,7 +102,7 @@
 </table>
 <br>
 
-<table style="width:100%;">
+<table style="width:100%;" cellpadding="0" cellspacing="0">
 	<tr><th class="rightsideheader">Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>

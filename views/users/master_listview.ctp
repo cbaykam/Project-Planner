@@ -1,14 +1,14 @@
 
-<div id="pagetitle"><h1><?php __('Resources');?></h1></div>
+<div id="pagetitlem"><h1><?php __('Resources');?></h1></div>
 
-<div id="projectLeftSide">
+<div id="projectLeftSidem">
 <p>
 <?php
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-<table>
+<table width="95%">
 <tr>
 	<th><?php echo $paginator->sort('name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>

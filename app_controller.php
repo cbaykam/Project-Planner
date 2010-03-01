@@ -18,7 +18,7 @@
             	'password' => 'password'
             );
             //$this->Auth->loginRedirect = array('controller'=>'projects' , 'action'=>'index' , 'master'=>true);
-            $this->Auth->logoutRedirect = array('controller'=>'users' , 'action'=>'login');
+            $this->Auth->logoutRedirect = array('controller'=>'users' , 'action'=>'logoutred');
             //get projects 
              
             $this->__getProjects();

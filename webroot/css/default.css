@@ -531,10 +531,26 @@ td.actions a {
 	padding: 10px 10px 30px 10px;
 }
 
+#projectLeftSidem {
+	float:left;
+	width:87%;
+	background-color:#ffffff;
+	padding: 10px 10px 30px 10px;
+}
+
 #pagetitle{
 	background-color:#edf3fe;
 	height:20px;
 	width:67%;
+	padding: 10px 10px 10px 10px;
+	float:left;
+	z-index: 10;
+}
+
+#pagetitlem{
+	background-color:#edf3fe;
+	height:20px;
+	width:87%;
 	padding: 10px 10px 10px 10px;
 	float:left;
 	z-index: 10;
@@ -724,7 +740,7 @@ td.actions a {
 	#qm0 a	
 	{	
 		padding:5px 4px 8px 5px;
-		color:#575757;
+		color:#FFFFFF;
 		font-family:Arial;
 		font-size:10px;
 		text-decoration:none;
@@ -734,6 +750,7 @@ td.actions a {
 	.qmmc #activeTab a{
 		background-color:#e5e5e5;
 		font-weight: bolder;
+		color:#474747;
 	}
 	
 	.qmmc #activeTab a:hover{
@@ -767,13 +784,13 @@ td.actions a {
 		font-size:11px;
 		border-width:0px;
 		border-style:none;
+		color:#000000;
 	}
 
 	#qm0 div a:hover, #qm0 ul a:hover	
 	{	
 		background-color:#ffffff;
 		color:#000000;
-		font-weight:bold;
 		font-family:arial;
 		font-size:11px;
 	}
