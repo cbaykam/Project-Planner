@@ -228,7 +228,7 @@
 								'position': 'relative',
 								'margin-top': '5px',
 								'margin-bottom': '5px',
-								'float':'left',
+								'float':'left'
 							});
 							gnt_tbl.append(trObj);
 						}

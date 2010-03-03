@@ -297,6 +297,25 @@ class TasksController extends AppController {
 		$this->set('project' , $project);
 	}
 	
+	function master_completejob($task=null , $redalto = 0){
+		$this->__belongs(true , $project);
+		$data["Task"]["enddate"] = date("Y-m-d");
+		$data["Task"]["status"] = 100;
+		$data["Task"]["completed"] = '1' ;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , $redalto));	
+	}
+	
+	function master_uncompletejob($task=null , $redalto ){
+		$this->__checkadmin($project);
+		$data["Task"]["enddate"] = '0000-00-00';
+		$data["Task"]["completed"] = '0' ;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , $redalto));	
+	}
+	
 	function master_view($id = null , $project=0) {
 		
 		$this->__checkadmin($project);
