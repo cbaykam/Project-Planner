@@ -1,28 +1,17 @@
 <div id="pagetitle"><h1><?php __('Add Note/Activity');?> </h1></div>
 <div id="projectLeftSide">
-<?php echo $form->create('Activity' , array('type'=>'file' ,'url'=>array('controller'=>'activities' , 'action'=>'add' , $this->params["pass"][0] , $projectid , $this->params["pass"][2]) ) );?>
+<?php echo $form->create('Activity' , array( 'type'=>'file' , 'url'=>array('controller'=>'activities' , 'action'=>'add' , $this->params["pass"][0] , $projectid , $this->params["pass"][2]) ) );?>
 	<fieldset>
- 		<legend><?php __('Add Activity');?></legend>
- 		
- 	
+	<label for="taskName">Task </label>
+	<span id="taskName"><b><?php echo $tdata["Task"]["name"]?></b></span>
+	<br><br>
+	<label for="taskName">Task Id</label>
+	<span id="taskName"><?php echo $tdata["Task"]["id"]?></span>
+	<br><br>
 	<?php
-		echo $form->input('description' , array('type'=>'text') );
+		echo $form->input('description' , array('type'=>'textfield' , 'label'=>'Add a note or description of activity that has been done' , 'rows'=>'10' , 'cols'=>'45' ) );
 		echo $form->input('date');
 	?>
-	<?php if($projectid != 0):?>
-		<label for="ActivityDescription">User</label>
-		<select id="ActivityUserId" name="data[Activity][user_id]">
-			<?php foreach($users as $usr):?>
-		
-				<option value="<?php echo $usr['id'];?>"><?php echo $usr["name"]; ?></option>
-		
-			<?php endforeach;?>
-				
-					
-				
-		</select>
-	<?php endif;?>
-		<br><br>
 		<label for="ActivityHour">Time Taken</label>
 	    	<select name="data[Activity][hour]" class="durhr" id="ActivityHour">
 				<option value="0">00</option>
@@ -69,9 +58,12 @@
 			Mins
 			<br><br>
 			<?php echo $form->input('file', array('type'=>'file')); ?> 	
-		</div>
+			<?php echo $form->input('user_id' , array('type'=>'hidden' , 'value'=>$user_idd))?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
-<br>
-	<?php echo $html->link('Cancel' , array('controller'=>'tasks' , 'action'=>'view' , $this->params["pass"][0]));?>
-</div>
+	<input type="submit" value="Submit"> <?php echo $html->link('Cancel' , array('controller'=>'tasks' , 'action'=>'view', $this->params["pass"][0]));?>
+	</form>
+	<br>
+	
+	</div>
+	
+

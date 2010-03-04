@@ -88,6 +88,8 @@
 	    	{
 	    		if ($redir)
 	    		{
+	    			//echo "<pre>";
+	    			//print_r($this->params);
 	    			$this->cakeError("notadmin");
 	    			
 	    		}else
@@ -205,6 +207,15 @@
 				$pui[] = $puai["Project"]["id"];
 			}
 			return $pui;
+		}
+		
+		function __propRedirect($url){
+			$split = explode('/' , $url);
+			
+			if($split[0] == 'master'){
+				$cnt = count($split);
+				$redir = array('controller'=>$split[1] , 'action'=>$split[2]);	
+			}
 		}
 	
 	}

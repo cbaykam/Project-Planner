@@ -3,7 +3,7 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 	var $helpers = array('Html', 'Form' , 'Priority', 'Tsk');
-	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice');
+	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice' , 'Milestone');
 	
 	function index() {
 		$this->Project->recursive = 2;
@@ -142,6 +142,8 @@ class ProjectsController extends AppController {
 		}
 		$this->set("sumhours" , $this->__calcDuration($prdat));
 		$this->set(compact('usersa'));
+		$milestones = $this->Milestone->find('all' , array('conditions'=>array("Milestone.project_id"=>$id) ,'order'=>'Milestone.enddate'));
+		$this->set("mlstns" , $milestones);
 	}
 
 	function allprojects(){
@@ -310,6 +312,8 @@ class ProjectsController extends AppController {
 			}
 			
 		}
+		$milestones = $this->Milestone->find('all' , array('conditions'=>array("Milestone.project_id"=>$id) ,'order'=>'Milestone.enddate'));
+		$this->set("mlstns" , $milestones);
 		$this->set("sumhours" , $this->__calcDuration($prdat));
 		$this->set(compact('usersa'));
 		

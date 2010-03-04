@@ -1,11 +1,13 @@
+<div id="pagetitle"><h1>Task : <?php echo $task["Task"]["id"] ?> </h1></div>	
+<div id="projectLeftSide">
 <table>
-	<tr>
-		<th><?php echo $task["Task"]["id"] ?></th>
-		<th>&nbsp;</th>
-	</tr>
 	<tr>
 		<td>Name</td>
 		<td><?php echo $task["Task"]["name"] ?></td>
+	</tr>
+	<tr>
+		<td>Description</td>
+		<td><?php echo $task["Task"]["description"] ?></td>
 	</tr>
 	<tr>
 		<?php if (isset($task["User"]["name"])): ?>
@@ -51,6 +53,7 @@
 	</tr>
 	
 </table>
+<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' ,  $task["Task"]["id"], $projectid ) , array('class'=>'buttonlink'));?>
 <?php if($task["Task"]["user_id"] != null):?>
 <?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
 <?php else:?>
@@ -62,7 +65,7 @@
  <table>
  	<tr>
  		<th>Activities / Notes</th>
- 		<th>&nbsp;</th><th>&nbsp;</th>
+ 		<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
  		<th>Total :</th>
  		<th><?php echo $tsk->duration($task["Activity"]); ?></th>
  	</tr>
@@ -70,6 +73,7 @@
  	     <th>Date</th>
  	     <th>By</th>
  	     <th>Description</th>
+ 	     <th>File</th>
  	     <th>Time</th>
  	     <th>Actions</th>
  	</tr>
@@ -79,8 +83,9 @@
  				<td><?php echo $act["date"] ?></td>
  				<td><?php echo $task["User"]["name"] ?></td>
  				<td><?php echo $act["description"] ?></td>
+ 				<td><a href="<?php echo Configure::read('appPath')?>files/<?php echo $act["file"]?>" taget="_blank"><?php echo $act["file"]?></a></td>
  				<td><?php echo $timecal->show($act["duration"]); ?></td>
- 				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit' , $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>
+ 				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit', $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>
  			</tr>
  	
  	<?php endforeach;?>
@@ -94,3 +99,5 @@
  <?php if($projectid != 0):?>
 		<?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view', $projectid), array('class'=>'buttonlink') ); ?></li>
  <?php endif;?>	
+ </div>
+"

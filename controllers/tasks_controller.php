@@ -26,6 +26,14 @@ class TasksController extends AppController {
 		$this->Task->save($data);
 		$this->redirect(array('controller'=>'projects' , 'action'=>'view' , $project));
 	}
+	
+	function uncomplete($task=null , $project=null ){
+		$data["Task"]["enddate"] = '0000-00-00';
+		$data["Task"]["completed"] = '0' ;
+		$this->Task->id = $task;
+		$this->Task->save($data);
+		$this->redirect(array('controller'=>'projects' , 'action'=>'view', $project));
+	}
 
 	function view($id = null , $project=0) {
 		
@@ -52,7 +60,6 @@ class TasksController extends AppController {
 	}
 	
 	function add($project=0 , $user=0 , $formres = 0 , $bug = 0 , $bredalto = 0) {
-		
 		$this->set('buggie' , $bug);
 		if (!empty($this->data)) {
 			$mail = false;
@@ -254,6 +261,19 @@ class TasksController extends AppController {
 		if ($this->Task->del($id)) {
 			$this->flash(__('Task deleted', true), array('action'=>'index'));
 		}
+	}
+	
+	function viewcompleted($project){
+		$this->set('data' , $this->Task->find('all' , array(
+										'conditions'=>array(
+											'Task.project_id'=>$project,
+											'NOT'=>array(
+												'Task.enddate'=>'0000-00-00'
+											)	
+										)
+		)));
+		
+		$this->set('project' , $project);
 	}
 	
 	function indexjobs($redalto = 0){

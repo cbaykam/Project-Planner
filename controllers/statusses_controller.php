@@ -9,11 +9,15 @@ class StatussesController extends AppController {
 		$this->set('statusses', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->flash(__('Invalid Statuss', true), array('action'=>'index'));
-		}
-		$this->set('statuss', $this->Statuss->read(null, $id));
+	function view($project) {
+			$this->set("data" , $this->Statuss->find('all' , 
+										array(
+										    'conditions'=>array(
+										        	'Statuss.project_id'=>$project
+										    ),
+										    'order'=>'Statuss.id DESC'
+										)
+						));
 	}
 
 	function add() {

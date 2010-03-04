@@ -1,9 +1,40 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
+<div id="projectLeftSide">
+<div align="right" style="width:95%;">
+</div>
+<h3> Customer Projects </h3>
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev3"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev4"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now3"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next4"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next3"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
+	<br><br>
 
+<div class="gantt" id="gantt2"></div> 
+<br><br>
+<div align="right" style="width:95%;">
+</div>
+<h3> Redalto Projects </h3>
+	<div align="center" class="forwardback">
+	<a href="#" class="GNT_prev"><?php echo $html->image("fbackward.gif")?></a> 
+	<a href="#" class="GNT_prev2"><?php echo $html->image("backward.gif")?></a> 
+	<a href="#" class="GNT_now"><span id="nowsq">Now</b></span> 
+	<a href="#" class="GNT_next2"><?php echo $html->image("forward.gif")?></a> 
+	<a href="#" class="GNT_next"><?php echo $html->image("fforward.gif")?></a> 
+	</div>
+	<br><br>
 
-<table style="width:250px;">
+	<div class="gantt" id="gantt"></div> 
+	
+
+</div> 
+
+<div id="projectRightSide">
+<table>
   <tr>
     <td></td>
     <th>Standard Project Milestones</th>
@@ -17,26 +48,5 @@
   	</tr>
   <?php endforeach;?>
 </table>
-<br><br>
 
-<h3> Redalto Projects </h3>
-
-	<a href="#" class="GNT_prev">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev2">[&lt;]</a> 
-	<a href="#" class="GNT_now">now</a> 
-	<a href="#" class="GNT_next2">[&gt;]</a> 
-	<a href="#" class="GNT_next">[&gt;&gt;]</a> 
-	<br><br>
-
-	<div class="gantt" id="gantt"></div> 
-	<br><br><br>
-<h3> Customer Projects </h3>
-
-	<a href="#" class="GNT_prev3">[&lt;&lt;]</a> 
-	<a href="#" class="GNT_prev4">[&lt;]</a> 
-	<a href="#" class="GNT_now3">now</a> 
-	<a href="#" class="GNT_next4">[&gt;]</a> 
-	<a href="#" class="GNT_next3">[&gt;&gt;]</a> 
-	<br><br>
-
-<div class="gantt" id="gantt2"></div> 
+</div>

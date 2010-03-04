@@ -1,5 +1,8 @@
+<div id="pagetitle"><h1>My Tasks</h1></div>
+<div id="projectLeftSide">
+<?php if(isset($tasks[0]["User"]["name"])):?>
 <table style="width:300px;">
-	<tr><th>Resource</th><th></th></tr>
+	<tr><th></th><th></th></tr>
 	<tr>
 		<td>Name</td>
 		<td><?php echo $tasks[0]["User"]["name"]; ?></td>
@@ -27,7 +30,7 @@
 		<tr>
 			<td><?php echo $task["Task"]["created"]; ?></td>
 			<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view', $task["Task"]["id"] , $task["Project"]["id"]) );  ?></td>		
-			<td><?php echo $html->link($task["Project"]["name"] , array('controller' => 'projects' , 'action' => 'view' , $task["Project"]["id"]) ); ?></td>
+			<td><?php echo $html->link($task["Project"]["name"] , array('controller' => 'projects' , 'action' => 'view', $task["Project"]["id"]) ); ?></td>
 			<td><?php echo $task["Task"]["duedate"]; ?></td>
 			<td><?php echo $task["Task"]["status"]; ?> %</td>
 			<td><?php echo $tsk->duration($task["Activity"]); ?></td>
@@ -35,6 +38,7 @@
 		</tr>
 <?php endforeach;?>
 </table>
-
-   <?php echo $html->link("Add Task" , array('controller' => 'tasks' , 'action' => 'add', 0 ,$tasks[0]["User"]["id"] , true ) , array('class'=>'buttonlink') ); ?>
-
+<?php else:?>
+	<h2>No Tasks for the User</h2>
+<?php endif;?>
+</div>

@@ -1,8 +1,9 @@
 <?php echo $html->css('jquery.gantt' , 'stylesheet' , array() , false); ?>
 <?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <?php echo $javascript->link('jquery.gantt' , false); ?>
+<div id="pagetitle"><h1> Welcome : <?php echo $username; ?> </h1></div>	
 <div id="projectLeftSide">
-	<h1> Welcome : <?php echo $username; ?> </h1>
+
 	
 	<h3> Top 5 Projects This Week </h3>
 	<div align="center" class="forwardback">
@@ -14,11 +15,20 @@
 	</div>
 
 	<div class="gantt" id="gantt"></div> 
-	<br><br>
+		<table style="width:95%;">
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td width="88" align="center"><?php echo $html->link('View All' , array('controller'=>'projects' , 'action'=>'listview') , array('class'=>'careful')) ?></td>
+		  </tr>
+		</table>
 	
 		<h3>My Top 5 Tasks</h3>
 	<?php if(count($toptasks) != 0):?>
-		<table>
+		<table style="width:95%;">
 			<tr>
 				<th>Project</th>
 				<th>Phase</th>
@@ -29,37 +39,33 @@
 			</tr>
 			<?php foreach($toptasks as $task):?>
 				<tr>
-					<td><?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view' , $task["Project"]["id"]));?></td>
+					<td><?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view', $task["Project"]["id"]));?></td>
 					<td><?php echo $task["Milestone"]["name"];?></td>
-					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , $task["Task"]["id"]));?></td>
+					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , $task["Task"]["id"] , $task["Project"]["id"]));?></td>
 					<td><?php echo $priority->display($task["Task"]["priority"]);?></td>
 					<td><?php echo $timecal->format($task["Task"]["duedate"]);?></td>
 					<td><?php echo $task["Task"]["status"];?> %</td>
 				</tr>
 			<?php endforeach;?>
 			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , $toptasks[0]["Task"]["user_id"]));?></th>
+				<td></td><td></td><td></td><td></td><td></td>
+				<td width="88" class="careful"><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , $toptasks[0]["Task"]["user_id"]));?></td>
 			</tr>
 		</table>
 	<?php else:?>
 		<h3>No Tasks assigned for you.</h3>
 	<?php endif;?>
 </div>
-<div id="projectRightSide">
-<table>
+<div id="projectRightSide2">
+<table border="0" style="width:100%;" cellpadding="0" cellspacing="0">
 	<tr>
-		<th></th><th>Notice Board</th>
+		<th></th><th class="rightsideheader">Notice Board</th>
 	</tr>
 		
 				<?php foreach ($notices as $notice):?>
 					<tr>
 						<td><?php echo $timecal->format($notice["Notice"]["date"]);?></td>
-						<td><?php echo $notice["Notice"]["title"];?></td>
+						<td><b><?php echo $notice["Notice"]["title"];?></b></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -70,9 +76,10 @@
 			<td></td>
 			<th><?php echo $html->link('View All' , array('controller'=>'notices' , 'action'=>'index'));?></th>
 		</tr>
-	</table><br><br>
-<table style="width:70%;">
-	<tr><th>Customer Maintenance & Support Issues</th></tr>
+	</table>
+	<br><br>
+<table style="width:100%;" cellpadding="0" cellspacing="0">
+	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
 	<tr>
 		<td>
 			<?php if ($customerbugs == 0): ?>
@@ -85,7 +92,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="actiontd">
 			<?php echo $html->link( "View Details" , array('controller' => 'tasks' , 'action' => 'indexjobs' ) ); ?>
 		</td>
 	</tr>
@@ -94,8 +101,8 @@
 </table>
 <br>
 
-<table style="width:70%;">
-	<tr><th>Redalto Apps Issue Tracking</th></tr>
+<table style="width:100%;" cellpadding="0" cellspacing="0">
+	<tr><th class="rightsideheader">Redalto Apps Issue Tracking</th></tr>
 	<tr>
 		<td>
 			<?php if ($redaltobugs == 0): ?>
@@ -108,7 +115,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="actiontd">
 			<?php echo $html->link( "View Details" , array('controller' => 'tasks' , 'action' => 'indexjobs' , 1 ) ); ?>
 		</td>
 	</tr>

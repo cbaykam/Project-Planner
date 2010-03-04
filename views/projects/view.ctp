@@ -1,62 +1,66 @@
-<h2><?php  __('Project');?> : <?php echo $project["Project"]["name"] ?></h2>
+<div id="pagetitle"><h1>
+	<?php if($project["Project"]["redalto"] == 1):?>
+		<?php echo $project["Project"]["name"] ?>
+	<?php else:?>
+		<?php echo $project["Project"]["customer"] . ': ' . $project["Project"]["name"] ?>
+	<?php endif;?>
+
+</h1></div>
 	
 	<div id="projectLeftSide">
 			<!--Project Overview -->
 			<div id="projectOverview">
-				<table class="pleftside">
-					<tr><th class="noborder">Project Overview</th><th class="nobordercorner"></th></tr>
-					<tr><td class="noborder"><?php echo $project["Project"]["overview"]; ?></td><td></td></tr>
+				<fieldset>
+				<table style="width:98%; padding:0 0 0 0;">
+					<tr><th class="noborder">Project Overview</th></tr>
+					<tr><td class="noborder"><?php echo $project["Project"]["overview"]; ?></td></tr>
 					
 				</table>
-				
+				</fieldset>
+				<br><br>
 			</div>
 			<!--Project milesontes-->
 			<div id="projectKeyMilestones">
-			
+			<h3>Key Milestones</h3>
 				<?php if (count($project['Milestone']) != 0): ?>
 					<table class="pleftside">
-						<tr><th class="noborder">Key Milestones</th><th class="noborder"></th><th class="noborder"></th><th class="noborder"></th><th class="nobordercorner"></th></tr>
 						<tr>
 							<th>Due Date</th>
 							<th>Owner</th>
 							<th>Description</th>
 							<th>Status</th>
-							<th>Completed</th>
+							<th width="70">Actions</th>
 						</tr>
-						<?php foreach($project['Milestone'] as $milestone):?>
+						<?php foreach($mlstns as $milestone):?>
 					
-							<?php if ($milestone['key'] == 1): ?>	
+							<?php if ($milestone['Milestone']['key'] == 1): ?>	
 								<tr>
-									<td><?php echo $timecal->format($milestone['enddate']); ?></td>
-									<td width="200">
+									<td><?php echo $timecal->format($milestone['Milestone']['enddate']); ?></td>
+									<td class="tdformdiv">
 										<?php if (isset($milestone['User']['name'])): ?>
 											<?php echo $milestone['User']['name']; ?>
 										<?php else: ?>
-											No One			 			
+											<?php echo $form->create("Milestone" , array('url'=>array('controller'=>'milestones' , 'action'=>'assign' ,  $milestone['Milestone']["id"] , $project["Project"]["id"]) ) ); ?>
+									 			--
 										<?php endif; ?>
 									</td>
-									<td style="background:<?php echo $milestone['color'];?>;"><?php echo $milestone['name']; ?></td>
-									<td><?php echo $milestone['status']; ?></td>
-									<td>
-										<?php if ($milestone['completed'] != '0000-00-00'): ?>
-											<?php echo $milestone['completed']; ?>
-										<?php else: ?>
-											No
-										<?php endif; ?>
-									</td>
+									<td style="background:<?php echo $milestone['Milestone']['color'];?>;"><?php echo $html->link($milestone['Milestone']['name'] , array('controller'=>'milestones' , 'action'=>'view', $milestone['Milestone']["id"])); ?></td>
+									<td><?php echo $milestone['Milestone']['status']; ?></td>
+									<td><?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'milestones' , 'action' => 'edit', $milestone['Milestone']["id"], $project["Project"]["id"]) , null , null , false ); ?> <?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'milestones' , 'action' => 'delete', $milestone['Milestone']["id"], $project["Project"]["id"]) , null, sprintf(__('Are you sure you want to delete %s?', true) , $milestone['Milestone']['name'] ), null , false ); ?></td>
 								</tr>
 						<?php endif; ?>
 					
 					<?php endforeach;?>
-					<tr>
-						<td></td><td></td><td></td><td></td>
-						<th><?php echo $html->link('View All Milestones' , array('controller' => 'milestones' , 'action' => 'index',  $project['Project']['id']) ); ?></th>
-					</tr>
+					
 				</table>
+				<br><br>
+				<div align="right" style="width:95%;">
+				</div>
+				<br><br>
 			</div>
 			<?php else: ?>
-				<?php echo $html->link("Add Milestone" , array('controller' => 'milestones' , 'action' => 'add', $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
-				</div>
+				<div align="right" style="width:95%;">
+				</div></div>
 			<?php endif; ?>
 			<!--Tasks of the project-->
 			<div id="tasks_in_project">
@@ -65,7 +69,6 @@
 							<h3>Tasks in the project</h3>
 							<table style="width:95%;">
 								<tr>
-									<th>Id</th>
 									<th>Created</th>
 									<th>Description</th>
 									<th>Project Phase</th>
@@ -74,125 +77,88 @@
 									<th>Due</th>
 									<th>Hours</th>
 									<th>Owner</th>
-									<th>Completed</th>
-									<th>Actions</th>
+									<th width="70">Actions</th>
 								</tr>
 							<?php foreach($tasks as $task):?>
-			
+								<?php if($task["Task"]["enddate"] == "0000-00-00"):?>
 								<tr>
-									<td><?php echo $task["Task"]["id"]; ?></td>
-									<td><?php echo $timecal->format($task["Task"]["created"]); ?></td>
-									<?php if($task["User"]["id"] == $user_idd):?>
+									<td><?php echo $timecal->format($task["Task"]["startdate"]); ?></td>
 									<td><?php echo $html->link($task["Task"]["name"] , array('controller' => 'tasks' , 'action' => 'view', $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
-									<?php else:?>
-									<td><?php echo $task["Task"]["name"]?></td>
-									<?php endif;?>
 									<td><?php echo $task["Milestone"]["name"]; ?></td>
 									<td><?php echo $priority->display($task["Task"]["priority"]); ?></td>
 									<td><?php echo $task["Task"]["status"]; ?> %</td>
 									<td><?php echo $timecal->format($task["Task"]["duedate"]); ?></td>
 									<td><?php echo $tsk->duration($task["Activity"]); ?></td>
 									<?php if ($task["Task"]["user_id"] == 0): ?>
-									 <td>
-										<?php echo $form->create("Task" , array('url'=>array('controller'=>'tasks' , 'action'=>'assign' ,  $task["Task"]["id"] , $project["Project"]["id"]) ) ); ?>
-										 <select id="TaskUsersa" name="data[Task][usersa]">
-										   <option value="">Select one</option>
-										  <?php foreach($usersa as $option):?>
-										  	 <option value="<?php echo $option['id'] ?>"><?php echo $option['name'] ?></option>
-										  <?php endforeach;?>
-										 </select>
-										 <input type="submit" value="assign" class="submitassign"/> 
-										 </form>
+									 <td class="tdformdiv">
+										--
 									 </td>
 									<?php else: ?>
 										<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
-									<td><?php echo $tsk->done($task["Task"]["enddate"]); ?></td>
+									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete', $task["Task"]["id"] , $project["Project"]["id"]) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit', $task["Task"]["id"] , $project["Project"]["id"]), null , null , false ); ?> 
 									<?php if($task["User"]["id"] == $user_idd):?>
-									<td><?php echo $html->link("[e]" , array('controller' => 'tasks' , 'action' => 'edit', $task["Task"]["id"] , $project["Project"]["id"]) ); ?> | <?php echo $html->link("[c]" , array('controller' => 'tasks' , 'action' => 'complete' , $task["Task"]["id"] , $project["Project"]["id"]) ); ?></td>
-									<?php else:?>
-									<td></td>
+										<?php echo $html->link("[c]" , array('controller'=>'tasks' , 'action'=>'complete', $task["Task"]["id"] , $project["Project"]["id"] ) , null , 'Are You sure you want to complete the task?')?></td>
 									<?php endif;?>
-								</tr>		
+								</tr>	
+								<?php endif;?>	
 							<?php endforeach;?>
+							
 							</table>
-					
-							<?php echo $html->link("Add A Task for Yourself" , array('controller' => 'tasks' , 'action' => 'add', $project["Project"]["id"] , $user_idd), array('class'=>'buttonlink') ); ?>
-					
+							<div align="right" style="width:95%;">
+							<?php echo $html->link("View Completed Tasks" , array('controller'=>'tasks' , 'action'=>'viewcompleted', $project["Project"]["id"]))?></td></tr>
+							</div>
+							<div align="right" style="width:95%;">
+							<?php echo $html->link("Add Another Task" , array('controller' => 'tasks' , 'action' => 'add', $project["Project"]["id"] , 0), array('class'=>'buttonlink') ); ?>
+							</div>
 						<?php else: ?>
-		
-							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add' , $project["Project"]["id"] , $user_idd), array('class'=>'buttonlink') ); ?> 
+							<div align="right" style="width:95%;">
+							 <?php echo $html->link("Add A Task" , array('controller' => 'tasks' , 'action' => 'add', $project["Project"]["id"] , 0), array('class'=>'buttonlink') ); ?> 
+							</div>
 						<?php endif; ?>
 			</div>
 			<div id="users_in_project">
 				<?php if (count($project["User"]) != 0): ?>
 					<table style="width:95%">
 					<thead>
-						<th style="width:70%;">Users in the Project</th>
+						<th style="width:30%;">Users in the Project</th>
 					</thead>
 					<?php foreach($project["User"] as $usr):?>
 						<tr>
-							<?php if($usr["id"] == $user_idd):?>
-							<td><?php echo $html->link($usr["name"] , array('controller' => 'users' , 'action' => 'view', $usr["id"]) ); ?></td>
-							<?php else:?>
-									<td><?php echo $usr["name"]?></td>
-							<?php endif;?>
+							<td><?php echo $usr["name"]; ?></td>
 						</tr>
 					<?php endforeach;?>
 					</table>
 				<?php else: ?>
 					No Users In the project please use the form below to add one.
 				<?php endif; ?>
-				
 			</div>	
 						
 	</div>
 	<!--Start of the right side Div-->
-	<div id="projectRightSide">
+	<div id="projectRightSide2">
 			<!--Project Notices-->
 			
-			<div id="project_notices">
-				<?php echo $html->link("View Notices" , array('controller' => 'notices' , 'action' => 'view', $project["Project"]["id"]), array('class'=>'buttonlink') ); ?>
-				
-				
-				<?php if (count($project["Notice"]) != 0 ): ?>
-					<table style="width:95%;">
-						<tr>
-							<th>Date</th>
-							<th>Notice</th>
-						</tr>
-						
-						<?php foreach($project["Notice"] as $notice):?>
-					
-								<tr>
-									<td><?php echo $notice["created"]; ?></td>
-									<td><?php echo $notice["title"]; ?></td>
-								</tr>
-					
-						<?php endforeach;?>			
-					</table>
-				<?php endif; ?>
-			</div>
 			<!--Links of the project-->
 			<div id="project_links_menu">
 				<?php if (count($project["Link"]) != 0): ?>
-						<table style="width:95%;">
+					
+						<table style="width:95%;" cellpadding="0" cellspacing="0">
 							<tr>
-								<th class="noborder">Project Links</th><th class="noborder"></th><th class="nobordercorner"><?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add',$project["Project"]["id"] ) ); ?></th>
+								<th class="noborder">Project Links</th>
 							</tr>
 							<tr>
-								<th>Name</th>
-								<th>Link</th>
-								<th>Actions</th>
+								<td><b>Link</b></th>
 							</tr>
 						<?php foreach($project["Link"] as $link):?>
 							<tr>
-								<td><?php echo $link["name"]; ?></td>
-								<td><a href="<?php echo $link['link'] ?>"><?php echo $link['link'] ?></td>
+								<td><a href="<?php echo $link['link'] ?>"><?php echo $link["name"]; ?></td>
 							</tr>
 						<?php endforeach;?>	
 						</table>
+						<br><br>
 				<?php else: ?>
+					<?php echo $html->link("Add Link" , array('controller' => 'links' , 'action' => 'add', $project["Project"]["id"] ), array('class'=>'buttonlink') ); ?>
 				<?php endif; ?>	
 			</div>
 			<!--For updating project status-->
@@ -201,8 +167,8 @@
 				<?php if ( $countstats == 0): ?>
 				<?php else: ?>
 				    <?php $statindice = $countstats - 1; ?>
-					<table style="width:95%;">
-						<tr><th>Project Status</th><th><?php echo $html->link("Change" , array('controller' => 'statusses' , 'action' => 'add' , $project["Project"]["id"]) ); ?></th></tr>
+					<table style="width:95%;" cellpadding="0" cellspacing="0">
+						<tr><th>Project Status</th><th></th></tr>
 						<tr>
 							<td><?php echo $project["Statuss"][$statindice]['created'] ?></td>
 							<td><?php echo $project["Statuss"][$statindice]['status'] ?></td>
@@ -211,12 +177,13 @@
 							<td></td><th><?php echo $html->link("View Archive" , array('controller' => 'statusses' , 'action' => 'view', $project["Project"]["id"]) ); ?></th>
 						</tr>
 					</table>
-					
+					<br><br>	
 				<?php endif; ?>
+				
 			</div>
 			<!--Show the budgeting.-->
 			<div id="budgeting">
-				<table style="width:95%;">
+				<table style="width:95%;" cellpadding="0" cellspacing="0">
 					<tr>
 						<th>Budgeting</th>
 						<th></th>
@@ -236,4 +203,5 @@
    			
 	</div>
 	
-
+	<!--Show users in the project-->
+	

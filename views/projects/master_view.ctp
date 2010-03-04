@@ -31,16 +31,16 @@
 							<th>Status</th>
 							<th width="70">Actions</th>
 						</tr>
-						<?php foreach($project['Milestone'] as $milestone):?>
+						<?php foreach($mlstns as $milestone):?>
 					
-							<?php if ($milestone['key'] == 1): ?>	
+							<?php if ($milestone['Milestone']['key'] == 1): ?>	
 								<tr>
-									<td><?php echo $timecal->format($milestone['enddate']); ?></td>
+									<td><?php echo $timecal->format($milestone['Milestone']['enddate']); ?></td>
 									<td class="tdformdiv">
 										<?php if (isset($milestone['User']['name'])): ?>
 											<?php echo $milestone['User']['name']; ?>
 										<?php else: ?>
-											<?php echo $form->create("Milestone" , array('url'=>array('controller'=>'milestones' , 'action'=>'assign' , 'master'=>true, $milestone["id"] , $project["Project"]["id"]) ) ); ?>
+											<?php echo $form->create("Milestone" , array('url'=>array('controller'=>'milestones' , 'action'=>'assign' , 'master'=>true, $milestone['Milestone']["id"] , $project["Project"]["id"]) ) ); ?>
 									 			<select id="TaskUsersa" name="data[Milestone][usersa]">
 									   			<option value="">Select one</option>
 									  				<?php foreach($usersa as $option):?>
@@ -51,9 +51,9 @@
 									 			</form>
 										<?php endif; ?>
 									</td>
-									<td style="background:<?php echo $milestone['color'];?>;"><?php echo $html->link($milestone['name'] , array('controller'=>'milestones' , 'action'=>'view' , 'master'=>true , $milestone["id"])); ?></td>
-									<td><?php echo $milestone['status']; ?></td>
-									<td><?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'milestones' , 'action' => 'edit','master'=>true, $milestone["id"], $project["Project"]["id"]) , null , null , false ); ?> <?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'milestones' , 'action' => 'delete','master'=>true, $milestone["id"], $project["Project"]["id"]) , null, sprintf(__('Are you sure you want to delete %s?', true) , $milestone['name'] ), null , false ); ?></td>
+									<td style="background:<?php echo $milestone['Milestone']['color'];?>;"><?php echo $html->link($milestone['Milestone']['name'] , array('controller'=>'milestones' , 'action'=>'view' , 'master'=>true , $milestone['Milestone']["id"])); ?></td>
+									<td><?php echo $milestone['Milestone']['status']; ?></td>
+									<td><?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'milestones' , 'action' => 'edit','master'=>true, $milestone['Milestone']["id"], $project["Project"]["id"]) , null , null , false ); ?> <?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'milestones' , 'action' => 'delete','master'=>true, $milestone['Milestone']["id"], $project["Project"]["id"]) , null, sprintf(__('Are you sure you want to delete %s?', true) , $milestone['Milestone']['name'] ), null , false ); ?></td>
 								</tr>
 						<?php endif; ?>
 					
@@ -114,7 +114,7 @@
 										<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
 									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project["Project"]["id"]), null , null , false ); ?> 
-									<?php if($task["User"]["completed"] == 0):?>
+									<?php if($task["Task"]["completed"] == 0):?>
 										<?php echo $html->link("[c]" , array('controller'=>'tasks' , 'action'=>'complete' , 'master'=>true , $task["Task"]["id"] , $project["Project"]["id"] ) , null , 'Are You sure you want to complete the task?')?></td>
 									<?php else:?>
 										<?php echo $html->link("[u]" , array('controller'=>'tasks' , 'action'=>'uncomplete' , 'master'=>true , $task["Task"]["id"] , $project["Project"]["id"] ) , null , 'Are you sure you want to uncomplete the task?')?></td>

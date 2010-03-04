@@ -52,7 +52,6 @@
 				<td width="88" class="careful"><?php echo $html->link('View All' , array('controller'=>'tasks' , 'action'=>'viewuser' , 'master'=>true , $toptasks[0]["Task"]["user_id"]));?></td>
 			</tr>
 		</table>
-		<?php echo $html->link("Add Task" , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , $user_idd , true) , array('class'=>'buttonlink'))?>
 	<?php else:?>
 		<h3>No Tasks assigned for you.</h3>
 	<?php endif;?>

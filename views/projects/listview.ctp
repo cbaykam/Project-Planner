@@ -1,3 +1,5 @@
+<div id="projectLeftSide">
+
 <table>
 		<tr>
 			<th>Project Name</th>
@@ -12,7 +14,16 @@
 	<?php foreach($projects as $project):?>
 
 			<tr>
-				<td><?php echo $html->link($project["Project"]["name"] , array('controller' => 'projects' , 'action' => 'view' , $project["Project"]["id"]) );?></td>
+				<td>
+					<?php if ($project["Project"]["redalto"]): ?>
+						<?php echo $html->link($project["Project"]["name"] , array('controller' => 'projects' , 'action' => 'view' , $project["Project"]["id"]) );?>
+					<?php else: ?>
+						<?php 
+							$prname = $project["Project"]["customer"] . ':' . $project["Project"]["name"];
+						?>
+						<?php echo $html->link($prname , array('controller' => 'projects' , 'action' => 'view',$project["Project"]["id"]) );?>
+					<?php endif; ?>
+				</td>
 				<td>
 					<?php if ($project["Project"]["redalto"]): ?>
 					 <?php echo "Redalto"; ?>
@@ -36,10 +47,11 @@
 						echo $currMile["name"];
 					?>	
 				</td>
-				<td><?php echo $timecal->format($currMile["enddate"]);?></td>
-				<td><?php echo $html->link("View" , array('controller' => 'projects' , 'action' => 'view', $project["Project"]["id"]) ); ?> </td>
+				<td><?php echo $timecal->format($project["Project"]["duedate"]);?></td>
+				<td><?php echo $html->link("Go To" , array('controller' => 'projects' , 'action' => 'view', $project["Project"]["id"]) ); ?></td>
 			</tr>
 
 	<?php endforeach;?>
 
 </table>
+</div>
