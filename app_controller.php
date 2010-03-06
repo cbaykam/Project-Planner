@@ -8,6 +8,9 @@
 		function beforeFilter()
 	    {
 	    	// Dont use timeline for start
+	    	//echo $this->__propRedirect($this->params["url"]["url"]);
+	    	//echo '<pre>';
+	    	//print_r($this->__propRedirect($this->params["url"]["url"]));
 	    	$this->Auth->authenticate = ClassRegistry::init('User');
 	    	$this->set("timeline" , false);
 	    	$this->set("colorpicker" , false);
@@ -89,8 +92,8 @@
 	    		if ($redir)
 	    		{
 	    			//echo "<pre>";
-	    			//print_r($this->params);
-	    			$this->cakeError("notadmin");
+	    			$this->redirect($this->__propRedirect($this->params["url"]["url"]));
+	    			//$this->cakeError("notadmin");
 	    			
 	    		}else
 	    		{
@@ -208,13 +211,23 @@
 			}
 			return $pui;
 		}
-		
+		/*
+		 * This function redirects properly if you are in master level. 
+		 * url is the value of $this->params["url"]["url"]
+		 * */
 		function __propRedirect($url){
 			$split = explode('/' , $url);
 			
 			if($split[0] == 'master'){
 				$cnt = count($split);
-				$redir = array('controller'=>$split[1] , 'action'=>$split[2]);	
+				$cnt = $cnt - 3;
+				$param = array();
+				for($i=0 ; $i < $cnt ; $i++){
+					$param[$i] = $split[$i + 3];
+				}
+				$redir = array('controller'=>$split[1] , 'action'=>$split[2] , 'master'=>false);	
+				$res = array_merge($redir , $param);
+				return $res;
 			}
 		}
 	

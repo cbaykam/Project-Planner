@@ -1,4 +1,4 @@
-<div id="pagetitle"><h1>Completed Tasks</h1></div>
+<div id="pagetitle"><h1>Recurring Tasks</h1></div>
 <div id="projectLeftSide">
 <?php if(count($data) != 0):?>
 	<h3></h3>
@@ -32,7 +32,6 @@
 							<td><?php echo $task["User"]["name"]; ?>
 									<?php endif; ?>
 									<td><?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'tasks' , 'action' => 'delete','master'=>true , $task["Task"]["id"] , $project) , array() , "Please confirm that you want to permenantly remove this task" , null , false ); ?> <?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'tasks' , 'action' => 'edit','master'=>true , $task["Task"]["id"] , $project), null , null , false ); ?>
-										<?php echo $html->link("[u]" , array('controller'=>'tasks' , 'action'=>'uncomplete' , 'master'=>true , $task["Task"]["id"] , $project ) , null , 'Are you sure you want to uncomplete the task?')?>
 									</td>
 								</tr>		
 							<?php endforeach;?>

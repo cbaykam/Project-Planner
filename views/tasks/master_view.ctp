@@ -82,7 +82,7 @@
  			<tr>
  				<td><?php echo $act["date"] ?></td>
  				<td><?php echo $task["User"]["name"] ?></td>
- 				<td><?php echo $act["description"] ?></td>
+ 				<td><?php echo $text->truncate($act["description"] , 40) ?></td>
  				<td><a href="<?php echo Configure::read('appPath')?>files/<?php echo $act["file"]?>" taget="_blank"><?php echo $act["file"]?></a></td>
  				<td><?php echo $timecal->show($act["duration"]); ?></td>
  				<td><?php echo $html->link("Edit" , array('controller' => 'activities' , 'action' => 'edit','master'=>true , $act["id"] , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"]) ); ?></td>

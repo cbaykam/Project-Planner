@@ -192,8 +192,7 @@ class UsersController extends AppController {
 		if ($this->Auth->isAuthorized())
 		{ 
 		   	if ($this->__checkadmin(null , false))
-			{
-				 
+			{	 
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
 			}else{
 				$this->redirect(array('controller'=>'projects' , 'action'=>'index'));

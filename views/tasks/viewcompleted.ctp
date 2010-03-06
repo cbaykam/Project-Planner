@@ -5,7 +5,7 @@
 		<table style="width:95%;">
 			<tr>
 				<th>Created</th>
-				<th>Description</th>
+				<th>Name</th>
 				<th>Project Phase</th>
 				<th>Priority</th>
 				<th>Status</th>

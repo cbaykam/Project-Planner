@@ -32,20 +32,24 @@
 					 <?php echo "Customer"; ?>
 					<?php endif; ?>
 				</td>
-				<td>
+				<td>	
 					<?php	
-						$currMile = $project["Milestone"][0];
-						foreach ($project["Milestone"] as $mile)
+						$currMile = $miles[$project["Project"]["id"]][0];
+						$cntt = count($miles[$project["Project"]["id"]]);
+						foreach ($miles[$project["Project"]["id"]] as $mile)
 						{
-							if ($currMile["status"] == "Done")
+							if ($currMile["Milestone"]["status"] == "Done")
 							{
 								$currMile = $mile;
 							}
-							if(strtotime($currMile["enddate"]) > strtotime($mile["enddate"])){
+							if(strtotime($currMile["Milestone"]["enddate"]) > strtotime($mile["Milestone"]["enddate"])){
 								$currMile = $mile;
 							}
+							if($currMile["Milestone"]["id"] == $miles[$project["Project"]["id"]][$cntt]["Milestone"]["id"] && $currMile["Milestone"]["status"] == "Done"){
+								$currMile["Milestone"]["name"] == "All Completed";
+							}
 						}
-						echo $currMile["name"];
+						echo $currMile["Milestone"]["name"];
 					?>	
 				</td>
 				<td><?php echo $timecal->format($project["Project"]["duedate"]);?></td>

@@ -6,6 +6,9 @@ class ProjectsController extends AppController {
 	var $uses = array('Project' , 'User' , 'UsersProject' , 'Task' , 'Bug', 'Notice' , 'Milestone');
 	
 	function index() {
+		if($this->Auth->user('admin') == 1){
+			$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+		}
 		$this->Project->recursive = 2;
 		// find the projects user in 
 		$userProjs = $this->UsersProject->find('all' , array('conditions'=>array('UsersProject.user_id'=>$this->Auth->user("id"))));
@@ -105,8 +108,13 @@ class ProjectsController extends AppController {
 	}
 	
 	function listview(){
-		
-		$this->set('projects' , $this->Project->find('all' , array('conditions'=>array('Project.id'=>$this->__fetchProjects()))));
+		$dat =  $this->Project->find('all' , array('conditions'=>array('Project.id'=>$this->__fetchProjects())));
+		$miles = array();
+		for($i = 0 ; $i < count($dat) ; $i++){
+			$miles[$dat[$i]['Project']['id']] = $this->Milestone->find('all' , array('conditions'=>array('Milestone.project_id'=>$dat[$i]['Project']['id']) , 'order'=>'Milestone.enddate ASC'));
+		}
+		$this->set('miles' , $miles);
+		$this->set('projects' , $dat);
 	}
 
 	function view($id) {
@@ -214,7 +222,13 @@ class ProjectsController extends AppController {
 	
 	function master_listview(){
 		$this->__checkadmin();
-		$this->set('projects' , $this->Project->find('all', array('order'=>'Project.redalto')));
+		$dat =  $this->Project->find('all', array('order'=>array('Project.redalto')));
+		$miles = array();
+		for($i = 0 ; $i < count($dat) ; $i++){
+			$miles[$dat[$i]['Project']['id']] = $this->Milestone->find('all' , array('conditions'=>array('Milestone.project_id'=>$dat[$i]['Project']['id']) , 'order'=>'Milestone.enddate ASC'));
+		}
+		$this->set('projects' , $dat);
+		$this->set('miles' , $miles);
 	}
 	
 	function master_index() {
@@ -376,7 +390,7 @@ class ProjectsController extends AppController {
 			$this->data = $this->Project->read(null, $id);
 			$bb = $this->data["Project"]["budget"] / 60;
 			$this->set('budget' , $bb);
-			$cust = $this->User->find('all' , array('conditions'=>array('User.redalto'=>0)));
+			$cust = $this->User->find('all' , array('conditions'=>array('User.redalto'=>0) , 'order'=>'User.name'));
 			$this->set('customerdata' , $cust);
 		}
 		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
@@ -444,7 +458,11 @@ class ProjectsController extends AppController {
 					}
 					
 				}else{
-					$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+					if($data[$i]["Project"]["redalto"] == 1){
+						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+					}else{
+						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':'  . $data[$i]["Project"]["name"] . '</a>';
+					}
 				}
 				
 				$timell .= "{'titles': '". $link ."', 
@@ -457,7 +475,7 @@ class ProjectsController extends AppController {
 					
 					$tudo = count($data[$i]["Milestone"]) - 1;
 					$start = $this->__timelineDate($data[$i]["Milestone"][$j]["startdate"]) ;
-					$end = $this->__timelineDate($data[$i]["Milestone"][$j]["enddate"]) ;;
+					$end = $this->__timelineDate($data[$i]["Milestone"][$j]["enddate"]) ;
 					 if ($this->__overdue($end) && $data[$i]["Milestone"][$j]["completed"] == '0000-00-00' )
 					 {
 					 	

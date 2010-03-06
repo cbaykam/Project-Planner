@@ -3,7 +3,7 @@ App::import('Vendor', 'timecalc');
 class TasksController extends AppController {
 
 	var $name = 'Tasks';
-	var $helpers = array('Html', 'Form' , 'Tsk' , 'Priority');
+	var $helpers = array('Html', 'Form' , 'Tsk' , 'Priority' , 'Text');
 	var $uses = array("Task" , "UsersProject" , "User" , "Project" , "Milestone");
 
 	function beforeFilter(){
@@ -175,22 +175,75 @@ class TasksController extends AppController {
 
 	
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Task', true), array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Task->save($this->data)) {
-				$this->flash(__('The Task has been saved.', true), array('action'=>'index'));
-			} else {
+	function edit($id , $project) {
+		$resources = $this->Project->findById($project);
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		
+			$users = array();
+			$i = 0;
+			foreach ($resources["User"] as $res)
+			{
+				$users[$i]["User"]["name"] = $res["name"];
+				$users[$i]["User"]["id"] = $res["id"];
+				$i++;
 			}
+			$this->set("users" , $users);
+		
+		if (!empty($this->data)) {
+			$mail = false;
+			// If no project is specified.
+			
+			$this->data["Task"]["project_id"] = $project;
+			$this->data["Task"]["creator"] = $this->Auth->user("id");
+			$this->data["Task"]["dependency"] = $this->data["Task"]["task_id"];
+			if($this->data["Task"]["status"] == 100){
+				$this->data["Task"]["completed"] = 1;
+			}
+			$date = date('yd');
+			$this->data["Task"]["time"] = time();
+			$this->Task->id = $this->data["Task"]["id"];
+			if ($this->Task->save($this->data)) {
+				//redirection part
+				$this->redirect(array('controller'=>'projects', 'action'=>'view', $project));
+				
+			} 
 		}
+		
 		if (empty($this->data)) {
 			$this->data = $this->Task->read(null, $id);
 		}
-		$projects = $this->Task->Project->find('list');
-		$resources = $this->Task->Resource->find('list');
-		$this->set(compact('projects','resources'));
+
+		// Fetching the project data will get the users too . 
+		$resources = $this->Project->findById($project);
+		
+		// Setting the user data. Gets all the users in the project and generates a Select box.  
+		$users = array();
+		$i = 0;
+		foreach ($resources["User"] as $res)
+		{
+			$users[$i]["name"] = $res["name"];
+			$users[$i]["id"] = $res["id"];
+			$i++;
+		}
+		$this->set("users" , $users);
+		//For setting the task dependency. 
+		$tasks = $this->Task->find('list' , 
+						array(
+							'conditions'=>array(
+								'Task.project_id'=>$project
+							)	
+		) );
+		// Set the milestones. To generate the lists. 
+		$milestones = $this->Milestone->find('list' , 
+						array(
+							'conditions'=>array(
+								'project_id'=>$project
+							)
+						) 
+		);
+		// get the list of projects
+		$this->set(compact('tasks' , 'milestones'));
 	}
 	
 	function jobedit($id,$redalto){
@@ -424,6 +477,10 @@ class TasksController extends AppController {
 				 }
 				
 			}
+			
+			if($this->data["Task"]["recursive"] == 1){
+				$this->data["Task"]["name"] = $this->data["Task"]["name"] . ' [recurring]';
+			}
 			// If no project is specified.
 			if ($this->data["Task"]["project_id"] == "")
 			{
@@ -523,6 +580,10 @@ class TasksController extends AppController {
 		$projects = $this->Project->find('list');
 		// Generate the lists 
 		$this->set(compact('projects' , 'tasks' , 'milestones'));
+	}
+	
+	function master_recur(){
+		$this->set('data' ,$this->Task->find('all' , array('conditions'=>array('Task.recursive' => '1' ))));
 	}
 
 	function master_edit($id = null , $project) {

@@ -8,7 +8,11 @@
 	<label for="ProjectCustomer">Customer</label>
 	<select id="ProjectCustomer" name="data[Project][customer]">
  	<?php foreach($customerdata as $customer):?>
-		<option value="<?php echo $customer["User"]["name"]?>"><?php echo $customer["User"]["name"]?></option>
+ 		<?php if($this->data["Project"]["customer"] != $customer["User"]["name"]):?>
+			<option value="<?php echo $customer["User"]["name"]?>"><?php echo $customer["User"]["name"]?></option>
+ 		<?php else:?>
+ 			<option value="<?php echo $customer["User"]["name"]?>" selected="true"><?php echo $customer["User"]["name"]?></option>
+ 		<?php endif;?>
  	<?php endforeach;?>
  	</select>
  	</div>

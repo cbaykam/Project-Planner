@@ -28,6 +28,8 @@ class ActivitiesController extends AppController {
 		if (!empty($this->data)) {
 			if($this->FileUpload->success){
 				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
+			}else{
+				$this->data["Activity"]["file"] = '';
 			}
 		    $this->data["Activity"]["task_id"] = $task;
 		    //$this->data["Activity"]["user_id"] = $user;
@@ -51,21 +53,35 @@ class ActivitiesController extends AppController {
 		$this->set(compact('tasks' , 'users'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Activity', true), array('action'=>'index'));
-		}
+	function edit($id ,$task , $project) {
+		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
+			if($this->FileUpload->success){
+				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
+			}else{
+				$this->data["Activity"]["file"] = '';
+			}
+		    $this->data["Activity"]["task_id"] = $task;
+		    //$this->data["Activity"]["user_id"] = $user;
+		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
+			$this->data["Activity"]["project_id"] = $project;
+			$this->Activity->create();
 			if ($this->Activity->save($this->data)) {
-				$this->flash(__('The Activity has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'tasks' , 'action'=>'view' , $task , $project) );
 			} else {
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Activity->read(null, $id);
-		}
+		$this->data = $this->Activity->read(null , $id);
 		$tasks = $this->Activity->Task->find('list');
-		$this->set(compact('tasks'));
+		// fetch the users in the project 
+		if($project != 0){
+			$this->__usersin($project);	
+		}
+		
+		$this->set('tdata' , $this->Task->findById($task));
+		$this->set('usss' , $user);
+		
+		$this->set(compact('tasks' , 'users'));
 	}
 
 	function delete($id = null) {
@@ -98,6 +114,8 @@ class ActivitiesController extends AppController {
 		if (!empty($this->data)) {
 			if($this->FileUpload->success){
 				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
+			}else{
+				$this->data["Activity"]["file"] = '';
 			}
 		    $this->data["Activity"]["task_id"] = $task;
 		    //$this->data["Activity"]["user_id"] = $user;
@@ -123,26 +141,34 @@ class ActivitiesController extends AppController {
 
 	function master_edit($id = null , $task , $project=0) {
 		$this->__checkadmin($project);
-		$this->set("projectid" , $project);
-		if (!$id && empty($this->data)) {
-			$this->flash(__('Invalid Activity', true), array('action'=>'index'));
-		}
+		$this->set('projectid' , $project);
 		if (!empty($this->data)) {
-			$this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
+			if($this->FileUpload->success){
+				$this->data["Activity"]["file"] = $this->data["Activity"]["file"]["name"];
+			}else{
+				$this->data["Activity"]["file"] = '';
+			}
+		    $this->data["Activity"]["task_id"] = $task;
+		    //$this->data["Activity"]["user_id"] = $user;
+		    $this->data["Activity"]["duration"] = $this->__calculatetime($this->data["Activity"]["hour"] , $this->data["Activity"]["minute"]);
+			$this->data["Activity"]["project_id"] = $project;
+			$this->Activity->create();
 			if ($this->Activity->save($this->data)) {
 				$this->redirect(array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task , $project) );
 			} else {
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Activity->read(null, $id);
-		}
+		$this->data = $this->Activity->read(null , $id);
+		$tasks = $this->Activity->Task->find('list');
 		// fetch the users in the project 
 		if($project != 0){
 			$this->__usersin($project);	
 		}
-		$tasks = $this->Activity->Task->find('list');
-		$this->set(compact('tasks'));
+		
+		$this->set('tdata' , $this->Task->findById($task));
+		$this->set('usss' , $user);
+		
+		$this->set(compact('tasks' , 'users'));
 	}
 
 	function master_delete($id = null) {

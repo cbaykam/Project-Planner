@@ -17,5 +17,4 @@
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
-<?php echo '--->'.$this->data["Milestone"]["color"] ?>
 
