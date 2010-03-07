@@ -23,7 +23,7 @@
 						'name'=>'Light Green'
 					),
 					5 =>array(
-						'code'=>'#d7ff94',
+						'code'=>'#aabcff',
 						'name'=>'Light Blue'
 					),
 					6 =>array(
@@ -77,7 +77,7 @@
 						'name'=>'Light Green'
 					),
 					5 =>array(
-						'code'=>'#d7ff94',
+						'code'=>'#aabcff',
 						'name'=>'Light Blue'
 					),
 					6 =>array(

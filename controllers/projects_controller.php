@@ -452,16 +452,16 @@ class ProjectsController extends AppController {
 				$first = false;	
 				if($master){
 					if($data[$i]["Project"]["redalto"] == 1){
-						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . '/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 					}else{
-						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . '/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':' . $data[$i]["Project"]["name"] . '</a>';
 					}
 					
 				}else{
 					if($data[$i]["Project"]["redalto"] == 1){
-						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . '/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 					}else{
-						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':'  . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . '/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':'  . $data[$i]["Project"]["name"] . '</a>';
 					}
 				}
 				

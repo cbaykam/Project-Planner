@@ -29,21 +29,21 @@ class MilestonesController extends AppController {
 		$this->set(compact('projects'));
 	}
 
-	function edit($id = null) {
+	function edit($id = null , $project) {
+		$this->__belongs(false , null , 'Milestone' , $id , false);
 		if (!$id && empty($this->data)) {
 			$this->flash(__('Invalid Milestone', true), array('action'=>'index'));
 		}
 		if (!empty($this->data)) {
+			$this->data["Milestone"]["project_id"] = $project;
 			if ($this->Milestone->save($this->data)) {
-				$this->flash(__('The Milestone has been saved.', true), array('action'=>'index'));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view', $project));
 			} else {
 			}
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Milestone->read(null, $id);
 		}
-		$projects = $this->Milestone->Project->find('list');
-		$this->set(compact('projects'));
 	}
 
 	function delete($id = null) {

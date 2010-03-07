@@ -29,7 +29,6 @@
 							<th>Owner</th>
 							<th>Description</th>
 							<th>Status</th>
-							<th width="70">Actions</th>
 						</tr>
 						<?php foreach($mlstns as $milestone):?>
 					
@@ -46,7 +45,7 @@
 									</td>
 									<td style="background:<?php echo $milestone['Milestone']['color'];?>;"><?php echo $html->link($milestone['Milestone']['name'] , array('controller'=>'milestones' , 'action'=>'view', $milestone['Milestone']["id"])); ?></td>
 									<td><?php echo $milestone['Milestone']['status']; ?></td>
-									<td><?php echo $html->link($html->image('ico_modify.gif') , array('controller' => 'milestones' , 'action' => 'edit', $milestone['Milestone']["id"], $project["Project"]["id"]) , null , null , false ); ?> <?php echo $html->link($html->image('ico_delete.gif') , array('controller' => 'milestones' , 'action' => 'delete', $milestone['Milestone']["id"], $project["Project"]["id"]) , null, sprintf(__('Are you sure you want to delete %s?', true) , $milestone['Milestone']['name'] ), null , false ); ?></td>
+									
 								</tr>
 						<?php endif; ?>
 					

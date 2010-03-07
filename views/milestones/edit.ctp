@@ -1,18 +1,20 @@
+<div id="pagetitle"><h1><?php __('Edit Milestone');?></h1></div>
+<div id="projectLeftSide">
+<?php echo $html->css('farbtastic' , 'stylesheet' , array() , false); ?>
+<?php echo $javascript->link('jquery-1.3.2' , false); ?>
 <div class="milestones form">
-<?php echo $form->create('Milestone');?>
+<?php echo $form->create('Milestone' , array('url'=>array('controller'=>'milestones' , 'action'=>'edit', $this->params["pass"][1])));?>
 	<fieldset>
- 		<legend><?php __('Edit Milestone');?></legend>
+
 	<?php
 		echo $form->input('id');
 		echo $form->input('name');
-		echo $form->input('project_id');
+		echo $form->input('startdate' , array('label'=>'Start Date', 'dateFormat'=>'DMY'));
+		echo $form->input('enddate' , array('label'=>'Due Date', 'dateFormat'=>'DMY'));
+		echo $form->input('status' , array('type'=>'select' , 'options'=>array('Not Yet Started'=>'Not Yet Started' , 'In Progress'=>'In Progress' , 'Done'=>'Done') ));
 	?>
+	<?php echo $color->select($this->data["Milestone"]["color"]);?>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Milestone.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Milestone.id'))); ?></li>
-		<li><?php echo $html->link(__('List Milestones', true), array('action'=>'index'));?></li>
-	</ul>
-</div>
+
