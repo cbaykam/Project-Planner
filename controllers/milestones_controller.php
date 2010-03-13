@@ -80,10 +80,13 @@ class MilestonesController extends AppController {
 		if (!empty($this->data)) {
 			$this->data["Milestone"]["project_id"] = $project;
 			$this->Milestone->create();
-			if ($this->Milestone->save($this->data)) {
+			if($this->data["Milestone"]["name"] == ''){
+				$this->Milestone->save($this->data);
+			}else{
 				$this->__addMilestones($this->data , $project);
+			}
 				$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
-			} 
+			 
 		}
 		$users = $this->Milestone->User->find('list' , array('conditions'=>array('User.redalto'=>1)));
 		$this->set(compact('users'));

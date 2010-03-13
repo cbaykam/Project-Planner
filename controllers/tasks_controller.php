@@ -371,13 +371,17 @@ class TasksController extends AppController {
 	}
 	
 	function master_completejob($task=null , $redalto = 0){
-		$this->__belongs(true , $project);
-		$data["Task"]["enddate"] = date("Y-m-d");
-		$data["Task"]["status"] = 100;
-		$data["Task"]["completed"] = '1' ;
-		$this->Task->id = $task;
-		$this->Task->save($data);
-		$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , $redalto));	
+		$this->__checkadmin($project);
+		$this->set('tdata', $this->Task->findById($task));
+		$this->set('pdata' , $this->Project->findById($project));
+		$this->set('redalto' , $redalto);
+		if(!empty($this->data)){
+			$this->data["Task"]["status"] = 100;
+			$this->data["Task"]["completed"] = '1' ;
+			$this->Task->save($this->data);
+			$this->redirect(array('controller'=>'tasks' , 'action'=>'indexjobs' , $redalto));	
+		}
+		
 	}
 	
 	function master_uncompletejob($task=null , $redalto ){
@@ -393,6 +397,11 @@ class TasksController extends AppController {
 		
 		$this->__checkadmin($project);
 		$this->set('projectid' , $project);
+		
+		if($project != 0){
+			$this->set('projj' , $this->Project->findById($project));
+		}
+		
 		if ($id)
 		{
 			$this->Task->recursive = 1 ;
@@ -433,13 +442,36 @@ class TasksController extends AppController {
 		if($redalto != 0){
 			$this->paginate = array(
 						'conditions'=>array(
-							'Task.type'=>'redalto'
+							'Task.type'=>'redalto',
+							'Task.completed'=>'0'
 						)
 			);
 		}else{
 			$this->paginate = array(
 						'conditions'=>array(
-							'Task.type'=>'customer'
+							'Task.type'=>'customer',
+							'Task.completed'=>'0'
+						)
+			);
+		}
+		$this->set('tasks', $this->paginate());
+		$this->set('redalto' , $redalto);
+	}
+	
+	function master_jobscompleted($redalto = 0){
+		$this->__checkadmin();
+		if($redalto != 0){
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'redalto',
+							'Task.completed'=>'1'
+						)
+			);
+		}else{
+			$this->paginate = array(
+						'conditions'=>array(
+							'Task.type'=>'customer',
+							'Task.completed'=>'1'
 						)
 			);
 		}
@@ -463,9 +495,13 @@ class TasksController extends AppController {
 	* If fromres = true after adding it will redirect to resource else to the project
 	**/
 	
-	function master_add($project=0 , $user=0 , $formres = 0 , $bug = 0 , $bredalto = 0) {
+	function master_add($project=0 , $user=0 , $formres = 0 , $bug = 0 , $bredalto = 0 , $milestone=0) {
 		$this->__checkadmin($project);
+		$this->set('project_idd' , $project);
 		$this->set('buggie' , $bug);
+		if($milestone != 0){
+	         $this->set('milestoneid' , $milestone);
+		}
 		if (!empty($this->data)) {
 			$mail = false;
 			
@@ -722,12 +758,14 @@ class TasksController extends AppController {
 	
 	function master_complete($task=null , $project=null ){
 		$this->__checkadmin($project);
-		$data["Task"]["enddate"] = date("Y-m-d");
-		$data["Task"]["status"] = 100;
-		$data["Task"]["completed"] = '1' ;
-		$this->Task->id = $task;
-		$this->Task->save($data);
-		$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+		$this->set('tdata', $this->Task->findById($task));
+		$this->set('pdata' , $this->Project->findById($project));
+		if(!empty($this->data)){
+			$this->data["Task"]["status"] = 100;
+			$this->data["Task"]["completed"] = '1' ;
+			$this->Task->save($this->data);
+			$this->redirect(array('controller'=>'projects' , 'action'=>'view','master'=>true , $project));
+		}	
 	}
 	
 	function master_uncomplete($task=null , $project=null ){

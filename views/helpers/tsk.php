@@ -57,6 +57,25 @@
 					break;
 				}
 			}
+			
+			function dispProj($project , $taskType){
+				if(isset($project["Project"])){
+					if($project["Project"]["redalto"] == 0){
+						$out = $project["Project"]["customer"] . ':' . $project["Project"]["name"];
+					}else{
+						$out = $project["Project"]["name"];
+					}
+				}else{
+					if($taskType =='customer'){
+						$out = 'Customer Jobs';
+					}else if($taskType == 'redalto'){
+						$out = 'Redalto Jobs';
+					}
+				}
+				
+				
+				return $this->output($out);
+			}
 		}
 
 ?>

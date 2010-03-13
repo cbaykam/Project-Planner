@@ -18,6 +18,10 @@ h1 {
 	font-weight: bold;
 }
 
+h1 a {
+	font-size: .62em;
+}
+
 h2 {
 	font-size: 1.3em;
 	color: green;
@@ -102,6 +106,7 @@ img.right {
 	border: none;
 	text-decoration: none;
 	color: #528DC8;
+	font-size: 1em;
 }
 
 /* Menu */
@@ -416,7 +421,7 @@ input, textarea {
 	font-family:Arial;
 }
 select {
-	font-size: 10px;
+
 }
 select[multiple=multiple] {
 

@@ -39,8 +39,20 @@
 			</tr>
 			<?php foreach($toptasks as $task):?>
 				<tr>
-					<td><?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $task["Project"]["id"]));?></td>
-					<td><?php echo $task["Milestone"]["name"];?></td>
+					<td>
+						<?php if($task["Task"]["project_id"]!= 0):?>
+							<?php echo $html->link($task["Project"]["name"] , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $task["Project"]["id"]));?>
+						<?php else:?>
+							<?php echo ucwords($task["Task"]["type"] . ' Job');?>
+						<?php endif;?>
+					</td>
+					<td>
+						<?php if($task["Task"]["project_id"]!= 0):?>
+							<?php echo $task["Milestone"]["name"];?>
+						<?php else:?>
+							Operations
+						<?php endif;?>
+					</td>
 					<td><?php echo $html->link($task["Task"]["name"] , array('controller'=>'tasks' , 'action'=>'view' , 'master'=>true , $task["Task"]["id"] , $task["Project"]["id"]));?></td>
 					<td><?php echo $priority->display($task["Task"]["priority"]);?></td>
 					<td><?php echo $timecal->format($task["Task"]["duedate"]);?></td>
@@ -79,7 +91,7 @@
 	</table>
 	<br><br>
 <table style="width:100%;" cellpadding="0" cellspacing="0">
-	<tr><th class="rightsideheader">Customer Maintenance & Support Issues</th></tr>
+	<tr><th class="rightsideheader">Customer Jobs</th></tr>
 	<tr>
 		<td>
 			<?php if ($customerbugs == 0): ?>
@@ -102,7 +114,7 @@
 <br>
 
 <table style="width:100%;" cellpadding="0" cellspacing="0">
-	<tr><th class="rightsideheader">Redalto Apps Issue Tracking</th></tr>
+	<tr><th class="rightsideheader">Redalto Jobs</th></tr>
 	<tr>
 		<td>
 			<?php if ($redaltobugs == 0): ?>

@@ -222,12 +222,14 @@ class ProjectsController extends AppController {
 	
 	function master_listview(){
 		$this->__checkadmin();
-		$dat =  $this->Project->find('all', array('order'=>array('Project.redalto')));
+		$redalto =  $this->Project->find('all', array('conditions'=>array('Project.redalto'=>'1')));
+		$cust =  $this->Project->find('all', array('conditions'=>array('Project.redalto'=>'0')));
 		$miles = array();
 		for($i = 0 ; $i < count($dat) ; $i++){
 			$miles[$dat[$i]['Project']['id']] = $this->Milestone->find('all' , array('conditions'=>array('Milestone.project_id'=>$dat[$i]['Project']['id']) , 'order'=>'Milestone.enddate ASC'));
 		}
-		$this->set('projects' , $dat);
+		$this->set('projects' , $redalto);
+		$this->set('cust' , $cust);
 		$this->set('miles' , $miles);
 	}
 	
@@ -343,9 +345,12 @@ class ProjectsController extends AppController {
 		$this->set("data" , $data);
 	}
 
-	function master_add() {
+	function master_add($user = 0) {
 		$this->__checkadmin();
 		$this->set("colorpicker" , true);
+		if($user != 0){
+			$this->set('useriddd' , $user);
+		}
 		if (!empty($this->data)) {
 			$this->data["Project"]["budget"] = $this->__calculatetime($this->data["Project"]["hours"] , $this->data["Project"]["mins"]);
 			// Add the project admin to the project
@@ -360,7 +365,7 @@ class ProjectsController extends AppController {
 				$updat["UsersProject"]["project_id"] = $this->Project->getLastInsertID() ;
 				$this->UsersProject->create();
 				$this->UsersProject->save($updat);
-				$this->redirect(array('controller'=>'projects' , 'action'=>'index' , 'master'=>true));
+				$this->redirect(array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $this->Project->getLastInsertId()));
 			} 
 		}
 		$users = $this->Project->User->find('list' , array('conditions'=>array('User.redalto'=>'1') ) );
@@ -452,16 +457,16 @@ class ProjectsController extends AppController {
 				$first = false;	
 				if($master){
 					if($data[$i]["Project"]["redalto"] == 1){
-						$link = '<a href="'. Configure::read('appPath') . '/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 					}else{
-						$link = '<a href="'. Configure::read('appPath') . '/master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . 'master/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':' . $data[$i]["Project"]["name"] . '</a>';
 					}
 					
 				}else{
 					if($data[$i]["Project"]["redalto"] == 1){
-						$link = '<a href="'. Configure::read('appPath') . '/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["name"] . '</a>';
 					}else{
-						$link = '<a href="'. Configure::read('appPath') . '/projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':'  . $data[$i]["Project"]["name"] . '</a>';
+						$link = '<a href="'. Configure::read('appPath') . 'projects/view/' . $data[$i]["Project"]["id"] . '">' . $data[$i]["Project"]["customer"] . ':'  . $data[$i]["Project"]["name"] . '</a>';
 					}
 				}
 				

@@ -1,7 +1,10 @@
+<h1><?php echo $tsk->dispProj($milestone);?>
+	<?php echo $html->link('Return To Project' , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $milestone["Project"]["id"]))?>	
+</h1>
 <div id="pagetitle"><h1><?php echo $milestone['Milestone']['name']; ?></h1></div>
 <div id="projectLeftSide">
 <div class="milestones view">
-
+	<?php echo $html->link("Add Task" , array('controller'=>'tasks' , 'action'=>'add' ,'master'=>true , $milestone["Milestone"]["project_id"] , 0 , 0 , 0 , 0 , $milestone["Milestone"]["id"]) , array('class'=>'buttonlink')) ?>
 	<?php if(count($milestone["Task"]) != 0):?>
 		<h3>Tasks For The Milestone</h3>
 		<table>

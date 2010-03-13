@@ -1,3 +1,9 @@
+<h1><?php echo $tsk->dispProj($projj, $task["Task"]["type"]);?>
+<?php if($projectid != 0):?>
+	<?php echo $html->link('Return To Project' , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $projectid))?>
+<?php endif;?>	
+</h1>
+
 <div id="pagetitle"><h1>Task : <?php echo $task["Task"]["id"] ?> </h1></div>	
 <div id="projectLeftSide">
 <table>
@@ -53,7 +59,18 @@
 	</tr>
 	
 </table>
-<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' , 'master'=>true , $task["Task"]["id"], $projectid ) , array('class'=>'buttonlink'));?>
+<?php if($projectid != 0):?>
+	<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'edit' , 'master'=>true , $task["Task"]["id"], $projectid ) , array('class'=>'buttonlink'));?>
+<?php else:?>
+	<?php 
+		if($task["Task"]["type"] == 'customer'){
+			$redaltojob = 0;
+		}else{
+			$redaltojob = 1;
+		}
+	?>
+	<?php echo $html->link('Edit Task' , array('controller'=>'tasks' , 'action'=>'jobedit' , 'master'=>true , $task["Task"]["id"],  $redaltojob) , array('class'=>'buttonlink'));?>
+<?php endif;?>
 <?php if($task["Task"]["user_id"] != null):?>
 <?php echo $html->link("Add An Activity / Note" , array('controller' => 'activities' , 'action' => 'add', 'master'=>true , $task["Task"]["id"] , $projectid , $task["Task"]["user_id"] ), array('class'=>'buttonlink') ); ?></li>
 <?php else:?>
@@ -100,4 +117,4 @@
 		<?php echo $html->link("Return To Project" , array('controller' => 'projects' , 'action' => 'view','master'=>true , $projectid), array('class'=>'buttonlink') ); ?></li>
  <?php endif;?>	
  </div>
-"
+

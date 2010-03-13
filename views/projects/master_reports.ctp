@@ -2,6 +2,7 @@
 <div id="projectLeftSide">
 <table>
 	<tr>
+		<th>Customer</th>
 	    <th>Project</th>
 	    <th>Completed</th>
 	    <th>Hours</th>
@@ -9,6 +10,7 @@
 	</tr>
 	<?php foreach($data as $project):?>
 		<tr>
+			<td><?php echo $project["Project"]["customer"]; ?></td>
 			<td><?php echo $project["Project"]["name"]; ?></td>
 			<td>
 				<?php if ($project["Project"]["currstats"] == 'arch'): ?>

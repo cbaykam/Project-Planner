@@ -49,7 +49,7 @@
 	<h3> Projects </h3>
 	<?php if($data["User"]["redalto"] == 1):?>
 		<?php if (count($data["Project"]) == 0): ?>
-			<h3>Not working in any projects</h3>
+			Not working in any projects
 		<?php else: ?>
 			<table>
 			
@@ -68,7 +68,7 @@
 		<?php endif; ?>
 	<?php else:?>
 		<?php if (count($custProj) == 0): ?>
-			<h3>This Customer does not have any projects</h3>
+			This Customer does not have any projects
 		<?php else: ?>
 			<table>
 			
@@ -119,18 +119,7 @@
 			
 		</table>
 	<?php endif; ?>
+	<?php echo $html->link('Add Project' , array('controller'=>'projects' , 'action'=>'add' , 'master'=>true ,$data["User"]["id"]) , array('class'=>'buttonlink'));?>
 </div>
-<div id="user_master_view_addtoproj">
-	<fieldset>
-	<?php echo $form->create('UsersProject' , array('url'=>array('controller'=>'users_projects' , 'action'=>'toproject','master'=>true , $data["User"]["id"]))); ?>
-	    <select id="data[UsersProject][project_id]" name="data[UsersProject][project_id]">
-		<?php foreach($projects as $project):?>
-		
-			<option value="<?php echo $project['Project']['id'] ?>"><?php echo $project['Project']['name'] ?></option>
-		
-		<?php endforeach;?>
-	    </select>	
-	<input type="submit" value="Add User To Project"/>
-	</fieldset>
-</div>
+
 </div>

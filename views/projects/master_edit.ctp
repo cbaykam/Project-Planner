@@ -1,4 +1,4 @@
-<div id="pagetitle"><h1><?php __('Add Project');?></h1></div>
+<div id="pagetitle"><h1><?php __('Edit Project');?></h1></div>
 <?php echo $javascript->link('jquery-1.3.2.min' , false); ?>
 <?php echo $javascript->link('milestones' , false); ?>
 <div id="projectLeftSide">
@@ -21,7 +21,7 @@
 		echo $form->input('overview' , array('type'=>'textfield') );
 		echo $form->input('user_id' , array('label'=>'Project Manager'));
 		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer' , '1'=>'Redalto') ) );
-		echo $form->input('duedate' , array('label'=>'Due Date', 'dateFormat'=>'DMY'));
+		echo $form->input('duedate' , array('label'=>'Due Date', 'dateFormat'=>'DMY' , 'minYear'=>'2010' , 'maxYear'=>'2015'));
 	?>
 	<br>
 		<span class="duration">
@@ -34,6 +34,25 @@
 <input type="submit" value="Submit">
 </div>
 <div id="projectRightSide">
-	<?php echo $this->element('milestones'); ?>
+	
 	</form>
+	<?php if(count($this->data["Milestone"])!=0):?>
+		<table>
+  
+
+
+		<?php foreach ($this->data['Milestone'] as $miles):?>
+				<tr>
+				    <td>Milestone Name</td>
+				    <td><?php echo $miles["name"]?></td>
+			    </tr>
+			    <tr>
+				    <td style="border-bottom:1px solid;">Milestone Due Date</td>
+				    <td style="border-bottom:1px solid;"><?php echo $timecal->format($miles["enddate"])?></td>
+			    </tr>
+		<?php endforeach;?>
+		</table>
+	<?php else:?>
+		This project has no Milestones
+	<?php endif;?>
 </div>

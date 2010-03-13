@@ -9,7 +9,6 @@
 		echo $form->input('name' , array('label'=>'Milestone'));
 		echo $form->input('startdate' , array('label'=>'Start Date', 'dateFormat'=>'DMY'));
 		echo $form->input('enddate' , array('label'=>'Due Date', 'dateFormat'=>'DMY')); 
-		echo $form->input('user_id' , array('label'=>'Owner'));
 		echo $form->input('status' , array('type'=>'select' , 'options'=>array('Not Yet Started'=>'Not Yet Started' , 'In Progress'=>'In Progress' , 'Done'=>'Done') ));
 	?>
 	<?php echo $color->select();?>

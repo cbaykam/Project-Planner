@@ -4,10 +4,6 @@ class Task extends AppModel {
 	var $name = 'Task';
 	
 	var $validate = array(
-		'startdate'=>array(
-			'rule'=>array('comparedate' , 'startdate' , 'duedate'),
-			'message'=>'you cannot select more'
-		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -9,11 +9,7 @@
   </div>  
 <?php endif;?>
 <div id="projectLeftSide">
-<?php if($redalto == 0):?>
-	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 0) , array('class'=>'buttonlink'));?>
-<?php else:?>
-	<?php echo $html->link('Create job' , array('controller'=>'tasks' , 'action'=>'add' , 'master'=>true , 0 , 0 , 0 , 1 , 1) , array('class'=>'buttonlink'));?>
-<?php endif;?>
+
 <?php if(count($tasks) != 0):?> 
 <table>
   <tr>
@@ -62,5 +58,5 @@
   </tr>
 </table>
 <?php endif;?>
-<?php echo $html->link('View Completed jobs' , array('controller'=>'tasks' , 'action'=>'jobscompleted' , 'master'=>true , $redalto) , array('class'=>'buttonlink'))?>
+<?php echo $html->link('View Active jobs' , array('controller'=>'tasks' , 'action'=>'indexjobs' , 'master'=>true , $redalto) , array('class'=>'buttonlink'))?>
 </div>

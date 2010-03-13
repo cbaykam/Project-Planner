@@ -10,7 +10,7 @@
 	<fieldset>
 	<?php
 		if($buggie == 0){
-			echo $form->input('milestone_id' , array('label'=>'Project Phase'));
+			echo $form->input('milestone_id' , array('label'=>'Project Phase' , 'value'=>$milestoneid));
 		}	
 		echo $form->input('name');
 		echo $form->input('priority' , array('type'=>'select', 'options'=>array('1'=>'High' , '2'=>'Medium' , '3'=>'low') , 'selected'=>'2' ) );
@@ -63,4 +63,5 @@
 	</fieldset>
 	<br><br>
 <?php echo $form->end('Submit');?>
+<?php echo $html->link('cancel' , array('controller'=>'projects' , 'action'=>'view' , 'master'=>true , $project_idd));?>
 </div>

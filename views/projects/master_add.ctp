@@ -15,9 +15,9 @@
 	<?php
 		echo $form->input('name' , array('label'=>'Project Name'));
 		echo $form->input('overview' , array('type'=>'textfield') );
-		echo $form->input('user_id' , array('label'=>'Project Manager'));
+		echo $form->input('user_id' , array('label'=>'Project Manager' , 'value'=>$useriddd));
 		echo $form->input('redalto' , array('label'=>'Project Type' , 'type'=>'select' , 'options'=>array('0'=>'Customer' , '1'=>'Redalto') ) );
-		echo $form->input('duedate' , array('label'=>'Due Date', 'dateFormat'=>'DMY'));
+		echo $form->input('duedate' , array('label'=>'Due Date', 'dateFormat'=>'DMY' , 'minYear'=>'2010' , 'maxYear'=>'2015'));
 	?>
 	<br>
 		<span class="duration">
